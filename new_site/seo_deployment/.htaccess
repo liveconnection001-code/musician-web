@@ -33,7 +33,7 @@
   # SEO: duplicate public URLs are permanently redirected to one canonical URL
   RewriteRule ^index\.html$ https://www.musician.co.jp/ [R=301,L]
   RewriteRule ^works/index/22(?:/page:1)?/?$ https://www.musician.co.jp/works.html [R=301,L,NE]
-  RewriteRule ^company/index/21/?$ https://www.musician.co.jp/achievements.html [R=301,L,NE]
+  RewriteRule ^company/index/21/?$ https://www.musician.co.jp/company.html [R=301,L,NE]
   RewriteRule ^works/index/(4|25)/page:1/?$ https://www.musician.co.jp/works/index/$1 [R=301,L,NE]
   RewriteRule ^company/index/(5|6|7|12|13|14|15|16|17|18|19|20)/page:1/?$ https://www.musician.co.jp/company/index/$1 [R=301,L,NE]
 

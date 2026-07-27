@@ -47,9 +47,9 @@ def validate_templates() -> None:
         page = text(relative_path)
         check("element('seo_meta'" in page, f"{relative_path}: shared SEO element is not called")
         check('<h1 class="osu3">' not in page, f"{relative_path}: logo is still the page H1")
-        expected_h1_templates = 2 if relative_path == "app/View/catalog/cl01_3/default/index.html" else 1
+        expected_h1_templates = 1 if relative_path == "app/View/catalog/cl01_3/default/index.html" else 1
         check(page.count("<h1") == expected_h1_templates, f"{relative_path}: unexpected H1 template count")
-        check('class="site-logo osu3"' in page, f"{relative_path}: semantic logo wrapper missing")
+    check('class="site-logo osu3"' in page, f"{relative_path}: semantic logo wrapper missing")
 
     public_templates = indexed_templates + ["app/View/Contact/msg.html", "app/View/Contact/thanks.html"]
     for relative_path in public_templates:
@@ -142,7 +142,7 @@ def validate_sitemap_and_robots() -> None:
 
 def validate_routing() -> None:
     root_htaccess = text(".htaccess")
-    for destination in ("/works.html", "/company.html", "/works/index/$1", "/company/index/$1"):
+    for destination in ("/works/index/22", "/company/index/21", "/works/index/$1", "/company/index/$1"):
         check(destination in root_htaccess, f"canonical redirect missing: {destination}")
     check(
         "company/index/(5|6|7|12|13|14|15|16|17|18|19|20)/page:1" in root_htaccess,

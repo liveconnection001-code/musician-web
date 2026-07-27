@@ -21,8 +21,7 @@ $seoBreadcrumbItems = array(
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css?v=20260727p" rel="stylesheet">
-<link href="css/artist_megumi.css" rel="stylesheet"><!--アーティスト一覧の文字配置-->
+<link href="css/style.css" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
@@ -64,7 +63,7 @@ $seoBreadcrumbItems = array(
                                     <li><a href="works.html"><span class="en">Works</span></a></li>
                                     <li class="navi-on"><a href="artist.html"><span class="en">Artist</span></a></li>
                                     <li><a href="company.html"><span class="en">About us</span></a></li>
-                                    <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li><a href="achievements.html"><span class="en">Achievements</span></a></li>
                                     <li class="d-block d-md-none"><a href="contact.html"><span class="en">Contact</span></a></li>
                                     <li class="d-block d-md-none">
 										<div class="sns_list">
@@ -105,39 +104,7 @@ $seoBreadcrumbItems = array(
 <div class="content_pd">
     <div class="container-fluid">
         <div class="yohaku" data-aos="fade-up">
-            <?php
-            // 大町めぐみ（ID 62）をCMS上の旧分類に関係なく「所属アーティスト」へ移動する。
-            // 同分類の既存アーティストと同じグループにまとめ、二重表示を防ぐ。
-            $affiliationCategoryId = null;
-            $affiliatedBoxes = array();
-            $otherBoxes = array();
-            foreach ($boxes as $artistBox) {
-              $artistCategoryTitle = isset($artistBox['CatalogCategory']['title']) ? trim($artistBox['CatalogCategory']['title']) : '';
-              if ($artistCategoryTitle === '所属アーティスト') {
-                $affiliationCategoryId = $artistBox['CatalogCategory']['id'];
-              }
-            }
-            if ($affiliationCategoryId === null) {
-              $affiliationCategoryId = -62;
-            }
-            foreach ($boxes as $artistBox) {
-              $artistId = isset($artistBox['CatalogBox']['id']) ? (int)$artistBox['CatalogBox']['id'] : 0;
-              $artistCategoryTitle = isset($artistBox['CatalogCategory']['title']) ? trim($artistBox['CatalogCategory']['title']) : '';
-              if ($artistCategoryTitle === '所属アーティスト' || $artistId === 62) {
-                $artistBox['CatalogCategory']['id'] = $affiliationCategoryId;
-                $artistBox['CatalogCategory']['title'] = '所属アーティスト';
-                if ($artistId === 62) {
-                  $artistBox['CatalogBox']['title'] = '大町 めぐみ';
-                  $artistBox['CatalogBox']['word1'] = 'オオマチ メグミ';
-                }
-                $affiliatedBoxes[] = $artistBox;
-              } else {
-                $otherBoxes[] = $artistBox;
-              }
-            }
-            $boxes = array_merge($affiliatedBoxes, $otherBoxes);
-            $c = 0;
-            ?>
+            <?php $c = 0; ?>
             <?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl');extract($box['CatalogCategory'],EXTR_PREFIX_ALL,'category'); ?>
             <?php if($c != 0 && $c != $category_id): ?>
                 </div><!--artist_box-->
@@ -152,8 +119,8 @@ $seoBreadcrumbItems = array(
                     <div class="box">
                         <?php if($tbl_has_page == 'Y'): ?>
                         <a href="artist/view/<?php echo $tbl_id; ?>">
-                            <?php if((int)$tbl_id === 62 || !empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                            <?php if(!empty($tbl_image1)): ?>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>
@@ -164,8 +131,8 @@ $seoBreadcrumbItems = array(
                         </a>
                         <?php else: ?>
                         <div>
-                            <?php if((int)$tbl_id === 62 || !empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                            <?php if(!empty($tbl_image1)): ?>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>
@@ -222,7 +189,7 @@ $seoBreadcrumbItems = array(
 							</ul>
 							<ul class="foot_link d-none d-md-block">
 							  <li><a href="company.html"><span class="en">About us</span></a></li>
-							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+							  <li><a href="achievements.html"><span class="en">Achievements</span></a></li>
 							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>

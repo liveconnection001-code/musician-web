@@ -75,7 +75,6 @@ Options -Indexes
     RewriteRule ^ez_js/eq(?:/|$) - [R=404,L,NC]
     RewriteRule ^ez_js/pdf/web(?:/|$) - [R=404,L,NC]
     RewriteRule (?:^|/)\.(?!well-known(?:/|$)) - [F,L]
-    RewriteRule ^company/index/21/?$ /achievements.html [R=301,L,NE]
 
 	#SHOP専用ブロックここから
 	# リクエストされたurlが/shopか/shop/のみで終わっている場合、EZManagerの処理へ移行する

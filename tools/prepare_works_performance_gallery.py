@@ -49,6 +49,10 @@ PHOTOS = (
     {"key": "classic-film-production", "folder": "classic", "file": "画像 022.jpg", "center": (0.58, 0.54)},
     {"key": "classic-mariachi-trio", "folder": "classic", "file": "DSC03285.JPG", "center": (0.50, 0.52), "override": "new_site/works_deployment/source_overrides/classic-mariachi-trio-clean.png"},
     {"key": "classic-gallery-trio", "folder": "classic", "file": "PICT0021.JPG", "center": (0.50, 0.56), "trim": (40, 80, 0, 0)},
+    {"key": "concert-opera-scene", "folder": "コンサート制作実績/鈴木慶江/2022_09_24鈴木慶江デビュー20周年/20220924鈴木慶江デビュー20周年記念オーケストラコンサート/公演写真/深谷さん撮影", "file": "_FY20422.jpg", "center": (0.50, 0.52), "override": "//192.168.1.2/Public/MUSICIAN/コンサート制作実績/鈴木慶江/2022_09_24鈴木慶江デビュー20周年/20220924鈴木慶江デビュー20周年記念オーケストラコンサート/公演写真/深谷さん撮影/_FY20422.jpg"},
+    {"key": "concert-operatic-heroines", "folder": "コンサート制作実績/鈴木慶江/2022_09_24鈴木慶江デビュー20周年/20220924鈴木慶江デビュー20周年記念オーケストラコンサート/公演写真/深谷さん撮影", "file": "_FY20745.jpg", "center": (0.52, 0.50), "override": "//192.168.1.2/Public/MUSICIAN/コンサート制作実績/鈴木慶江/2022_09_24鈴木慶江デビュー20周年/20220924鈴木慶江デビュー20周年記念オーケストラコンサート/公演写真/深谷さん撮影/_FY20745.jpg"},
+    {"key": "concert-orchestra-amber", "folder": "コンサート制作実績/鈴木慶江/2022_09_24鈴木慶江デビュー20周年/20220924鈴木慶江デビュー20周年記念オーケストラコンサート/公演写真/深谷さん撮影", "file": "_FY30064.jpg", "center": (0.49, 0.55), "override": "//192.168.1.2/Public/MUSICIAN/コンサート制作実績/鈴木慶江/2022_09_24鈴木慶江デビュー20周年/20220924鈴木慶江デビュー20周年記念オーケストラコンサート/公演写真/深谷さん撮影/_FY30064.jpg"},
+    {"key": "concert-soprano-stage", "folder": "コンサート制作実績/鈴木慶江/写真2018年6月オペラティックヒロインズ", "file": "S__57876567.jpg", "center": (0.50, 0.50), "override": "//192.168.1.2/Public/MUSICIAN/コンサート制作実績/鈴木慶江/写真2018年6月オペラティックヒロインズ/S__57876567.jpg"},
 )
 
 

@@ -76,6 +76,34 @@ def replace_heading_level(
     return updated
 
 
+def replace_heading_level_if_present(
+    text: str,
+    old_level: int,
+    new_level: int,
+    class_prefix: str,
+    label: str,
+) -> str:
+    pattern = re.compile(
+        rf'<h{old_level}(?P<attrs>[^>]*\bclass="{re.escape(class_prefix)}[^"]*"[^>]*)>'
+        rf'(?P<body>.*?)</h{old_level}>',
+        re.DOTALL,
+    )
+    updated, count = pattern.subn(
+        lambda match: (
+            f'<h{new_level}{match.group("attrs")}>'
+            f'{match.group("body")}</h{new_level}>'
+        ),
+        text,
+    )
+    if count > 1:
+        raise RuntimeError(f"{label}: expected at most 1 match, found {count}")
+    return updated
+
+
+def normalize_achievements_links(text: str) -> str:
+    return re.sub(r"company\.html#achievements(?!-)", "achievements.html", text)
+
+
 def replace_php_preamble(text: str, preamble: str, label: str) -> str:
     return replace_regex_once(text, r"\A<\?php.*?\?>", preamble.strip(), label)
 
@@ -454,6 +482,7 @@ def build_home() -> None:
         'class="img-fluid"></span>',
         'class="img-fluid" loading="lazy" decoding="async"></span>',
     )
+    text = normalize_achievements_links(text)
     youtube_titles = {
         "Q3I7bU3JHng": "MUSICIAN 出張演奏・イベント映像 1",
         "Yqte27z2aww": "MUSICIAN 出張演奏・イベント映像 2",
@@ -477,6 +506,7 @@ def build_static_pages() -> None:
             f'src="images/business_photo{image_number}.jpg"',
             f'src="images/business_photo{image_number}.jpg" loading="lazy" decoding="async"',
         )
+    business = normalize_achievements_links(business)
     write("app/webroot/business.html", business)
 
     contact = read(BACKUP / "app" / "webroot" / "contact.html")
@@ -492,6 +522,7 @@ def build_static_pages() -> None:
         '出張演奏、演奏家・アーティストの手配、企業イベントや式典の音楽演出は、<br class="d-none d-sm-block">日時や会場が未確定の段階でもメールフォームまたはお電話でご相談いただけます。',
         "contact intro copy",
     )
+    contact = normalize_achievements_links(contact)
     write("app/webroot/contact.html", contact)
 
 
@@ -511,6 +542,7 @@ def build_catalog_pages() -> None:
         'class="img-fluid"></span>',
         'class="img-fluid" loading="lazy" decoding="async"></span>',
     )
+    works = normalize_achievements_links(works)
     write("app/View/catalog/cl01_2/default/index.html", works)
 
     company = read(CURRENT_COMPANY)
@@ -518,7 +550,7 @@ def build_catalog_pages() -> None:
     company = replace_legacy_meta(company, DYNAMIC_META, "company metadata")
     company = improve_shared_markup(company, banner_label="<span>About us</span>私たちについて")
     company = replace_heading_level(company, 3, 2, "midashi1", 5, "company section headings")
-    company = replace_heading_level(company, 4, 3, "recent-achievements__title", 1, "recent achievements heading")
+    company = replace_heading_level_if_present(company, 4, 3, "recent-achievements__title", "recent achievements heading")
     company = replace_heading_level(company, 4, 3, "midashi3", 1, "company category heading")
     company = replace_once(company, "<h4>2018年以前の実績</h4>", "<h3>2018年以前の実績</h3>", "archive achievements heading")
     company = replace_once(
@@ -547,6 +579,7 @@ def build_catalog_pages() -> None:
         'class="img-fluid"></span>',
         'class="img-fluid" loading="lazy" decoding="async"></span>',
     )
+    company = normalize_achievements_links(company)
     write("app/View/catalog/cl01_3/default/index.html", company)
 
     artist_index = read(BACKUP / "app" / "View" / "catalog" / "cl02_4" / "default" / "index.html")
@@ -558,6 +591,7 @@ def build_catalog_pages() -> None:
         'class="img-fluid"></span>',
         'class="img-fluid" loading="lazy" decoding="async"></span>',
     )
+    artist_index = normalize_achievements_links(artist_index)
     write("app/View/catalog/cl02_4/default/index.html", artist_index)
 
     artist_view = read(BACKUP / "app" / "View" / "catalog" / "cl02_4" / "default" / "view.html")
@@ -569,6 +603,7 @@ def build_catalog_pages() -> None:
         'class="img-fluid"></div>',
         'class="img-fluid" loading="lazy" decoding="async"></div>',
     )
+    artist_view = normalize_achievements_links(artist_view)
     write("app/View/catalog/cl02_4/default/view.html", artist_view)
 
 
@@ -594,7 +629,36 @@ def build_contact_results() -> None:
         text = replace_legacy_meta(text, meta, f"{filename} noindex metadata")
         text = improve_shared_markup(text, banner_label="<span>Contact</span>お問い合わせ")
         text = replace_heading_level(text, 3, 2, "midashi1", 1, f"{filename} form heading")
+        text = normalize_achievements_links(text)
         write(f"app/View/Contact/{filename}", text)
+
+
+def build_achievements_page() -> None:
+    achievements = """<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>実績一覧｜MUSICIAN</title>
+    <meta name="description" content="企業イベント、式典、ホテル・商業施設、音楽制作に関するMUSICIANの実績一覧">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://www.musician.co.jp/achievements.html">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <main>
+      <section class="pd_yohaku_r">
+        <div class="container">
+          <h1 class="midashi1 mb30_md50 tal_sptac"><span class="en">Achievements</span>実績一覧</h1>
+          <p class="p_22">MUSICIANの代表的な実績は <a href="company.html#achievements">MUSICIANについて</a> のページ内に年度別で掲載しています。</p>
+          <p><a href="company.html#achievements" class="btn btn-1">MUSICIANについて（実績セクション）へ</a></p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+"""
+    write("app/webroot/achievements.html", achievements)
 
 
 def build_css() -> None:
@@ -830,6 +894,7 @@ Sitemap: https://www.musician.co.jp/sitemap.xml
         ("/works.html", "0.9"),
         ("/artist.html", "0.9"),
         ("/company.html", "0.9"),
+        ("/achievements.html", "0.9"),
         ("/contact.html", "0.8"),
         ("/works/index/4", "0.7"),
         ("/works/index/25", "0.7"),
@@ -890,6 +955,7 @@ def main() -> None:
     build_javascript()
     build_routing_and_errors()
     build_htaccess()
+    build_achievements_page()
     build_robots_and_sitemap()
     write_manifest()
     print(f"Built SEO deployment package: {OUTPUT}")

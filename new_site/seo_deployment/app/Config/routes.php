@@ -6,12 +6,10 @@
 
 // webroot下にあるhtmlファイルをルーティングする
 webroot_routing();
-Router::redirect('/company/index/21', '/achievements.html', array('status' => 301));
 Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
 Router::connect('/index.html', array('controller' => 'homes', 'action' => 'index'));
 Router::connect('/works.html', array('controller' => 'works', 'action' => 'index'));
 Router::connect('/company.html', array('controller' => 'company', 'action' => 'index'));
-Router::connect('/achievements.html', array('controller' => 'company', 'action' => 'index', 21));
 Router::connect('/artist.html', array('controller' => 'artist', 'action' => 'index'));
 
 //Router::connect('/shop',   array('plugin' => 'shop','controller' => 'homes',   'action' => 'index'));      //ezshop追加時

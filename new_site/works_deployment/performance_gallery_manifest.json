@@ -1,37 +1,832 @@
 {
   "photos": [
-    {"key":"unit-live-band"},
-    {"key":"unit-modern-trio"},
-    {"key":"unit-big-band"},
-    {"key":"unit-brass-quintet"},
-    {"key":"unit-christmas"},
-    {"key":"unit-electric-strings"},
-    {"key":"unit-concert-production"},
-    {"key":"traditional-koto-gala"},
-    {"key":"unit-kimono"},
-    {"key":"unit-outdoor-night"},
-    {"key":"unit-vocal-balcony"},
-    {"key":"traditional-taiko"},
-    {"key":"traditional-japanese-fusion"},
-    {"key":"traditional-koto-quartet"},
-    {"key":"traditional-koto-duo"},
-    {"key":"traditional-shamisen-solo"},
-    {"key":"traditional-flamenco"},
-    {"key":"traditional-japanese-dance"},
-    {"key":"traditional-gospel"},
-    {"key":"traditional-vocal-show"},
-    {"key":"jazz-church-concert"},
-    {"key":"jazz-quartet"},
-    {"key":"jazz-big-band-concert"},
-    {"key":"pops-string-live"},
-    {"key":"pops-erhu-piano"},
-    {"key":"classic-orchestra"},
-    {"key":"classic-public-concert"},
-    {"key":"classic-cruise-brass"},
-    {"key":"classic-string-ensemble"},
-    {"key":"classic-film-production"},
-    {"key":"classic-mariachi-trio"},
-    {"key":"classic-gallery-trio"}
+    {
+      "key": "unit-live-band",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "unit-live-band-4x3-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-modern-trio",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "unit-modern-trio-centered-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-big-band",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "unit-big-band-identifiers-removed.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-brass-quintet",
+      "sourceFolder": "unit",
+      "sourceFile": "IMG_8699.JPG",
+      "sourcePixels": [
+        4320,
+        2432
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1081
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-christmas",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "unit-christmas-4x3.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-electric-strings",
+      "sourceFolder": "unit",
+      "sourceFile": "20100602_06.jpg",
+      "sourcePixels": [
+        1500,
+        1125
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1500,
+        1125
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-concert-production",
+      "sourceFolder": "unit",
+      "sourceFile": "DSC00498.JPG",
+      "sourcePixels": [
+        2048,
+        1536
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-koto-gala",
+      "sourceFolder": "unit",
+      "sourceFile": "P1000283.JPG",
+      "sourcePixels": [
+        2048,
+        1360
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1024,
+        592
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-kimono",
+      "sourceFolder": "unit",
+      "sourceFile": "S__3727427.jpg",
+      "sourcePixels": [
+        1478,
+        1108
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1098,
+        1108
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-outdoor-night",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "unit-outdoor-night-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "unit-vocal-balcony",
+      "sourceFolder": "unit",
+      "sourceFile": "Photo002.jpg",
+      "sourcePixels": [
+        1280,
+        960
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1280,
+        960
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-taiko",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "traditional-taiko-logo-removed.png",
+      "sourcePixels": [
+        1672,
+        941
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1672,
+        941
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-japanese-fusion",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "traditional-japanese-fusion-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1198,
+        899
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-koto-quartet",
+      "sourceFolder": "traditional",
+      "sourceFile": "DSC01855.JPG",
+      "sourcePixels": [
+        2592,
+        1944
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-koto-duo",
+      "sourceFolder": "traditional",
+      "sourceFile": "DSC01838.JPG",
+      "sourcePixels": [
+        2592,
+        1944
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-shamisen-solo",
+      "sourceFolder": "traditional",
+      "sourceFile": "P1090101.JPG",
+      "sourcePixels": [
+        1600,
+        1200
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1600,
+        1200
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-flamenco",
+      "sourceFolder": "traditional",
+      "sourceFile": "DSC01788.JPG",
+      "sourcePixels": [
+        3648,
+        2736
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-japanese-dance",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "traditional-japanese-dance-4x3.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-gospel",
+      "sourceFolder": "traditional",
+      "sourceFile": "P1030626.JPG",
+      "sourcePixels": [
+        2048,
+        1536
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-vocal-show",
+      "sourceFolder": "traditional",
+      "sourceFile": "PICT0010.JPG",
+      "sourcePixels": [
+        1600,
+        1200
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1600,
+        1200
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "jazz-church-concert",
+      "sourceFolder": "JAZZ.POPS",
+      "sourceFile": "2.JPG",
+      "sourcePixels": [
+        4320,
+        2432
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1081
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "jazz-quartet",
+      "sourceFolder": "JAZZ.POPS",
+      "sourceFile": "2008122017040001.jpg",
+      "sourcePixels": [
+        640,
+        480
+      ],
+      "redactions": 1,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        640,
+        480
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "jazz-big-band-concert",
+      "sourceFolder": "JAZZ.POPS",
+      "sourceFile": "画像 086.jpg",
+      "sourcePixels": [
+        2048,
+        1536
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "pops-string-live",
+      "sourceFolder": "JAZZ.POPS",
+      "sourceFile": "20140201_160706.jpg",
+      "sourcePixels": [
+        3264,
+        2448
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "pops-erhu-piano",
+      "sourceFolder": "JAZZ.POPS",
+      "sourceFile": "IMG_6565.JPG",
+      "sourcePixels": [
+        1920,
+        1080
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1080
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-orchestra",
+      "sourceFolder": "classic",
+      "sourceFile": "20110429070.jpg",
+      "sourcePixels": [
+        2500,
+        1875
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-public-concert",
+      "sourceFolder": "classic",
+      "sourceFile": "DSC02348.JPG",
+      "sourcePixels": [
+        3648,
+        2736
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1440
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-cruise-brass",
+      "sourceFolder": "classic",
+      "sourceFile": "ぱしふぃっくびぃなす_190204_0040.jpg",
+      "sourcePixels": [
+        1478,
+        1108
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1478,
+        1108
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-string-ensemble",
+      "sourceFolder": "classic",
+      "sourceFile": "画像 016.jpg",
+      "sourcePixels": [
+        1600,
+        1200
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1600,
+        1200
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-film-production",
+      "sourceFolder": "classic",
+      "sourceFile": "画像 022.jpg",
+      "sourcePixels": [
+        2048,
+        1360
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1275
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-mariachi-trio",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "classic-mariachi-trio-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "classic-gallery-trio",
+      "sourceFolder": "classic",
+      "sourceFile": "PICT0021.JPG",
+      "sourcePixels": [
+        1280,
+        960
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1240,
+        880
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "concert-opera-scene",
+      "sourceFolder": "\\\\192.168.1.2\\Public\\MUSICIAN\\コンサート制作実績\\鈴木慶江\\2022_09_24鈴木慶江デビュー20周年\\20220924鈴木慶江デビュー20周年記念オーケストラコンサート\\公演写真\\深谷さん撮影",
+      "sourceFile": "_FY20422.jpg",
+      "sourcePixels": [
+        4543,
+        3029
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1280
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "concert-operatic-heroines",
+      "sourceFolder": "\\\\192.168.1.2\\Public\\MUSICIAN\\コンサート制作実績\\鈴木慶江\\2022_09_24鈴木慶江デビュー20周年\\20220924鈴木慶江デビュー20周年記念オーケストラコンサート\\公演写真\\深谷さん撮影",
+      "sourceFile": "_FY20745.jpg",
+      "sourcePixels": [
+        4539,
+        3026
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1280
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "concert-orchestra-amber",
+      "sourceFolder": "\\\\192.168.1.2\\Public\\MUSICIAN\\コンサート制作実績\\鈴木慶江\\2022_09_24鈴木慶江デビュー20周年\\20220924鈴木慶江デビュー20周年記念オーケストラコンサート\\公演写真\\深谷さん撮影",
+      "sourceFile": "_FY30064.jpg",
+      "sourcePixels": [
+        4572,
+        3048
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1920,
+        1280
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "concert-soprano-stage",
+      "sourceFolder": "\\\\192.168.1.2\\Public\\MUSICIAN\\コンサート制作実績\\鈴木慶江\\写真2018年6月オペラティックヒロインズ",
+      "sourceFile": "S__57876567.jpg",
+      "sourcePixels": [
+        1634,
+        1004
+      ],
+      "redactions": 0,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1634,
+        1004
+      ],
+      "metadata": "stripped during re-encode"
+    }
   ]
 }
-

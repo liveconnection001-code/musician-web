@@ -34,8 +34,8 @@ def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))["photos"]
 
     keys = [photo["key"] for photo in manifest]
-    require(len(keys) == 32, f"Expected 32 photos, found {len(keys)}")
-    require(len(set(keys)) == 32, "Gallery keys are not unique")
+    require(len(keys) == 36, f"Expected 36 photos, found {len(keys)}")
+    require(len(set(keys)) == 36, "Gallery keys are not unique")
     template_keys = re.findall(r"array\('image' => '([^']+)'", template)
     preview_keys = re.findall(r'\{ image: "([^"]+)"', preview)
     require(template_keys == keys, "Production gallery keys/order must match the manifest exactly")
@@ -52,7 +52,7 @@ def main() -> None:
     require("-large.jpg" in template and "-large.jpg" in preview, "Full gallery images are missing")
     require("IndexIgnore *" in (DEPLOY / "app/webroot/images/works/.htaccess").read_text(encoding="utf-8"), "Safe directory listing protection is missing")
     require("traditional-koto-gala" in PROCESSOR.read_text(encoding="utf-8"), "The event-banner crop configuration is missing")
-    require("Refusing to overwrite the curated 32-photo Works gallery" in BUILDER.read_text(encoding="utf-8"), "Legacy Works builder can overwrite the gallery")
+    require("Refusing to overwrite the curated" in BUILDER.read_text(encoding="utf-8"), "Legacy Works builder can overwrite the gallery")
 
     expected_files = []
     for key in keys:
@@ -75,7 +75,7 @@ def main() -> None:
         require((STAGING_IMAGES / name).read_bytes() == production_bytes, f"Staging image differs: {name}")
 
     require(total_size <= 35 * 1024 * 1024, f"Gallery payload is too large: {total_size / 1024 / 1024:.2f} MB")
-    print(f"Works gallery validation passed: 32 photos, 64 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
+    print(f"Works gallery validation passed: 36 photos, 72 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
 
 
 if __name__ == "__main__":
