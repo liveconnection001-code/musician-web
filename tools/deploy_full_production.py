@@ -9,6 +9,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from tempfile import gettempdir
@@ -509,9 +510,74 @@ def cleanup(password: str, backup_dir_text: str) -> dict:
     }
 
 
+def purge_stale_remnants(password: str) -> dict:
+    """Remove only Codex deployment remnants for known release targets.
+
+    Names must match both a known target/obsolete path and the timestamped
+    deployment naming convention. This intentionally cannot delete arbitrary
+    hidden files or active application content.
+    """
+    targets, _summary = read_local_targets()
+    target_names: dict[PurePosixPath, set[str]] = {}
+    for relative in targets:
+        remote = remote_for(relative)
+        target_names.setdefault(remote.parent, set()).add(remote.name)
+
+    obsolete_names: dict[PurePosixPath, set[str]] = {}
+    for obsolete_text in OBSOLETE_PATHS:
+        obsolete = PurePosixPath(obsolete_text)
+        obsolete_names.setdefault(obsolete.parent, set()).add(obsolete.name)
+
+    stamp = r"\d{8}T\d{6}Z"
+    removed_paths: list[str] = []
+    removed_files = 0
+    directories = sorted(set(target_names) | set(obsolete_names), key=str)
+    with login_ftp(password, timeout=60) as ftp:
+        for parent in directories:
+            try:
+                entries = list(ftp.mlsd(str(parent)))
+            except ftplib.error_perm as exc:
+                if str(exc).startswith("550"):
+                    continue
+                raise
+            for name, facts in entries:
+                child = parent / name
+                target_match = re.fullmatch(
+                    rf"\.(.+)\.codex-(?:upload|backup)(?:-full)?-{stamp}",
+                    name,
+                )
+                is_known_target = bool(
+                    target_match
+                    and target_match.group(1) in target_names.get(parent, set())
+                )
+                is_known_quarantine = any(
+                    re.fullmatch(
+                        rf"\.codex-quarantine-{re.escape(obsolete_name)}-{stamp}",
+                        name,
+                    )
+                    for obsolete_name in obsolete_names.get(parent, set())
+                )
+                if not (is_known_target or is_known_quarantine):
+                    continue
+                if facts.get("type") == "dir":
+                    removed_files += remove_tree(ftp, child)
+                else:
+                    delete_file_optional(ftp, child)
+                    removed_files += 1
+                removed_paths.append(str(child))
+    return {
+        "mode": "purge-remnants",
+        "removed_paths": len(removed_paths),
+        "removed_files": removed_files,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("inspect", "deploy", "rollback", "cleanup"))
+    parser.add_argument(
+        "mode",
+        choices=("inspect", "deploy", "rollback", "cleanup", "purge-remnants"),
+    )
     parser.add_argument("--backup-dir")
     args = parser.parse_args()
     if args.mode == "inspect":
@@ -523,6 +589,8 @@ def main() -> int:
         raise RuntimeError(f"{PASSWORD_ENV} is not set")
     if args.mode == "deploy":
         result = deploy(password)
+    elif args.mode == "purge-remnants":
+        result = purge_stale_remnants(password)
     else:
         if not args.backup_dir:
             raise RuntimeError("--backup-dir is required")

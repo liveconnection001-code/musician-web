@@ -25,7 +25,7 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 21, "deployment must contain 21 staged files")
+    check(manifest.get("file_count") == 23, "deployment must contain 23 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
@@ -102,8 +102,18 @@ def validate_templates() -> None:
     company = text("app/View/catalog/cl01_3/default/index.html")
     check("$seoIsRoot ? 'AboutPage' : 'CollectionPage'" in company, "company page schema type not specialized")
     check("/achievements.html" in company, "independent achievements URL missing")
-    check(company.count('class="achievement-list__item"') == 85, "expected 85 recent achievement items")
+    check("achievement-category-group__item" not in company, "About page must not contain achievement listings")
     check("アーティスト協会 MUSICIAN事業部として継続している実績を含みます。" not in company, "removed association sentence returned")
+
+    achievements = text("app/webroot/achievements.html")
+    check(
+        achievements.count('class="achievement-category-group__item">') == 85,
+        "expected 85 recent achievement items",
+    )
+    check(
+        achievements.count("achievement-category-group__item--archive") == 2672,
+        "expected 2672 date-free historical achievement items",
+    )
 
     for relative_path in ("app/View/Contact/msg.html", "app/View/Contact/thanks.html"):
         page = text(relative_path)
@@ -121,7 +131,7 @@ def validate_sitemap_and_robots() -> None:
     root = ET.parse(sitemap_path).getroot()
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     urls = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
-    check(len(urls) == 48, f"sitemap must contain 48 URLs, found {len(urls)}")
+    check(len(urls) == 36, f"sitemap must contain 36 page URLs, found {len(urls)}")
     check("https://www.musician.co.jp/achievements.html" in urls, "independent achievements URL missing from sitemap")
     check(len(urls) == len(set(urls)), "sitemap contains duplicate URLs")
     check(all(url.startswith("https://www.musician.co.jp/") for url in urls), "sitemap contains a non-canonical host")
@@ -142,7 +152,7 @@ def validate_sitemap_and_robots() -> None:
 
 def validate_routing() -> None:
     root_htaccess = text(".htaccess")
-    for destination in ("/works/index/22", "/company/index/21", "/works/index/$1", "/company/index/$1"):
+    for destination in ("works/index/22", "company/index/21", "works/index/$1", "company/index/$1"):
         check(destination in root_htaccess, f"canonical redirect missing: {destination}")
     check(
         "company/index/(5|6|7|12|13|14|15|16|17|18|19|20)/page:1" in root_htaccess,
@@ -188,7 +198,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 21 files, 48 canonical URLs, 85 recent achievements")
+    print("SEO validation passed: 23 files, 36 canonical URLs, 85 recent and 2672 historical achievements")
 
 
 if __name__ == "__main__":

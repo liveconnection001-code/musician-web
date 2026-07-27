@@ -7,8 +7,8 @@
   "files": [
     {
       "path": ".htaccess",
-      "bytes": 2179,
-      "sha256": "2d4126aa22502f5aea9bf25b1f02a322093e3f5ca764901af8b0a7eb4b7dd9a3"
+      "bytes": 2583,
+      "sha256": "167935085509b112bafe4e643d8a4870ec23fc1a481bf56a148c728042869e58"
     },
     {
       "path": "app/Config/routes.php",

@@ -666,6 +666,16 @@ def prepare_static_preview() -> None:
     shutil.copyfile(ACHIEVEMENTS_CSS, public / "css/recent_achievements.css")
     if (public / "about.html").is_file():
         shutil.copyfile(public / "about.html", public / "company.html")
+        preview_company = public / "company.html"
+        company_html = preview_company.read_text(encoding="utf-8")
+        if 'name="robots" content="noindex, nofollow"' not in company_html:
+            company_html = company_html.replace(
+                '<meta name="viewport" content="width=device-width, initial-scale=1">',
+                '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+                '<meta name="robots" content="noindex, nofollow">',
+                1,
+            )
+            write_text(preview_company, company_html)
     shutil.copyfile(
         ARTIST / "app/webroot/css/artist_megumi.css",
         public / "css/artist_megumi.css",

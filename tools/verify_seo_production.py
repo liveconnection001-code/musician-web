@@ -102,12 +102,14 @@ def main() -> int:
         "/company.html": "/company.html",
         "/achievements.html": "/achievements.html",
         "/contact.html": "/contact.html",
-        "/artist/view/38": "/artist/view/38",
+        "/artist/view/62": "/artist/view/62",
         "/works/index/4": "/works/index/4",
     }
     rendered = {path: verify_html(path, canonical) for path, canonical in pages.items()}
     company = rendered["/company.html"]
     achievements = rendered["/achievements.html"]
+    artist = rendered["/artist.html"]
+    megumi = rendered["/artist/view/62"]
     check(
         achievements.count('class="achievement-category-group__item"') == 85,
         "achievements: 85 recent achievements",
@@ -121,9 +123,38 @@ def main() -> int:
         "achievements: recovered event dates are hidden",
     )
     check(
+        len(re.findall(r'<details[^>]+id="achievements-(?:20(?:0[6-9]|1\d|2[0-6]))"[^>]*\bopen\b', achievements)) == 21,
+        "achievements: all 21 years are open by default",
+    )
+    check(
         "アーティスト協会 MUSICIAN事業部として継続している実績を含みます。" not in company,
         "company: removed association sentence is absent",
     )
+    check(
+        company.find("大町 めぐみ") < company.find("宮﨑 隆")
+        and company.find("大町 めぐみ") >= 0,
+        "company: Megumi Omachi appears before Takashi Miyazaki",
+    )
+    check("/artist/view/62" in artist and "大町 めぐみ" in artist, "artist: Megumi listing")
+    check("上海音楽院" in megumi and "2年間" in megumi, "Megumi profile: Shanghai study details")
+    for social in (
+        "x.com/MUSICIAN_MEGUMI",
+        "threads.com/@megmilk323",
+        "facebook.com/da.ting.megumi",
+        "instagram.com/megmilk323",
+    ):
+        check(social in megumi, f"Megumi profile: {social}")
+
+    status, headers, _payload = fetch("/")
+    check(status == 200, "home: security header response")
+    for header in (
+        "x-content-type-options",
+        "x-frame-options",
+        "referrer-policy",
+        "permissions-policy",
+    ):
+        check(bool(headers.get(header)), f"home: {header} security header")
+    check(not headers.get("x-powered-by"), "home: X-Powered-By is hidden")
 
     redirects = {
         "/index.html": "/",
@@ -171,13 +202,20 @@ def main() -> int:
     check('name="robots" content="noindex, follow"' in missing, "unknown .html: noindex")
 
     for sample_path in (
+        "/.git/config",
+        "/.env",
+        "/composer.json",
+        "/app/Config/database.php",
+        "/wp-login.php",
+        "/xmlrpc.php",
+        "/_bk_20221124/",
         "/SampleKit/",
         "/securimage/example_form.php",
         "/ez_js/eq/",
         "/ez_js/pdf/web/",
     ):
         status, _headers, _payload = fetch(sample_path)
-        expected = (403, 404) if sample_path == "/SampleKit/" else (404,)
+        expected = (403, 404)
         check(status in expected, f"{sample_path}: expected blocked status {expected}, got {status}")
 
     result = {

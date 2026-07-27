@@ -31,6 +31,11 @@
 
 
   # SEO: duplicate public URLs are permanently redirected to one canonical URL
+  # Security: obsolete CMS entry points and server-side source/configuration
+  # paths must never be routed through the public application.
+  RewriteRule ^(?:wp-admin|wp-login\.php|xmlrpc\.php)(?:/|$) - [R=404,L,NC]
+  RewriteRule ^(?:composer\.(?:json|lock)|phpinfo\.php|\.env)(?:/|$) - [F,L,NC]
+  RewriteRule ^app/(?:Config|Console|Controller|Lib|Locale|Model|Plugin|Test|tmp|Vendor)(?:/|$) - [F,L,NC]
   RewriteRule ^index\.html$ https://www.musician.co.jp/ [R=301,L]
   RewriteRule ^works/index/22(?:/page:1)?/?$ https://www.musician.co.jp/works.html [R=301,L,NE]
   RewriteRule ^company/index/21(?:/page:1)?/?$ https://www.musician.co.jp/achievements.html [R=301,L,NE]

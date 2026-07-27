@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: musician-production
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -47,6 +51,10 @@ jobs:
         env:
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
         run: |
+          python tools/verify_recovered_release.py
+          python tools/verify_artist_release.py
+          python tools/verify_works_gallery_release.py
+          python tools/validate_seo_update.py
           python - <<'PY'
           import sys
           sys.path.insert(0, "tools")
@@ -75,11 +83,38 @@ jobs:
           PY
 
       - name: Deploy to production
+        id: deploy
         env:
           MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
         run: |
-          python tools/deploy_full_production.py deploy
+          set -o pipefail
+          python tools/deploy_full_production.py deploy | tee deploy-result.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          result = json.loads(Path("deploy-result.json").read_text(encoding="utf-8").splitlines()[-1])
+          print(f"backup_dir={result['backup_dir']}")
+          PY
+
+      - name: Verify deployed production
+        run: python tools/verify_seo_production.py
+
+      - name: Roll back a failed production verification
+        if: failure() && steps.deploy.outputs.backup_dir != ''
+        env:
+          MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
+          MUSICIAN_WORKSPACE: ${{ github.workspace }}
+        run: python tools/deploy_full_production.py rollback --backup-dir "${{ steps.deploy.outputs.backup_dir }}"
+
+      - name: Remove verified rollback copies and obsolete content
+        if: success()
+        env:
+          MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
+          MUSICIAN_WORKSPACE: ${{ github.workspace }}
+        run: |
+          python tools/deploy_full_production.py cleanup --backup-dir "${{ steps.deploy.outputs.backup_dir }}"
+          python tools/deploy_full_production.py purge-remnants
 
       - name: Preserve rollback snapshot
         if: always()
@@ -88,4 +123,4 @@ jobs:
           name: musician-production-rollback-${{ github.run_id }}
           path: new_site/production_backups/full_*
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 90
