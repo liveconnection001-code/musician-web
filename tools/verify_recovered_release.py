@@ -45,7 +45,7 @@ def validate_shared_headers() -> None:
         require(text.count("<header>") == 1, f"{label}: header count")
         require(text.count("<footer>") == 1, f"{label}: footer count")
         require(text.count('id="midashi_h2"') == 1, f"{label}: shared heading missing")
-        require("style.css?v=20260728a" in text, f"{label}: CSS cache key missing")
+        require("style.css?v=20260728b" in text, f"{label}: CSS cache key missing")
     css = STYLE.read_text(encoding="utf-8")
     require("approved shared page heading" in css, "Approved heading CSS missing")
     require(re.search(r"#midashi_h2\s*\{[^}]*height:\s*40px", css, re.S), "Navy band is not 40px")
@@ -57,8 +57,8 @@ def validate_about() -> None:
     megumi = text.index("代表取締役</span> 大町めぐみ")
     miyazaki = text.index("プロデューサー</span> 宮﨑 隆")
     require(megumi < miyazaki, "About us profile order is wrong")
-    require("company_photo_megumi.jpg" in text, "Megumi About image missing")
-    require("company_photo_miyazaki_illustration.jpg" in text, "Miyazaki illustration missing")
+    require("company_photo_megumi.jpg?v=20260728b" in text, "Megumi About image cache key missing")
+    require("company_photo_miyazaki_illustration.jpg?v=20260728b" in text, "Miyazaki illustration cache key missing")
     require("recent-achievements" not in text and 'id="achievements"' not in text, "Achievements remain in About us")
     require("Career" not in text, "Removed Career section remains")
     require(text.count("<span>About us</span>私たちについて") == 1, "About us title is duplicated")
@@ -83,8 +83,11 @@ def validate_achievements() -> None:
     links = [int(value) for value in re.findall(r'href="#achievements-(\d{4})"', text)]
     require(ids == years, f"Achievements IDs mismatch: {ids}")
     require(links == years, f"Achievements Category mismatch: {links}")
-    require(text.count('class="achievement-list__item"') == 85, "Recent achievement item count changed")
-    require("recent_achievements.css?v=20260728a" in text, "Achievements CSS missing")
+    require(text.count('class="achievement-category-group__item"') == 85, "Recent achievement item count changed")
+    require('class="achievement-category-group"' in text, "Recent achievements are not grouped by category")
+    require(not re.search(r'<details class="achievement-year"[^>]*\sopen(?:\s|>)', text), "A year is open by default")
+    require("ISEKI Global Awards</span><span class=\"achievement-list__detail\">ソプラノ歌唱の出演手配" in text, "Achievement title/detail are not kept inline")
+    require("recent_achievements.css?v=20260728b" in text, "Achievements CSS missing")
     require("seoCanonicalPath' => '/achievements.html'" in text, "Achievements canonical missing")
     require("2006年から2026年" in text, "Achievements description does not cover full archive")
 
@@ -98,6 +101,7 @@ def validate_achievements() -> None:
     require("position: sticky" in css and "align-self: stretch" in css, "Sticky Category is incomplete")
     require(".achievements-category a::before" in css, "CSS year arrow missing")
     require("grid-template-columns: repeat(3, 1fr)" in css, "Mobile Category layout missing")
+    require(".achievement-list__line" in css and "display: flex" in css, "Inline achievement layout missing")
 
 
 def validate_artist() -> None:
@@ -116,6 +120,8 @@ def validate_artist() -> None:
     ):
         require(url in detail, f"SNS URL missing: {url}")
     require("$tbl_id = 62" in home, "Homepage Megumi slot replacement missing")
+    require("/images/megumi-portrait-card.jpg?v=20260728b" in listing, "Artist image cache key missing")
+    require("/images/megumi-portrait-card.jpg?v=20260728b" in home, "Homepage artist image cache key missing")
     require(
         sha256(WORKS / "app/webroot/images/megumi-portrait-card.jpg")
         == sha256(ARTIST / "app/webroot/images/artists/megumi-omachi/megumi-portrait-card.jpg"),
@@ -126,7 +132,10 @@ def validate_artist() -> None:
 def validate_works() -> None:
     template = (WORKS / "app/View/catalog/cl01_2/default/index.html").read_text(encoding="utf-8")
     css = (WORKS / "app/webroot/css/works_showcase.css").read_text(encoding="utf-8")
-    require("style.css?v=20260728a" in template, "Works CSS cache key missing")
+    require("style.css?v=20260728b" in template, "Works CSS cache key missing")
+    require("hero-corporate-show-clean.webp?v=20260728b" in template, "Works showcase image cache key missing")
+    require("-card.jpg?v=20260728b" in template, "Works gallery card cache key missing")
+    require("-large.jpg?v=20260728b" in template, "Works gallery large-image cache key missing")
     require("grid-template-columns: repeat(4" in css, "Four-column Works gallery missing")
     for key in (
         "concert-opera-scene",
@@ -140,6 +149,16 @@ def validate_works() -> None:
     with Image.open(taiko) as image:
         require(image.size == (960, 720), f"Taiko card is not 4:3: {image.size}")
         require(not image.getexif(), "Taiko EXIF remains")
+    for stem, size in (
+        ("hero-corporate-show-clean", (1920, 1080)),
+        ("international-reception-clean", (1440, 900)),
+        ("hotel-live-clean", (1440, 900)),
+    ):
+        for extension in ("jpg", "webp"):
+            path = WORKS / f"app/webroot/images/works/{stem}.{extension}"
+            with Image.open(path) as image:
+                require(image.size == size, f"Edited Works image has wrong size: {path.name} {image.size}")
+                require(not image.getexif(), f"Edited Works image retains EXIF: {path.name}")
 
 
 def validate_seo_security() -> None:

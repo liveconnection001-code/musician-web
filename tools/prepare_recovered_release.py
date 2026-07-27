@@ -17,12 +17,14 @@ WORKS = ROOT / "new_site" / "works_deployment"
 RECOVERED = ROOT / "work" / "recovered_achievements_2006_2018.json"
 STYLE = SEO / "app" / "webroot" / "css" / "style.css"
 ACHIEVEMENTS_CSS = ROOT / "new_site" / "deployment" / "app" / "webroot" / "css" / "recent_achievements.css"
+RECENT_ACHIEVEMENTS_SOURCE = ROOT / "new_site" / "deployment" / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html"
 COMPANY = SEO / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html"
 ACHIEVEMENTS = SEO / "app" / "webroot" / "achievements.html"
 BUSINESS = SEO / "app" / "webroot" / "business.html"
 ROUTES = SEO / "app" / "Config" / "routes.php"
 SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
+ASSET_VERSION = "20260728b"
 
 
 SHARED_HEADING_CSS = r"""
@@ -94,7 +96,11 @@ main > .content_pd:first-child,
   #midashi_h2 { margin-bottom: 132px; }
   #midashi_h2 .yohaku { padding: 24px 24px 18px; }
   #midashi_h2 h1 { font-size: 17px; }
-  #midashi_h2 h1 span { font-size: clamp(44px, 13vw, 60px); margin-bottom: 8px; }
+  #midashi_h2 h1 span {
+    font-size: clamp(34px, 10.8vw, 52px);
+    letter-spacing: .06em;
+    margin-bottom: 8px;
+  }
   main > .content_pd:first-child,
   #banner1 + main > section:first-child > .content_pd:first-child { padding-top: 16px; }
 }
@@ -181,20 +187,50 @@ def write_text(path: Path, text: str) -> None:
 
 
 def cache_bust(text: str) -> str:
-    return re.sub(r'href="css/style\.css(?:\?v=[^"]+)?"', 'href="css/style.css?v=20260728a"', text)
+    return re.sub(
+        r'href="css/style\.css(?:\?v=[^"]+)?"',
+        f'href="css/style.css?v={ASSET_VERSION}"',
+        text,
+    )
+
+
+def cache_bust_images(text: str) -> str:
+    """Force browsers to refresh the reviewed public image assets."""
+    text = re.sub(
+        r'((?:https://www\.musician\.co\.jp/|/)?images/works/[A-Za-z0-9_./-]+\.(?:jpe?g|webp))(?:\?v=[^"\'<>\s]+)?',
+        rf'\1?v={ASSET_VERSION}',
+        text,
+        flags=re.I,
+    )
+    text = re.sub(
+        r'(-(?:card|large)\.jpg)(?:\?v=[^"\'<>\s]+)?(?=["\'])',
+        rf'\1?v={ASSET_VERSION}',
+        text,
+        flags=re.I,
+    )
+    text = re.sub(
+        r'(/?images/(?:megumi-portrait-card|company_photo_megumi|company_photo_miyazaki_illustration)\.jpg)(?:\?v=[^"\'<>\s]+)?',
+        rf'\1?v={ASSET_VERSION}',
+        text,
+        flags=re.I,
+    )
+    return text
 
 
 def prepare_style() -> None:
     text = STYLE.read_text(encoding="utf-8")
     marker = "/* 2026-07-28: approved shared page heading"
-    if marker not in text:
+    start = text.find(marker)
+    if start >= 0:
+        text = text[:start].rstrip() + SHARED_HEADING_CSS
+    else:
         text = text.rstrip() + SHARED_HEADING_CSS
     write_text(STYLE, text)
 
 
 def prepare_company() -> None:
     text = COMPANY.read_text(encoding="utf-8")
-    text = cache_bust(text)
+    text = cache_bust_images(cache_bust(text))
     text = text.replace(' rel="noopener noreferrer" rel="noopener noreferrer"', ' rel="noopener noreferrer"')
     text = text.replace('\t<link href="css/sidemenu2.css" rel="stylesheet"><!--サイドメニュー-->\n', '')
     text = text.replace('<link href="css/recent_achievements.css" rel="stylesheet"><!--近年の実績-->\n', '')
@@ -235,7 +271,7 @@ def sync_artist() -> None:
         Path("app/View/catalog/cl02_4/default/view.html"),
     ):
         source = ARTIST / relative
-        text = cache_bust(source.read_text(encoding="utf-8"))
+        text = cache_bust_images(cache_bust(source.read_text(encoding="utf-8")))
         write_text(ARTIST / relative, text)
         write_text(SEO / relative, text)
 
@@ -269,13 +305,61 @@ def seo_block() -> str:
 )); ?>"""
 
 
+def group_recent_achievements(recent: str) -> str:
+    """Group each recent year by service category and keep entries compact."""
+    item_pattern = re.compile(
+        r'<li class="achievement-list__item">\s*'
+        r'<span class="achievement-list__category">(.*?)</span>\s*'
+        r'<div class="achievement-list__content">\s*'
+        r'<p class="achievement-list__title">(.*?)</p>\s*'
+        r'<p class="achievement-list__detail">(.*?)</p>\s*'
+        r'</div>\s*</li>',
+        flags=re.S,
+    )
+
+    def replace_list(match: re.Match[str]) -> str:
+        grouped: dict[str, list[tuple[str, str]]] = {}
+        for category, title, detail in item_pattern.findall(match.group(1)):
+            grouped.setdefault(category.strip(), []).append((title.strip(), detail.strip()))
+        if not grouped:
+            return match.group(0)
+
+        blocks = []
+        for category, entries in grouped.items():
+            lines = "\n".join(
+                f'''              <li class="achievement-category-group__item">
+                <p class="achievement-list__line"><span class="achievement-list__title">{title}</span><span class="achievement-list__detail">{detail}</span></p>
+              </li>'''
+                for title, detail in entries
+            )
+            blocks.append(f'''          <section class="achievement-category-group">
+            <h3 class="achievement-list__category">{category}</h3>
+            <ul class="achievement-category-group__list">
+{lines}
+            </ul>
+          </section>''')
+        return "\n".join(blocks)
+
+    recent = re.sub(
+        r'<ul class="achievement-list">\s*(.*?)\s*</ul>',
+        replace_list,
+        recent,
+        flags=re.S,
+    )
+    return re.sub(
+        r'(<details class="achievement-year" id="achievements-\d{4}")\s+open>',
+        r'\1>',
+        recent,
+    )
+
+
 def prepare_achievements() -> None:
-    old = ACHIEVEMENTS.read_text(encoding="utf-8")
-    recent_start = old.find('<section class="recent-achievements"')
-    recent_end = old.find("</section>", recent_start)
+    source = RECENT_ACHIEVEMENTS_SOURCE.read_text(encoding="utf-8")
+    recent_start = source.find('<section class="recent-achievements"')
+    recent_end = source.find("</section>", recent_start)
     if recent_start < 0 or recent_end < 0:
         raise RuntimeError("Recent achievements section not found")
-    recent = old[recent_start:recent_end + len("</section>")]
+    recent = group_recent_achievements(source[recent_start:recent_end + len("</section>")])
 
     business = BUSINESS.read_text(encoding="utf-8")
     header_end = business.find("</header>")
@@ -303,9 +387,9 @@ def prepare_achievements() -> None:
     )
     prefix = cache_bust(prefix)
     prefix = prefix.replace(
-        '<link href="css/style.css?v=20260728a" rel="stylesheet">',
-        '<link href="css/style.css?v=20260728a" rel="stylesheet">\n'
-        '<link href="css/recent_achievements.css?v=20260728a" rel="stylesheet">',
+        '<link href="css/style.css?v=20260728b" rel="stylesheet">',
+        '<link href="css/style.css?v=20260728b" rel="stylesheet">\n'
+        '<link href="css/recent_achievements.css?v=20260728b" rel="stylesheet">',
         1,
     )
 
@@ -444,7 +528,7 @@ def cache_bust_public_pages() -> None:
     ]
     for path in files:
         if path.exists():
-            write_text(path, cache_bust(path.read_text(encoding="utf-8")))
+            write_text(path, cache_bust_images(cache_bust(path.read_text(encoding="utf-8"))))
 
 
 def refresh_manifest() -> None:

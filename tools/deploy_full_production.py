@@ -371,10 +371,21 @@ def deploy(password: str) -> dict:
         manifest["status"] = "backed_up"
         write_manifest(backup_dir, manifest)
 
+        changed_targets = {
+            relative: payload
+            for relative, payload in targets.items()
+            if originals[relative] is None or sha256(originals[relative]) != sha256(payload)
+        }
+        for relative in targets:
+            manifest["targets"][relative]["changed"] = relative in changed_targets
+        summary["changed_target_count"] = len(changed_targets)
+        manifest["summary"]["changed_target_count"] = summary["changed_target_count"]
+        write_manifest(backup_dir, manifest)
+
         replaced: list[str] = []
         quarantined: list[tuple[PurePosixPath, PurePosixPath]] = []
         try:
-            for relative, payload in targets.items():
+            for relative, payload in changed_targets.items():
                 remote = remote_for(relative)
                 temp_remote = remote.with_name(f".{remote.name}.codex-upload-full-{stamp}")
                 backup_remote = remote.with_name(f".{remote.name}.codex-backup-full-{stamp}")
@@ -390,7 +401,7 @@ def deploy(password: str) -> dict:
                 ftp.rename(str(temp_remote), str(remote))
                 write_manifest(backup_dir, manifest)
 
-            for relative, payload in targets.items():
+            for relative, payload in changed_targets.items():
                 current = retrieve_optional(ftp, remote_for(relative))
                 if current is None or sha256(current) != sha256(payload):
                     raise RuntimeError(f"Final deployment verification failed: {relative}")
@@ -452,6 +463,8 @@ def rollback(password: str, backup_dir_text: str) -> dict:
             if remote_kind(ftp, quarantine) is not None and remote_kind(ftp, original) is None:
                 ftp.rename(str(quarantine), str(original))
         for relative, entry in reversed(list(manifest["targets"].items())):
+            if not entry.get("changed", True):
+                continue
             remote = remote_for(relative)
             if entry["remote_existed"]:
                 payload = Path(entry["rollback_file"]).read_bytes()
