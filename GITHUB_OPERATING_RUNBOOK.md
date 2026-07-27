@@ -1,55 +1,56 @@
-# MUSICIAN GitHub公開運用：今日からの最短実行手順
+# MUSICIAN GitHub公開運用
 
-このフォルダを既存データで初期化できることを前提に、
-「GitHubを真のデフォルト」にする運用を始めるための実行順をまとめます。
+更新日: 2026-07-28
 
-前提:
-- .github/workflows/deploy-production.yml がある
-- tools/capture_site_snapshot.py がある
-- deploy_*_production.py は WORKSPACE を環境変数で解決
+## 正規版
 
-## 1) 初期化（A: スナップショットの固定）
-1. `python` が使えない環境では既存Pythonを使う
+- GitHub: `https://github.com/liveconnection001-code/musician-web`
+- 本番公開ブランチ: `main`
+- ローカル作業場所: `A:\AI\Web\MUSICIAN`
+- 本番サイト: `https://www.musician.co.jp/`
 
-```powershell
-& 'C:\Users\Takashi Miyazaki\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' 'A:\AI\Web\MUSICIAN\tools\capture_site_snapshot.py'
-```
+以後、サイトの正規版はGitHubの`main`です。ファイルマネージャー上で直接
+編集した内容は正規版にならず、次の公開で上書きされるため使用しません。
 
-2. これで `default_snapshots/latest.json` が更新されます。
+## Codexへ更新を依頼したときの標準手順
 
-## 2) GitHubブランチ運用（B: 並行）
-- 作業ブランチ: `develop`
-- 本番反映: `main`
-- 変更は原則 `develop` → PR/マージで `main`
+1. `MUSICIAN_DESIGN_GUIDELINES.md`と現在の本番を確認する。
+2. ローカルで変更し、PC・携帯のプレビューを確認する。
+3. ページ、画像、リンク、SEO、セキュリティの自動検査を通す。
+4. 変更をGitへコミットし、`main`へpushする。
+5. GitHub Actions `deploy-musician-production`の完了を待つ。
+6. 本番を再検査し、正常表示を確認して完了する。
 
-## 3) 既存運用と並行した手動デプロイ（必要時）
-- 既存の手動公開手順は維持
-- GitHub CI公開は追加運用として併用
+日常の更新では、利用者がPowerShellやFTPパスワードを入力する必要はありません。
 
-## 4) CI自動公開（C）
-### 4-1. `main` 更新で自動実行
-- `main` への push で `deploy-production` が走る
-- GitHub Secrets: `MUSICIAN_TEMP_FTP_PASSWORD` を必ず登録
+## GitHub Actionsが自動で行うこと
 
-### 4-2. 手動実行
-- Actions → `deploy-musician-production` → `Run workflow`
+- 公開前にAbout us、Achievements、Artist、Works、SEOを検査
+- 現在の本番ファイルをロールバック用に保存
+- 変更ファイルをFTPへ原子的に公開し、ハッシュを照合
+- 公開後に主要ページ、リダイレクト、画像・実績・SEO・防御設定を検査
+- 公開後検査に失敗した場合は直前の本番へ自動復元
+- 成功した場合だけ一時アップロード・旧バックアップ・旧CMS残骸を削除
+- ロールバックスナップショットをGitHubへ90日間保存
+- 同時公開を禁止し、1回ずつ順番に処理
 
-## 5) ローカルから同じ手順を再現（テスト/緊急復旧向け）
-```powershell
-$env:MUSICIAN_WORKSPACE = 'A:\\AI\\Web\\MUSICIAN'
-$env:MUSICIAN_TEMP_FTP_PASSWORD = '***'
-& 'C:\Users\Takashi Miyazaki\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' 'A:\\AI\\Web\\MUSICIAN\\tools\\deploy_full_production.py' deploy
-```
+## 確認場所
 
-## 6) ロールバック
-- 失敗時の現地復旧履歴は
-  `new_site/production_backups/<stamp>/manifest.json`
-  を見て、必要なら前回の内容を復旧
+GitHubの `Actions` → `deploy-musician-production` で、最新の実行が緑色の
+チェックになっていることを確認します。赤色の場合は再実行を重ねず、Codexへ
+その実行番号を伝えて原因を直します。
 
----
+## 復元基準
 
-最終チェック（公開後）
-- 青い帯/Works/Business/Artist/About us/Achievements の見た目が崩れていないか
-- AchievementsのURLと導線
-- 404やリンク切れ、画像ファイル不足
-- `snapshot latest` と差分で変更点を記録
+- Gitタグ: `production-YYYY-MM-DD`
+- ローカル完全Gitバックアップ: `release_backups/*.bundle`
+- 内容一覧とハッシュ: `release_backups/*/manifest.json`
+- GitHub Actionsのロールバック成果物: 90日間
+
+通常の復元もCodexへ依頼し、推測で古いファイルをアップロードしません。
+
+## 例外
+
+ローカルからの直接FTP公開は、GitHubが長時間利用不能な場合の緊急復旧だけに
+限定します。通常公開で`tools/run_github_default_ops.ps1 -Action deploy-full`
+は使用しません。

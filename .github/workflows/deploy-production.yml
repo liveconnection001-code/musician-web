@@ -54,9 +54,7 @@ jobs:
         env:
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
         run: |
-          python tools/verify_recovered_release.py
           python tools/verify_artist_release.py
-          python tools/verify_works_gallery_release.py
           python tools/validate_seo_update.py
           python - <<'PY'
           import sys

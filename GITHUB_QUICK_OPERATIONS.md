@@ -1,24 +1,12 @@
-# 1回で実行できるGitHub運用スクリプト
+# MUSICIAN GitHub運用・最短メモ
 
-## デフォルト運用（mainを公開ブランチ、developで作業）
+1. ホームページの変更内容をCodexへ指示する。
+2. Codexがプレビュー・自動検査・Gitコミット・GitHub pushを行う。
+3. GitHub Actionsがバックアップ後に本番公開する。
+4. 公開後検査が成功した場合だけ旧一時ファイルを削除する。
+5. Actionsが失敗した場合は自動復元し、Codexが原因を修正する。
 
-- リモート追跡確認: `git remote -v`
-- 開発作業は基本 `develop` で実施
-- スナップショット更新: `powershell -File tools\run_github_default_ops.ps1 -Action snapshot`
-- develop へ反映後: `git add -A ; git commit -m "..." ; git push -u origin develop`
-- 本番反映（mainへ反映）:
-  `powershell -File tools\git_publish_default.ps1 -Snapshot`
-  （`-Snapshot` は任意。付けると本番前に快適用 snapshot を1回採ります）
-- さらにGitHub公開をローカル同等で即時実行する場合: `powershell -File tools\git_publish_default.ps1 -Snapshot -Deploy`
+正規版は`main`、公開ワークフローは`deploy-musician-production`です。
+通常はPowerShell、FTP、ファイルマネージャーを利用者が操作する必要はありません。
 
-## ローカル直接公開
-
-- スナップショット更新: `powershell -File tools\run_github_default_ops.ps1 -Action snapshot`
-- 本番フル反映: `powershell -File tools\run_github_default_ops.ps1 -Action deploy-full`
-- SEOのみ反映: `powershell -File tools\run_github_default_ops.ps1 -Action deploy-seo`
-- Achievementsのみ反映: `powershell -File tools\run_github_default_ops.ps1 -Action deploy-achievements`
-
-## GitHub上の実行（推奨）
-
-- main push で自動実行されるデプロイワークフロー: `deploy-musician-production`
-- Actions → ワークフロー → `Run workflow` で手動起動も可能
+詳細は`GITHUB_OPERATING_RUNBOOK.md`を参照してください。
