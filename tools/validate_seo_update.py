@@ -172,6 +172,12 @@ def validate_routing() -> None:
 
 
 def validate_preview() -> None:
+    # The browser preview is intentionally local-only and excluded from Git.
+    # CI validates the deployable package; local runs additionally validate the
+    # private noindex preview when it is present.
+    if not PREVIEW.is_dir():
+        print("Local-only browser preview is absent; preview checks skipped.")
+        return
     check((PREVIEW / "app" / "seo" / "page.tsx").is_file(), "SEO preview route is missing")
     check((PREVIEW / "app" / "seo" / "seo.css").is_file(), "SEO preview stylesheet is missing")
     preview_company = (PREVIEW / "public" / "company.html").read_text(encoding="utf-8")
