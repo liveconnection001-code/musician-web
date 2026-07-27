@@ -191,3 +191,72 @@
     transition: none;
   }
 }
+
+/* 2026-07-28: independent Achievements page and narrow sticky year category. */
+.achievements-content { padding-top: 18px; }
+.achievements-layout {
+  display: grid;
+  gap: clamp(34px, 5vw, 76px);
+  grid-template-columns: minmax(0, 1fr) 180px;
+}
+.achievements-main { min-width: 0; }
+.achievements-sidebar { align-self: stretch; min-width: 0; }
+.achievements-category {
+  background: #f7f7f7;
+  border-top: 3px solid #041e42;
+  max-height: calc(100vh - 130px);
+  overflow-y: auto;
+  padding: 17px 16px 14px;
+  position: sticky;
+  scrollbar-color: rgba(4, 30, 66, .35) transparent;
+  scrollbar-width: thin;
+  top: 112px;
+}
+.achievements-category h2 {
+  color: #041e42;
+  font-family: "Urbanist", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  margin: 0 0 12px;
+}
+.achievements-category ul { list-style: none; margin: 0; padding: 0; }
+.achievements-category li { border-top: 1px solid rgba(4, 30, 66, .12); }
+.achievements-category a {
+  color: #041e42;
+  display: block;
+  font-family: "Urbanist", sans-serif;
+  font-size: 15px;
+  letter-spacing: .04em;
+  padding: 7px 4px 7px 18px;
+  position: relative;
+}
+.achievements-category a::before {
+  border-right: 1px solid currentColor;
+  border-top: 1px solid currentColor;
+  content: "";
+  height: 6px;
+  left: 3px;
+  position: absolute;
+  top: 14px;
+  transform: rotate(45deg);
+  width: 6px;
+}
+.achievements-category a:hover,
+.achievements-category a:focus-visible { color: #b34c18; text-decoration: none; }
+.achievement-year { scroll-margin-top: 130px; }
+.achievement-year__body--archive .ezm_htmlarea p {
+  border-top: 1px dotted rgba(4, 30, 66, .22);
+  font-size: 14px;
+  line-height: 1.75;
+  margin: 0;
+  padding: 10px 0;
+}
+.achievement-year__body--archive .ezm_htmlarea p:first-child { border-top: 0; }
+@media (max-width: 767.98px) {
+  .achievements-layout { display: flex; flex-direction: column; gap: 28px; }
+  .achievements-sidebar { order: -1; width: 100%; }
+  .achievements-category { max-height: none; position: static; }
+  .achievements-category ul { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .achievements-category li { border-right: 1px solid rgba(4, 30, 66, .12); }
+}

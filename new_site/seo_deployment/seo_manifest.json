@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-07-26",
+  "generated_at_jst": "2026-07-28",
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
@@ -12,8 +12,8 @@
     },
     {
       "path": "app/Config/routes.php",
-      "bytes": 3589,
-      "sha256": "4eafba92da9fa531459e65343992c40f3e1e3e6f4dd384077c28b427e964baf3"
+      "bytes": 4998,
+      "sha256": "0010198f896a818986c73b57e94920001ee34f50e7a4fe741032aeb165fe37af"
     },
     {
       "path": "app/Controller/HomesController.php",
@@ -27,28 +27,28 @@
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
-      "bytes": 58558,
-      "sha256": "fba212bf6dabc0f239d3d6d333e203ee86c9f69b6e160eee63b0eef81f462a22"
+      "bytes": 19381,
+      "sha256": "5f939d5c224c537597d1e3d9f26b147485c6a7626291ef06e9882293ee1f985f"
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
-      "bytes": 13968,
-      "sha256": "e351a274c21a78ad4800dbab131e3d703b59113d73096f100e7bfd1cb6e9e4a3"
+      "bytes": 16188,
+      "sha256": "248f85589d98688e483b224b49034e0719bf6a7535c1cde3d9bbe7fb1072ced1"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
-      "bytes": 18868,
-      "sha256": "45df8313b251756be91be17e26111f33eebeb48a7a83e6ce2877112c418b3963"
+      "bytes": 31591,
+      "sha256": "a1039569951578df4b62078b2886fb870568e120ec445340b29c26639cc53d2b"
     },
     {
       "path": "app/View/Contact/msg.html",
-      "bytes": 14850,
-      "sha256": "0b57d99b0b05fdeea23f87c0a9e5dfb4f8a860d7cb467a467842e9e9cb3c846d"
+      "bytes": 14843,
+      "sha256": "fdb0d46ca228e808ac7a64d148715a3de5a62927fbc9ee2939cc47b042469526"
     },
     {
       "path": "app/View/Contact/thanks.html",
-      "bytes": 11798,
-      "sha256": "8334e5edca2e6526490d38f36ad0d4f03b921bbb0f42fd32833e4fc73f0e40b9"
+      "bytes": 11791,
+      "sha256": "862d24425c943ab9cc3c608df8d2876f0cd4845c8ffd1de8199f4ddd15ba9bea"
     },
     {
       "path": "app/View/Elements/seo_meta.html",
@@ -62,8 +62,8 @@
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 23482,
-      "sha256": "400274ee71e09db07176bc49af56ac67f9e4c58122afad9af487354ad97fe4d5"
+      "bytes": 23919,
+      "sha256": "aefda65f9772f7981da14ee4ed29a1110a2761ce91e351738f1f487bceba264c"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -77,18 +77,18 @@
     },
     {
       "path": "app/webroot/achievements.html",
-      "bytes": 39765,
-      "sha256": "e132583e6bb4a05b0cf627a7601f27ae99c23dba6a8b1c30ece2da174a475f12"
+      "bytes": 312567,
+      "sha256": "b55d667e5e0e931b175e77403af1f0578628bea32566344a1e30e7313694337e"
     },
     {
       "path": "app/webroot/business.html",
-      "bytes": 18094,
-      "sha256": "c6a17844b8acf9a0236685349ce6cf34357cec04f710cf6da4f52fa91a921984"
+      "bytes": 18049,
+      "sha256": "dfb2b94b465b9ae08cd674b342cac6eb56721022c40ad2d20ca18cd92958c02c"
     },
     {
       "path": "app/webroot/contact.html",
-      "bytes": 24999,
-      "sha256": "67bf1feee8ec3ee23237e8247660d320c59c23a4274fa7748db19a966003d308"
+      "bytes": 24969,
+      "sha256": "6ec92b79ed4f2416af64b884af424c8a429192072393e105700e59fd250e6cfc"
     },
     {
       "path": "app/webroot/css/recent_achievements.css",
@@ -97,8 +97,8 @@
     },
     {
       "path": "app/webroot/css/style.css",
-      "bytes": 54505,
-      "sha256": "7b89249b26207a17d3345c4d234012c9e1280910dc31074e1bdc6d80c08cd721"
+      "bytes": 56595,
+      "sha256": "d467f5e7846556475f007ce47013d509d33db9aeabfd4cb2779a2dd4dda19580"
     },
     {
       "path": "app/webroot/js/bootstrap.js",
@@ -112,8 +112,8 @@
     },
     {
       "path": "app/webroot/sitemap.xml",
-      "bytes": 8459,
-      "sha256": "997394e9e569e561ce2e4dfa0994191fedd42859486865f6fd225e3e7eafded1"
+      "bytes": 6350,
+      "sha256": "7cc94e827c32ebd49f30cba1e14e1f6cf82423927180eaba8f5bd2c40343f5c6"
     },
     {
       "path": "README.md",

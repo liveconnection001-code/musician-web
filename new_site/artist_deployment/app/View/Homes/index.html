@@ -21,7 +21,7 @@
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css" rel="stylesheet">
+<link href="css/style.css?v=20260728a" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
@@ -37,14 +37,14 @@
 <link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
 </head>
 <body>
-	
+
 <!-- ローディング画面 -->
 <div id="loading">
     <div class="load_logo"><img src="images/musician_logo.svg" alt="MUSICIAN">
     </div>
 </div>
-	
-	
+
+
 <header>
     <div class="container-fluid">
             <div class="row">
@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-		
+
 		<div class="content_pd">
 			<h1 class="ja caption mb40">大切な瞬間を彩る、華やかな生演奏</h1>
 			<p class="ja sub_caption">
@@ -138,7 +138,7 @@
  <div id="main_print">
 	<div class="main_print_moji"><img src="images/main_print.jpg" alt="印刷用メイン画像" class="img-fluid"></div>
 </div><!--main_print-->
- 
+
 
 
 
@@ -161,16 +161,16 @@
 							</div>
 						</div>
 					</div>
-					
-					
+
+
 				</div>
 			</div>
 		</div>
 		<div class="photo"><span class="object-fit"><img src="images/top01_photo.jpg" alt="私たちについて" class="img-fluid" loading="lazy" decoding="async"></span></div>
 	</div>
 </section>
-	
-	
+
+
 <div class="content_pd">
     <div class="container-fluid">
         <div class="yohaku2" data-aos="fade-up">
@@ -193,23 +193,23 @@
                 <div class="col-12 col-md-4 col-xl-3">
 					<section class="facebook">
                         <h2 class="midashi1 mb30_md50 tal_sptac"><span class="en"><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer">Facebook</a></span>公式Facebook</h2>
-						<div class="fb-page" data-href="https://www.facebook.com/MUSICIANoffice/" data-tabs="timeline" data-width="400" data-height="795" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/MUSICIANoffice/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MUSICIANoffice/">MUSICIAN</a></blockquote></div>						
+						<div class="fb-page" data-href="https://www.facebook.com/MUSICIANoffice/" data-tabs="timeline" data-width="400" data-height="795" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/MUSICIANoffice/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MUSICIANoffice/">MUSICIAN</a></blockquote></div>
 					</section>
                 </div>
             </div>
         </div>
     </div>
 </div>
-	
 
-	
+
+
 <section>
 	<div class="bg_kon">
 		<div class="content_pd">
 			<div class="container-fluid">
 				<div class="yohaku" data-aos="fade-up">
 					<h2 class="midashi1 mb30_md50 tal_sptac beijyu"><span class="en">Artist</span>アーティスト</h2>
-					
+
 						<div class="top_artist clearfix">
 							<?php $boxes = $this->requestAction(array('controller'=>'artist','action'=>'widget','conditions'=>array('on_top_page'=>'Y'),'limit'=>8));
 							foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl');
@@ -245,27 +245,27 @@
 							?>
 							<?php endforeach; ?>
 						</div><!--top_artist-->
-					
-					
-					
+
+
+
 					<p class="tac"><a href="artist.html" class="btn btn-1 en beijyu">View More</a></p>
-					
-					
-					
+
+
+
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-	
 
-	
+
+
 <section>
 		<div class="content_pd">
 			<div class="container-fluid">
 				<div class="yohaku" data-aos="fade-up">
 					<h2 class="midashi1 mb30_md50 tal_sptac"><span class="en">Musician Youtube</span>公式Youtubeチャンネル</h2>
-					
+
 						<div class="top_youtube clearfix">
 							<div class="box">
 								<div class="video">
@@ -283,8 +283,8 @@
 								</div>
 							</div>
 						</div><!--top_artist-->
-					
-					
+
+
 				</div>
 			</div>
 		</div>
@@ -322,7 +322,7 @@
 							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>
-						
+
                         <div class="sns_list">
                             <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
                             <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
@@ -331,7 +331,7 @@
 						<p class="copy en"><small><i class="far fa-copyright"></i> 2022–2026 MUSICIAN.CO.JP</small></p>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -393,7 +393,7 @@ AOS.init({
 <script>
 $(function () {
 
-  // falg変数のデフォルト値として「up」を指定    
+  // falg変数のデフォルト値として「up」を指定
   var flag = "up";
 
   // scrollイベントを取得した際の処理を定義
@@ -450,20 +450,20 @@ $(function(){
  objectFitImages('.photo-ofi img');
  objectFitImages('.object-fit img');
 </script>
-	
+
 <!--タイトルのエフェクト-->
 <script src="js/anime.min.js"></script>
 <script src="js/scrollMonitor.js"></script>
 <script src="js/main.js"></script>
-<script src="js/title.js"></script>	
+<script src="js/title.js"></script>
 
 <!--facebook-->
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v15.0" nonce="lbOwv6SP"></script>
-	
+
 <!--ローディング-->
 <script src="js/common.js"></script>
 
-	
+
 </body>
 </html>

@@ -21,7 +21,8 @@ $seoBreadcrumbItems = array(
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css" rel="stylesheet">
+<link href="css/style.css?v=20260728a" rel="stylesheet">
+<link href="css/artist_megumi.css" rel="stylesheet"><!--アーティスト一覧の文字配置-->
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
@@ -36,8 +37,8 @@ $seoBreadcrumbItems = array(
 <link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
 </head>
 <body>
-	
-	
+
+
 <header>
     <div class="container-fluid">
             <div class="row">
@@ -63,7 +64,7 @@ $seoBreadcrumbItems = array(
                                     <li><a href="works.html"><span class="en">Works</span></a></li>
                                     <li class="navi-on"><a href="artist.html"><span class="en">Artist</span></a></li>
                                     <li><a href="company.html"><span class="en">About us</span></a></li>
-                                    <li><a href="achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
                                     <li class="d-block d-md-none"><a href="contact.html"><span class="en">Contact</span></a></li>
                                     <li class="d-block d-md-none">
 										<div class="sns_list">
@@ -100,11 +101,43 @@ $seoBreadcrumbItems = array(
 
 <main>
 
-	
+
 <div class="content_pd">
     <div class="container-fluid">
         <div class="yohaku" data-aos="fade-up">
-            <?php $c = 0; ?>
+            <?php
+            // 大町めぐみ（ID 62）をCMS上の旧分類に関係なく「所属アーティスト」へ移動する。
+            // 同分類の既存アーティストと同じグループにまとめ、二重表示を防ぐ。
+            $affiliationCategoryId = null;
+            $affiliatedBoxes = array();
+            $otherBoxes = array();
+            foreach ($boxes as $artistBox) {
+              $artistCategoryTitle = isset($artistBox['CatalogCategory']['title']) ? trim($artistBox['CatalogCategory']['title']) : '';
+              if ($artistCategoryTitle === '所属アーティスト') {
+                $affiliationCategoryId = $artistBox['CatalogCategory']['id'];
+              }
+            }
+            if ($affiliationCategoryId === null) {
+              $affiliationCategoryId = -62;
+            }
+            foreach ($boxes as $artistBox) {
+              $artistId = isset($artistBox['CatalogBox']['id']) ? (int)$artistBox['CatalogBox']['id'] : 0;
+              $artistCategoryTitle = isset($artistBox['CatalogCategory']['title']) ? trim($artistBox['CatalogCategory']['title']) : '';
+              if ($artistCategoryTitle === '所属アーティスト' || $artistId === 62) {
+                $artistBox['CatalogCategory']['id'] = $affiliationCategoryId;
+                $artistBox['CatalogCategory']['title'] = '所属アーティスト';
+                if ($artistId === 62) {
+                  $artistBox['CatalogBox']['title'] = '大町 めぐみ';
+                  $artistBox['CatalogBox']['word1'] = 'オオマチ メグミ';
+                }
+                $affiliatedBoxes[] = $artistBox;
+              } else {
+                $otherBoxes[] = $artistBox;
+              }
+            }
+            $boxes = array_merge($affiliatedBoxes, $otherBoxes);
+            $c = 0;
+            ?>
             <?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl');extract($box['CatalogCategory'],EXTR_PREFIX_ALL,'category'); ?>
             <?php if($c != 0 && $c != $category_id): ?>
                 </div><!--artist_box-->
@@ -113,14 +146,14 @@ $seoBreadcrumbItems = array(
             <?php if($c == 0 || $c != $category_id): ?>
             <section>
                 <h2 class="midashi2 mb30"><?php echo $category_title; ?></h2>
-				
+
                 <div class="artist_box clearfix mb30_md50">
             <?php endif; ?>
                     <div class="box">
                         <?php if($tbl_has_page == 'Y'): ?>
                         <a href="artist/view/<?php echo $tbl_id; ?>">
-                            <?php if(!empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                            <?php if((int)$tbl_id === 62 || !empty($tbl_image1)): ?>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>
@@ -131,8 +164,8 @@ $seoBreadcrumbItems = array(
                         </a>
                         <?php else: ?>
                         <div>
-                            <?php if(!empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                            <?php if((int)$tbl_id === 62 || !empty($tbl_image1)): ?>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>
@@ -145,7 +178,7 @@ $seoBreadcrumbItems = array(
                     </div>
             <?php if($box === end($boxes)): ?>
                 </div><!--artist_box-->
-				
+
             </section>
             <?php endif; ?>
             <?php $c = $category_id; ?>
@@ -156,7 +189,7 @@ $seoBreadcrumbItems = array(
             }
             ?>
             <?php endforeach;?>
-			
+
         </div>
     </div>
 </div>
@@ -189,11 +222,11 @@ $seoBreadcrumbItems = array(
 							</ul>
 							<ul class="foot_link d-none d-md-block">
 							  <li><a href="company.html"><span class="en">About us</span></a></li>
-							  <li><a href="achievements.html"><span class="en">Achievements</span></a></li>
+							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
 							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>
-						
+
                         <div class="sns_list">
                             <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
                             <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
@@ -202,7 +235,7 @@ $seoBreadcrumbItems = array(
 						<p class="copy en"><small><i class="far fa-copyright"></i> 2022–2026 MUSICIAN.CO.JP</small></p>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -264,7 +297,7 @@ AOS.init({
 <script>
 $(function () {
 
-  // falg変数のデフォルト値として「up」を指定    
+  // falg変数のデフォルト値として「up」を指定
   var flag = "up";
 
   // scrollイベントを取得した際の処理を定義
@@ -321,12 +354,12 @@ $(function(){
  objectFitImages('.photo-ofi img');
  objectFitImages('.object-fit img');
 </script>
-	
+
 <!--タイトルのエフェクト-->
 <script src="js/anime.min.js"></script>
 <script src="js/scrollMonitor.js"></script>
 <script src="js/main.js"></script>
-<script src="js/title.js"></script>	
+<script src="js/title.js"></script>
 
 
 </body>

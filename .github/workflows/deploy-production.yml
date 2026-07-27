@@ -43,16 +43,49 @@ jobs:
               )
           PY
 
+      - name: Validate atomic release inputs
+        env:
+          MUSICIAN_WORKSPACE: ${{ github.workspace }}
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, "tools")
+          import deploy_full_production as deploy
+
+          targets, summary = deploy.read_local_targets()
+          if summary["manifest_mismatches"]:
+              raise SystemExit(f"Manifest mismatch: {summary['manifest_mismatches']}")
+          required = {
+              "app/View/catalog/cl01_2/default/index.html",
+              "app/View/catalog/cl01_3/default/index.html",
+              "app/View/catalog/cl02_4/default/index.html",
+              "app/View/catalog/cl02_4/default/view.html",
+              "app/webroot/achievements.html",
+              "app/webroot/css/style.css",
+              "app/webroot/css/works_showcase.css",
+              "app/webroot/css/artist_megumi.css",
+              "app/webroot/images/company_photo_megumi.jpg",
+              "app/webroot/images/company_photo_miyazaki_illustration.jpg",
+              "app/webroot/images/works/gallery/traditional-taiko-card.jpg",
+          }
+          missing = sorted(required - targets.keys())
+          if missing:
+              raise SystemExit(f"Release targets missing: {missing}")
+          print(summary)
+          PY
+
       - name: Deploy to production
         env:
           MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
         run: |
           python tools/deploy_full_production.py deploy
-          
-      - name: Deploy artist/achievement refinements
-        env:
-          MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
-          MUSICIAN_WORKSPACE: ${{ github.workspace }}
-        run: |
-          python tools/deploy_artist_achievements_production.py deploy
+
+      - name: Preserve rollback snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: musician-production-rollback-${{ github.run_id }}
+          path: new_site/production_backups/full_*
+          if-no-files-found: warn
+          retention-days: 14

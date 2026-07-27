@@ -2,12 +2,12 @@
 $seoIsRoot = ((int)$target_id === 21);
 $seoCategoryTitle = !empty($target['title']) ? trim(strip_tags($target['title'])) : 'MUSICIANについて';
 $seoTitle = $seoIsRoot
-  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家派遣'
+  ? 'MUSICIANについて｜株式会社東京アーティスト協会'
   : $seoCategoryTitle . 'の演奏・イベント実績｜MUSICIAN';
 $seoDescription = !empty($target['description'])
   ? trim(strip_tags($target['description']))
   : ($seoIsRoot
-    ? '出張演奏・演奏家派遣のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
+    ? '株式会社東京アーティスト協会が運営するMUSICIANの会社情報と、音楽・芸術制作に携わる大町めぐみ、宮﨑隆のプロフィールをご紹介します。'
     : $seoCategoryTitle . 'にMUSICIANが担当した主な出張演奏、企業イベント、式典、ホテル・商業施設などの実績をご紹介します。');
 $seoCanonicalPath = $seoIsRoot ? '/company.html' : '/company/index/' . (int)$target_id;
 $seoBreadcrumbItems = array(
@@ -32,13 +32,11 @@ if (!$seoIsRoot) {
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css?v=20260727c" rel="stylesheet">
+<link href="css/style.css?v=20260728a" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
 <link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
-	<link href="css/sidemenu2.css" rel="stylesheet"><!--サイドメニュー-->
-<link href="css/recent_achievements.css" rel="stylesheet"><!--近年の実績-->
 <!--Googleフォント-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,8 +47,8 @@ if (!$seoIsRoot) {
 <link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
 </head>
 <body>
-	
-	
+
+
 <header>
     <div class="container-fluid">
             <div class="row">
@@ -80,9 +78,9 @@ if (!$seoIsRoot) {
                                     <li class="d-block d-md-none"><a href="/contact.html"><span class="en">Contact</span></a></li>
                                     <li class="d-block d-md-none">
 										<div class="sns_list">
-											<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
-											<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
-											<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+											<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+											<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+											<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
 										</div>
 									</li>
                                 </ul>
@@ -117,7 +115,6 @@ if (!$seoIsRoot) {
 	<div class="content_pd">
 		<div class="container-fluid">
 			<div class="yohaku" data-aos="fade-up">
-				<h2 class="midashi1 mb30_md50 tal_sptac"><span class="en">About us</span>私たちについて</h2>
 
 				<table class="table1">
 				  <tbody>
@@ -164,8 +161,8 @@ if (!$seoIsRoot) {
 		</div>
 	</div>
 </section>
-	
-	
+
+
 <!--<section>
 	<div class="bg_kon">
 		<div class="content_pd">
@@ -179,8 +176,8 @@ if (!$seoIsRoot) {
 		</div>
 	</div>
 </section>-->
-	
-	
+
+
 <section>
 		<div class="content_pd pb0">
 			<div class="container-fluid">
@@ -203,10 +200,10 @@ if (!$seoIsRoot) {
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="row mb_content company-profile">
 						<div class="col-12 col-sm-4 mb30_sp">
-							<div class="company_photo01"><img src="images/company_photo01.jpg" alt="宮﨑 隆" class="img-fluid" loading="lazy" decoding="async"></div>
+							<div class="company_photo01"><img src="images/company_photo_miyazaki_illustration.jpg" alt="宮﨑 隆の似顔絵" class="img-fluid" loading="lazy" decoding="async"></div>
 						</div>
 						<div class="col-12 col-sm-8">
 							<div class="pd_yohaku_l">
@@ -224,755 +221,16 @@ if (!$seoIsRoot) {
 			</div>
 			</div>
 		</section>
-	
-	
-<section>
-	<div id="cate_head"></div>
-	<div id="achievements"></div>
-	
-		<div class="content_pd">
-			<div class="container-fluid">
-				<div class="yohaku">
-					<h2 class="midashi1 mb30_md50 tal_sptac d-block d-md-none"><span class="en">Achievements</span>実績紹介</h2>
-					<div class="row">
-						<div class="col-12 col-md-4 col-lg-3 order-md-8 order-lg-9 mb30_sp achievements-category-column">
-                            <dl class="accordion">
-                                <dt>Category<button class="hamburgerMenu"><span></span><span></span><span></span></button></dt>
-                                <dd>
-                                    <ul>
-                                        <li><a href="/achievements.html#achievements-2026">2026年</a></li>
-                                        <li><a href="/achievements.html#achievements-2025">2025年</a></li>
-                                        <li><a href="/achievements.html#achievements-2024">2024年</a></li>
-                                        <li><a href="/achievements.html#achievements-2023">2023年</a></li>
-                                        <li><a href="/achievements.html#achievements-2022">2022年</a></li>
-                                        <li><a href="/achievements.html#achievements-2021">2021年</a></li>
-                                        <li><a href="/achievements.html#achievements-2020">2020年</a></li>
-                                        <li><a href="/achievements.html#achievements-2019">2019年</a></li>
-                                    </ul>
-                                </dd>
-                            </dl>
-						</div>
-						<div class="col-12 col-md-8 col-lg-9">
-							<h2 class="midashi1 mb30_md50 tal_sptac d-none d-md-block"><span class="en">Achievements</span>実績紹介</h2>
-							
-							<?php if ((int)$target_id === 21): ?>
-<section class="recent-achievements" aria-label="2019年から2026年の実績">
-  <div class="recent-achievements__years">
-    <details class="achievement-year" id="achievements-2026" open>
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2026</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ISEKI Global Awards</p>
-              <p class="achievement-list__detail">ソプラノ歌唱の出演手配</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ROLLY2.0 -DEAD or ALIVE !</p>
-              <p class="achievement-list__detail">中西俊博出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA賞 授賞式</p>
-              <p class="achievement-list__detail">オーケストラ、迎賓・歓談演奏、譜面制作</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ピティナ 特級ガラコンサート</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">企業イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">Audi Annual Dealer Awards Dinner Party</p>
-              <p class="achievement-list__detail">Black Venus出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">鈴木慶江 ミモザリサイタル2026</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">音響・運営</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">第53回東京モーターサイクルショー</p>
-              <p class="achievement-list__detail">音響オペレーション・会場運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">メディア・制作</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ソニーヘッドフォンイベント</p>
-              <p class="achievement-list__detail">サヌカイト演奏・収録</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">2026年全国大会（ジャパンアワード）</p>
-              <p class="achievement-list__detail">演奏者手配</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">東急ハーヴェストクラブ／VIALA 各施設</p>
-              <p class="achievement-list__detail">ロビーコンサート、記念公演、ディナー演奏</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2025">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2025</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">クルーズ</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">Silver Dawn World Cruise Pre Event</p>
-              <p class="achievement-list__detail">箏演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA賞 授賞式</p>
-              <p class="achievement-list__detail">オーケストラ、迎賓・歓談演奏、譜面制作</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">CM・広告</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">スマホゲーム『にゃんこ大戦争』CM</p>
-              <p class="achievement-list__detail">指揮者キャスティング</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">鈴木慶江 ミモザリサイタル2025</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">国際イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">2025年大阪・関西万博 サウジアラビアPR</p>
-              <p class="achievement-list__detail">出演者手配</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">音響・運営</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">第52回東京モーターサイクルショー</p>
-              <p class="achievement-list__detail">音響オペレーション・会場運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">2025年全国大会（ジャパンアワード）</p>
-              <p class="achievement-list__detail">演奏者手配</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ピティナ・ピアノコンペティション</p>
-              <p class="achievement-list__detail">特級ほか各全国大会のライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">出張演奏</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">東京競馬場 ジャパンカップ</p>
-              <p class="achievement-list__detail">場内演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">箱根翡翠、VIALA鬼怒川渓翠、品川シーズンテラスほか</p>
-              <p class="achievement-list__detail">ロビーコンサート、周年公演、クリスマス公演</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2024">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2024</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">出張演奏</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">東京スカイツリー お正月イベント</p>
-              <p class="achievement-list__detail">和楽器演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">夢のかけ橋 コンサート Vol.4</p>
-              <p class="achievement-list__detail">ライブ配信・回線手配</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA賞 授賞式</p>
-              <p class="achievement-list__detail">オーケストラ、迎賓・歓談演奏、譜面制作</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">テレビ</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">日本テレビ『行列のできる相談所』</p>
-              <p class="achievement-list__detail">演奏者出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">音響・運営</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">第51回東京モーターサイクルショー</p>
-              <p class="achievement-list__detail">音響オペレーション・会場運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">FOREVER JAPAN AWARD 2024</p>
-              <p class="achievement-list__detail">出演者手配</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ピティナ・ピアノコンペティション</p>
-              <p class="achievement-list__detail">特級予選・セミファイナルのライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">百貨店・商業施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">日本橋髙島屋 フランス展</p>
-              <p class="achievement-list__detail">館内演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">箱根翡翠、軽井沢＆VIALAほか</p>
-              <p class="achievement-list__detail">新春、周年、クリスマスの各コンサート</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">レクサス高崎 クリスマスコンサート</p>
-              <p class="achievement-list__detail">出演者手配・公演運営</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2023">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2023</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA賞 授賞式</p>
-              <p class="achievement-list__detail">オーケストラ、弦楽四重奏、歌手出演、録音・譜面制作</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">企業イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">三陽商会 創業100周年記念パーティー</p>
-              <p class="achievement-list__detail">弦楽八重奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">テレビ</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">NHK連続テレビ小説『らんまん』</p>
-              <p class="achievement-list__detail">外国人弦楽器奏者キャスティング</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">展覧会・文化</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">野村グループ ルーヴル美術館展</p>
-              <p class="achievement-list__detail">弦楽四重奏 SNOWDROPS出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">クルーズ</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">船上花火大会</p>
-              <p class="achievement-list__detail">BGM演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ピティナ・ピアノコンペティション</p>
-              <p class="achievement-list__detail">特級予選・セミファイナルのライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">企業イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">RICHARD MILLE GINZA Special Dinner</p>
-              <p class="achievement-list__detail">演奏出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">Bohemian Love ROLLY</p>
-              <p class="achievement-list__detail">中西俊博出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">二胡フェスティバル2023</p>
-              <p class="achievement-list__detail">制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">箱根翡翠 クリスマスコンサート</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2022">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2022</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">箱根翡翠 お正月ロビーコンサート</p>
-              <p class="achievement-list__detail">新春演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">FFS DISNEY &amp; MOVIE MUSIC LIVE</p>
-              <p class="achievement-list__detail">出演、編曲、デザイン、ライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">丸の内ミュージックフェス</p>
-              <p class="achievement-list__detail">エリアコンサート収録・ライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ライオンズ チャリティーコンサート</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ピティナ・ピアノコンペティション</p>
-              <p class="achievement-list__detail">特級各予選・セミファイナルのライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">夢のかけ橋 コンサート Vol.3</p>
-              <p class="achievement-list__detail">配信・音響・ステージ運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・祝賀会</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">日本港湾協会 祝賀会</p>
-              <p class="achievement-list__detail">弦楽四重奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">二胡フェスティバル2022</p>
-              <p class="achievement-list__detail">制作・出演手配・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ミューズたちの響宴2022</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">箱根翡翠 クリスマスコンサート</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2021">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2021</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ピティナ・ピアノコンペティション</p>
-              <p class="achievement-list__detail">特級各予選・セミファイナルのライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">CM・広告</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">Google 翻訳 CM</p>
-              <p class="achievement-list__detail">チェロ演奏指導・手元ボディダブル</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">企業イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">RICHARD MILLE Press Dinner</p>
-              <p class="achievement-list__detail">演奏出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">夢のかけ橋 コンサート Vol.2</p>
-              <p class="achievement-list__detail">映像撮影・ライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">YOSAアワード2021</p>
-              <p class="achievement-list__detail">テノール歌唱</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">Neo Artist Live II</p>
-              <p class="achievement-list__detail">公演制作・配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ミューズたちの響宴 第一夜・第二夜</p>
-              <p class="achievement-list__detail">公演制作・配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">福田泰子 ソプラノリサイタル</p>
-              <p class="achievement-list__detail">公演制作・配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">鈴木慶江 クリスマススペシャルコンサート</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">商業施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">聖蹟桜ケ丘SC クリスマスコンサート</p>
-              <p class="achievement-list__detail">出演者手配・公演運営</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2020">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2020</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">国際イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">世界経済フォーラム年次総会（ダボス会議）Japan Night</p>
-              <p class="achievement-list__detail">演奏出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA賞 授賞式</p>
-              <p class="achievement-list__detail">オーケストラ演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">テレビ</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">NHK BS時代劇『明治開化 新十郎探偵帖』</p>
-              <p class="achievement-list__detail">弦楽四重奏の撮影出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">演奏家向けオンライン収録・映像制作</p>
-              <p class="achievement-list__detail">リモート収録、編集、配信準備</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">MUSIC FESTIVAL 2020</p>
-              <p class="achievement-list__detail">オンライン公演の収録・配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">日生劇場『ひなたと月の姫』スピンオフ映像</p>
-              <p class="achievement-list__detail">映像出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">楽曲制作</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">テルモ100周年記念企画</p>
-              <p class="achievement-list__detail">楽曲制作</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ライブ・舞台</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">KAAT神奈川芸術劇場 音楽劇『銀河鉄道の夜2020』</p>
-              <p class="achievement-list__detail">中西俊博出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">市川慎 プレミアムソロライブ</p>
-              <p class="achievement-list__detail">ライブ配信</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">配信・映像</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">東京都『アートにエールを！』</p>
-              <p class="achievement-list__detail">中西俊博オリジナル音楽映像の制作</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">出張演奏</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA GIファンファーレ、ホテル・商業施設の季節公演</p>
-              <p class="achievement-list__detail">状況に合わせてライブ演奏を段階的に再開</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="achievement-year" id="achievements-2019">
-      <summary class="achievement-year__summary">
-        <span class="achievement-year__number">2019</span>
-        <span class="achievement-year__toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="achievement-year__body">
-        <ul class="achievement-list">
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">東急ハーヴェストクラブ軽井沢＆VIALA 新春演奏会</p>
-              <p class="achievement-list__detail">新春コンサート</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ア・ラ・カルト 30th Anniversary</p>
-              <p class="achievement-list__detail">中西俊博出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">式典・表彰</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">JRA賞 授賞式</p>
-              <p class="achievement-list__detail">オーケストラ演奏</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">TAP DANCER KENTA 30TH ANNIVERSARY LIVE</p>
-              <p class="achievement-list__detail">公演出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">クルーズ</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ぱしふぃっく びいなす 各クルーズ</p>
-              <p class="achievement-list__detail">メインショー、ラウンジ演奏、各種ステージ</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">池田綾子コンサートツアー『風を紡ぐ』</p>
-              <p class="achievement-list__detail">中西俊博出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">スポーツイベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ワールドレディスチャンピオンシップ 前夜祭</p>
-              <p class="achievement-list__detail">演奏出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">国際イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">2019 World Judo Championships GALA</p>
-              <p class="achievement-list__detail">演奏出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">コンサート</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">Global ROLLY Groovy 2019</p>
-              <p class="achievement-list__detail">中西俊博出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">テレビ・録音</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">NHK連続テレビ小説『スカーレット』</p>
-              <p class="achievement-list__detail">レコーディング</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">企業イベント</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">RICHARD MILLE in TOKYO 2019</p>
-              <p class="achievement-list__detail">ビッグバンドほか演奏演出</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">ホテル・施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">箱根翡翠 クリスマスロビーコンサート</p>
-              <p class="achievement-list__detail">公演制作・運営</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">商業施設</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">ナイトアクアリウム コンサート</p>
-              <p class="achievement-list__detail">演奏出演</p>
-            </div>
-          </li>
-          <li class="achievement-list__item">
-            <span class="achievement-list__category">定期公演</span>
-            <div class="achievement-list__content">
-              <p class="achievement-list__title">柏の杜 ランチタイムコンサート</p>
-              <p class="achievement-list__detail">月例コンサートの出演者手配・運営</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </details>
-  </div>
-</section>
-<div class="achievement-archive-heading">
-  <p class="achievement-archive-heading__eyebrow">Archive</p>
-  <h3>2018年以前の実績</h3>
-</div>
-<?php endif; ?>
 
-<h2 class="midashi3 mb30_md50"><?php echo $target['title'];?></h2>
-							<?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>
-							<div><?php echo $tbl_html1; ?></div>
-							<?php
-							//使った変数を初期化
-							foreach($box['CatalogBox'] as $key=>$data){
-							  ${'tbl_'.$key} = null;
-							}
-							?>
-							<?php endforeach;?>
 
-						</div>
-					</div>
 
-					
-					
-					
-				</div>
-			</div>
-		</div>
-</section>
-	
-	
-	
-	
 </main>
-	
-	
 
-	
-	
-	
+
+
+
+
+
 
 
 <footer>
@@ -1004,16 +262,16 @@ if (!$seoIsRoot) {
 							  <li><a href="/contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>
-						
+
                         <div class="sns_list">
-                            <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
-                            <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
-                            <p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+                            <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+                            <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+                            <p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
                         </div>
 						<p class="copy en"><small><i class="far fa-copyright"></i> 2022–2026 MUSICIAN.CO.JP</small></p>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -1021,9 +279,9 @@ if (!$seoIsRoot) {
 
 
 <div id="sns_kotei" class="sns d-none d-md-block">
-	<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
-	<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
-	<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+	<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+	<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+	<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
 </div>
 
 <div id="pagetop"><a href="#"><img src="images/pagetop.png" width="45" height="45" alt="pagetop"></a></div>
@@ -1077,7 +335,7 @@ AOS.init({
 <script>
 $(function () {
 
-  // falg変数のデフォルト値として「up」を指定    
+  // falg変数のデフォルト値として「up」を指定
   var flag = "up";
 
   // scrollイベントを取得した際の処理を定義
@@ -1134,15 +392,15 @@ $(function(){
  objectFitImages('.photo-ofi img');
  objectFitImages('.object-fit img');
 </script>
-	
+
 <!--タイトルのエフェクト-->
 <script src="js/anime.min.js"></script>
 <script src="js/scrollMonitor.js"></script>
 <script src="js/main.js"></script>
-<script src="js/title.js"></script>	
+<script src="js/title.js"></script>
 
 
-	
+
 <!--サイドメニュー-->
 <script src="js/sidemenu.js"></script>
 

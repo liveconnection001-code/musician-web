@@ -24,6 +24,27 @@ $seoBreadcrumbItems = array(
   array('name' => 'アーティスト', 'item' => '/artist.html'),
   array('name' => $seoArtistTitle, 'item' => $seoCanonicalPath)
 );
+
+$isMegumiOmachi = ((int)$tbl_id === 62);
+$megumiGallery = array(
+  array('slug' => 'portrait', 'alt' => '二胡を手にした大町めぐみのスタジオポートレート'),
+  array('slug' => 'studio-seated', 'alt' => '二胡とともに座る大町めぐみのスタジオ写真'),
+  array('slug' => 'studio-qipao', 'alt' => '緑のチャイナドレスで二胡を持つ大町めぐみ'),
+  array('slug' => 'hangzhou-garden', 'alt' => '杭州の庭園に立つ大町めぐみ'),
+  array('slug' => 'hangzhou-erhu', 'alt' => '杭州の庭園で二胡を演奏する大町めぐみ'),
+  array('slug' => 'white-hydrangea', 'alt' => '紫陽花と白い衣装で二胡を持つ大町めぐみ'),
+  array('slug' => 'black-portrait', 'alt' => '黒い衣装で二胡を持つ大町めぐみ'),
+  array('slug' => 'red-lantern', 'alt' => '赤いチャイナドレスで二胡を持つ大町めぐみ'),
+  array('slug' => 'red-full', 'alt' => '赤い提灯の街並みに立つ大町めぐみ'),
+  array('slug' => 'stage', 'alt' => 'コンサートで二胡を演奏する大町めぐみ')
+);
+if ($isMegumiOmachi) {
+  $seoArtistTitle = '二胡奏者・ピアニスト 大町めぐみ';
+  $seoTitle = '大町めぐみ｜二胡奏者・ピアニスト・演奏依頼｜MUSICIAN';
+  $seoDescription = 'MUSICIAN所属の二胡奏者・ピアニスト、大町めぐみ。2026年に上海音楽学院での2年間の進修課程を修了し、敦煌杯2025全日本二胡コンクール銀賞。企業イベント、式典、ホテル、学校公演などの出演依頼をご相談いただけます。';
+  $seoImage = '/images/megumi-portrait-large.jpg';
+  $seoBreadcrumbItems[2]['name'] = '大町めぐみ';
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -40,12 +61,13 @@ $seoBreadcrumbItems = array(
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css" rel="stylesheet">
+<link href="css/style.css?v=20260728a" rel="stylesheet">
+<?php if ($isMegumiOmachi): ?><link href="css/artist_megumi.css" rel="stylesheet"><?php endif; ?>
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
 <link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
-<link rel="stylesheet" type="text/css" href="css/fotorama.css"><!--ギャラリー-->
+<?php if (!$isMegumiOmachi): ?><link rel="stylesheet" type="text/css" href="css/fotorama.css"><!--ギャラリー--><?php endif; ?>
 <link rel="stylesheet" href="lightcase/css/lightcase.css"><!--画像拡大-->
 <!--Googleフォント-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,10 +77,33 @@ $seoBreadcrumbItems = array(
 <!--end-->
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
+<?php if ($isMegumiOmachi): ?>
+<script type="application/ld+json"><?php echo json_encode(array(
+  '@context' => 'https://schema.org',
+  '@type' => 'Person',
+  'name' => '大町めぐみ',
+  'alternateName' => 'Megumi Omachi',
+  'jobTitle' => array('二胡奏者', 'ピアニスト'),
+  'url' => 'https://www.musician.co.jp/artist/view/62',
+  'image' => 'https://www.musician.co.jp/images/megumi-portrait-large.jpg',
+  'memberOf' => array('@type' => 'Organization', 'name' => 'MUSICIAN'),
+  'affiliation' => array('@type' => 'Organization', 'name' => '株式会社東京アーティスト協会'),
+  'sameAs' => array(
+    'https://x.com/MUSICIAN_MEGUMI?s=20',
+    'https://www.threads.com/@megmilk323?hl=ja',
+    'https://www.instagram.com/megmilk323/',
+    'https://www.facebook.com/da.ting.megumi/about',
+    'https://linktr.ee/megumitsu',
+    'https://youtube.com/channel/UCqFZdsYz15D2zcItJAMU97A',
+    'https://note.com/niko_megumitsu',
+    'https://www.tunecore.co.jp/artists/megumiomachi?lang=ja'
+  )
+), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<?php endif; ?>
 </head>
 <body>
-	
-	
+
+
 <header>
     <div class="container-fluid">
             <div class="row">
@@ -84,7 +129,7 @@ $seoBreadcrumbItems = array(
                                     <li><a href="works.html"><span class="en">Works</span></a></li>
                                     <li class="navi-on"><a href="artist.html"><span class="en">Artist</span></a></li>
                                     <li><a href="company.html"><span class="en">About us</span></a></li>
-                                    <li><a href="achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
                                     <li class="d-block d-md-none"><a href="contact.html"><span class="en">Contact</span></a></li>
                                     <li class="d-block d-md-none">
 										<div class="sns_list">
@@ -120,14 +165,153 @@ $seoBreadcrumbItems = array(
 
 
 <main>
+<?php if ($isMegumiOmachi): ?>
+<article class="megumi-profile">
+  <section class="megumi-hero" aria-labelledby="megumi-name">
+    <div class="megumi-hero__image">
+      <picture>
+        <img src="/images/megumi-portrait-large.jpg" alt="二胡奏者・ピアニスト 大町めぐみ" width="1536" height="2048" fetchpriority="high">
+      </picture>
+    </div>
+    <div class="megumi-hero__content">
+      <p class="megumi-eyebrow">MUSICIAN EXCLUSIVE ARTIST</p>
+      <p class="megumi-role">二胡奏者・ピアニスト</p>
+      <h2 id="megumi-name">大町 めぐみ<span>Megumi Omachi</span></h2>
+      <p class="megumi-lead">二胡とピアノを軸に、日本と中国の音楽文化をつなぐ演奏家。2026年に上海音楽学院での2年間の進修課程を修了し、現地で磨いた中国音楽の語法と表現を演奏・公演制作へ生かしています。</p>
+      <ul class="megumi-highlights" aria-label="主な実績">
+        <li><strong>2026</strong>上海音楽学院での2年間の研修を修了</li>
+        <li><strong>銀賞</strong>「敦煌杯」2025全日本二胡コンクール</li>
+        <li><strong>100+</strong>J-POP・演歌・ジャズ・中国曲など幅広いレパートリー</li>
+      </ul>
+      <a class="megumi-button" href="contact.html">出演・演奏を相談する</a>
+      <div class="megumi-socials megumi-socials--hero" aria-label="大町めぐみ公式SNS">
+        <a href="https://x.com/MUSICIAN_MEGUMI?s=20" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://www.threads.com/@megmilk323?hl=ja" target="_blank" rel="noopener noreferrer">Threads</a>
+        <a href="https://www.instagram.com/megmilk323/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.facebook.com/da.ting.megumi/about" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://youtu.be/kZvvnMDZHXU?si=pn71GfEo_R7wyUXJ" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </div>
+    </div>
+  </section>
 
-	
+  <section class="megumi-section megumi-section--intro" aria-labelledby="megumi-profile-title">
+    <div class="megumi-section__heading">
+      <p>PROFILE</p>
+      <h2 id="megumi-profile-title">音楽歴と現在の活動</h2>
+    </div>
+    <div class="megumi-copy">
+      <p>幼少期からピアノを学び、ミュージカルや少年少女合唱団で歌と舞台に親しむ。守屋純子氏率いる小中高生ビッグバンドにピアニストとして参加し、日野皓正氏とも共演。日本大学芸術学部のピアノ科を卒業後、ピアニストとして演奏活動を行う一方、出張演奏、ライブ配信、コンサート制作など音楽事業に携わってきました。</p>
+      <p>大学卒業後に二胡と出会い、玉蘭、ウェイウェイ・ウー、劉鋒、桐子の各氏に師事。2020年以降はライブ配信でも演奏を重ね、J-POP、演歌、洋楽、ジャズ、中国古典曲など100曲を超えるレパートリーを築きました。「二胡フェスティバル2022・2023」を主催・出演し、アルバム『名曲COVERS』（2023）、『演歌セレクション』（2024）を発表しています。</p>
+      <p>2024年9月、中国政府奨学金を得て上海音楽学院・民族音楽学科二胡専攻の進修生として2年間留学。二胡、視唱聴音、楽理、中国伝統音楽を学び、留学生コンサートにも出演しました。2026年に2年間の進修課程を修了して帰国。留学中の2025年には「敦煌杯」全日本二胡コンクール壮年の部で銀賞を受賞しました。現在は演奏活動に加え、株式会社東京アーティスト協会の代表取締役として、公演制作とアーティストプロデュースにも取り組んでいます。</p>
+    </div>
+  </section>
+
+  <section class="megumi-section megumi-section--gallery" aria-labelledby="megumi-gallery-title">
+    <div class="megumi-section__heading">
+      <p>PHOTO GALLERY</p>
+      <h2 id="megumi-gallery-title">プロフィール写真</h2>
+      <span>写真をクリックすると大きく表示します</span>
+    </div>
+    <div class="megumi-gallery">
+      <?php foreach ($megumiGallery as $index => $photo): ?>
+      <a href="/images/megumi-<?php echo $photo['slug']; ?>-large.jpg" data-rel="lightcase:megumi-profile" aria-label="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>を拡大表示">
+        <picture>
+          <img src="/images/megumi-<?php echo $photo['slug']; ?>-thumb.jpg" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" width="640" height="760" <?php echo ($index < 2) ? '' : 'loading="lazy" decoding="async"'; ?>>
+        </picture>
+        <span><?php echo sprintf('%02d', $index + 1); ?></span>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </section>
+
+  <section class="megumi-section megumi-performance" aria-labelledby="megumi-performance-title">
+    <div class="megumi-section__heading">
+      <p>PERFORMANCE</p>
+      <h2 id="megumi-performance-title">二胡演奏</h2>
+    </div>
+    <div class="megumi-video">
+      <div class="megumi-video__frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/kZvvnMDZHXU?rel=0" title="大町めぐみ 二胡演奏" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <p>大町めぐみの二胡演奏。<a href="https://youtu.be/kZvvnMDZHXU?si=pn71GfEo_R7wyUXJ" target="_blank" rel="noopener noreferrer">YouTubeで見る</a></p>
+    </div>
+  </section>
+
+  <section class="megumi-section megumi-achievements" aria-labelledby="megumi-achievements-title">
+    <div class="megumi-section__heading">
+      <p>SELECTED HIGHLIGHTS</p>
+      <h2 id="megumi-achievements-title">受賞・リリース</h2>
+    </div>
+    <div class="megumi-achievements__grid">
+      <div class="megumi-achievements__text">
+        <dl>
+          <div><dt>2026</dt><dd>上海音楽学院 民族音楽学科・二胡専攻の2年間の進修課程を修了</dd></div>
+          <div><dt>2025</dt><dd>「敦煌杯」2025・全日本二胡コンクール 壮年の部 銀賞</dd></div>
+          <div><dt>2024</dt><dd>アルバム『演歌セレクション』リリース</dd></div>
+          <div><dt>2024</dt><dd>中国政府奨学金を得て上海音楽学院へ留学</dd></div>
+          <div><dt>2023</dt><dd>アルバム『名曲COVERS』リリース</dd></div>
+          <div><dt>2022–23</dt><dd>二胡フェスを主催・出演</dd></div>
+        </dl>
+      </div>
+      <a class="megumi-award-photo" href="/images/megumi-award-certificate-large.jpg?v=20260727" data-rel="lightcase:megumi-award" aria-label="敦煌杯2025全日本二胡コンクール銀賞の賞状を拡大表示">
+        <picture>
+          <img src="/images/megumi-award-certificate-card.jpg?v=20260727" alt="敦煌杯2025全日本二胡コンクール銀賞の賞状" width="900" height="620" loading="lazy" decoding="async">
+        </picture>
+        <span>銀賞の記録を見る</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="megumi-section megumi-booking" aria-labelledby="megumi-booking-title">
+    <div class="megumi-section__heading">
+      <p>BOOKING</p>
+      <h2 id="megumi-booking-title">出演・演奏のご相談</h2>
+    </div>
+    <div class="megumi-booking__content">
+      <div>
+        <h3>対応する演奏シーン</h3>
+        <ul>
+          <li>企業イベント・表彰式・レセプション</li>
+          <li>ホテル・商業施設・文化イベント</li>
+          <li>学校公演・芸術鑑賞会・国際交流事業</li>
+          <li>二胡とピアノ、和洋楽器とのアンサンブル</li>
+        </ul>
+      </div>
+      <div>
+        <h3>主なレパートリー</h3>
+        <p>蘇州夜曲、夜来香、涙そうそう、賽馬、何日君再来、シルクロード、ラストエンペラーほか。J-POP、演歌、洋楽、ジャズ、中国古典曲まで、ご依頼の場に合わせて選曲します。</p>
+      </div>
+    </div>
+    <div class="megumi-booking__action">
+      <p>編成・選曲・演奏時間・ご予算に合わせ、MUSICIANが公演全体を設計します。</p>
+      <a class="megumi-button megumi-button--light" href="contact.html">大町めぐみへの出演依頼</a>
+    </div>
+  </section>
+
+  <section class="megumi-links" aria-labelledby="megumi-links-title">
+    <h2 id="megumi-links-title">Official Links</h2>
+    <div>
+      <a href="https://x.com/MUSICIAN_MEGUMI?s=20" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://www.threads.com/@megmilk323?hl=ja" target="_blank" rel="noopener noreferrer">Threads</a>
+      <a href="https://www.instagram.com/megmilk323/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/da.ting.megumi/about" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a href="https://youtu.be/kZvvnMDZHXU?si=pn71GfEo_R7wyUXJ" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://linktr.ee/megumitsu" target="_blank" rel="noopener noreferrer">Linktree</a>
+      <a href="https://note.com/niko_megumitsu" target="_blank" rel="noopener noreferrer">Note</a>
+      <a href="https://www.tunecore.co.jp/artists/megumiomachi?lang=ja" target="_blank" rel="noopener noreferrer">Music</a>
+      <a href="https://live-connection.shop/?category_id=63bd5c914293512821ba9c54" target="_blank" rel="noopener noreferrer">CD Store</a>
+    </div>
+  </section>
+</article>
+<?php else: ?>
+
+
 <div class="content_pd">
     <div class="container-fluid">
         <div class="yohaku" data-aos="fade-up">
             <section>
                 <h2 class="midashi2 mb30_md50"><?php echo $category_title; ?></h2>
-				
+
 				<div class="row mb_content">
 					<div class="col-12 col-md-6 order-md-6 mb30_sp">
 						<div class="pd_yohaku_l">
@@ -177,22 +361,24 @@ $seoBreadcrumbItems = array(
                 </div>
                 <?php endif; ?>
                 <?php endfor; ?>
-				
+
 				<p class="tac"><a href="javascript:history.back();" class="btn btn-1 en">Back</a></p>
-				
-				
+
+
             </section>
-			
-			
-			
+
+
+
         </div>
     </div>
 </div>
 
+<?php endif; ?>
 </main>
 
 
 
+<?php if (!$isMegumiOmachi): ?>
 <!-- 大サイズ用モーダル -->
 <?php if(!empty($tbl_image1)): ?>
 <div class="modal fade p-lg-<?php echo $tbl_id; ?>-1">
@@ -251,6 +437,7 @@ $seoBreadcrumbItems = array(
 </div>
 <?php endif; ?>
 <!-- end -->
+<?php endif; ?>
 
 <footer>
 	<div class="in">
@@ -277,11 +464,11 @@ $seoBreadcrumbItems = array(
 							</ul>
 							<ul class="foot_link d-none d-md-block">
 							  <li><a href="company.html"><span class="en">About us</span></a></li>
-							  <li><a href="achievements.html"><span class="en">Achievements</span></a></li>
+							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
 							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>
-						
+
                         <div class="sns_list">
                             <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
                             <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
@@ -290,7 +477,7 @@ $seoBreadcrumbItems = array(
 						<p class="copy en"><small><i class="far fa-copyright"></i> 2022–2026 MUSICIAN.CO.JP</small></p>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -352,7 +539,7 @@ AOS.init({
 <script>
 $(function () {
 
-  // falg変数のデフォルト値として「up」を指定    
+  // falg変数のデフォルト値として「up」を指定
   var flag = "up";
 
   // scrollイベントを取得した際の処理を定義
@@ -409,13 +596,14 @@ $(function(){
  objectFitImages('.photo-ofi img');
  objectFitImages('.object-fit img');
 </script>
-	
+
 <!--タイトルのエフェクト-->
 <script src="js/anime.min.js"></script>
 <script src="js/scrollMonitor.js"></script>
 <script src="js/main.js"></script>
-<script src="js/title.js"></script>	
+<script src="js/title.js"></script>
 
+<?php if (!$isMegumiOmachi): ?>
 <!--ギャラリー-->
 <script src="js/fotorama.js"></script>
 <script>
@@ -423,7 +611,8 @@ $(function(){
 		$('.fotorama').fotorama();
 	});
 </script>
-	
+<?php endif; ?>
+
 <!--画像拡大-->
 <script src="lightcase/js/lightcase.js"></script>
 <script>

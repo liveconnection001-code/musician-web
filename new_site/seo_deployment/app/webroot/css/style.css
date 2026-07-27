@@ -278,7 +278,7 @@ header{
 	.menu > ul > li { border-bottom: none !important; vertical-align: middle;}
 	.menu > ul > li > ul {font-size: 100%;}
 	.menu > ul > li > ul.normal-sub > li {margin: 4px 0!important;}
-	
+
 	.menu > ul > li i {vertical-align: middle;}
 }
 @media print, screen and (min-width: 992px) {
@@ -422,7 +422,7 @@ header{
 	color: #003984;
 	background: url(../images/midashi_tate.gif) no-repeat center top;
 	-moz-background-size:1px 32px;
-	background-size:1px 32px; 
+	background-size:1px 32px;
 	font-family: 'Playfair Display', serif;
 	font-weight: 500;
 }
@@ -446,7 +446,7 @@ header{
 #midashi_h2 h1{
 	line-height: 1.4em;
 	margin-bottom: 30px;
-	text-align: center; 
+	text-align: center;
 	font-size: 100%;
 	font-family: 'Shippori Mincho', serif;
 	font-weight: 600;
@@ -749,7 +749,7 @@ a:hover{opacity:0.7;filter: alpha(opacity=70);/*transition: 0.5s;*/}
 }
 @media print, screen and (min-width: 992px){
 	.btn-1{ font-size: 130%;}
-	
+
 }
 
 
@@ -866,7 +866,7 @@ a:hover{opacity:0.7;filter: alpha(opacity=70);/*transition: 0.5s;*/}
 	line-height: 35px;
 	text-align: center;
 	vertical-align: middle;
-	
+
 }
 .btn_detail:hover{
 	opacity: 1;
@@ -977,7 +977,7 @@ ol.list_num {
   list-style: none;
   padding: 0;
 }
- 
+
 ol.list_num > li {
   margin-bottom: 15px;
   padding-left: 35px;
@@ -1608,7 +1608,7 @@ div.paging span.paging-text a:hover{
 		width: 100%;
 		height: 100%;
 	}
-	
+
 }
 
 
@@ -1708,7 +1708,7 @@ div.paging span.paging-text a:hover{
 }
 .top_youtube .box:nth-of-type(2n+1) { clear: both;}
 @media print, screen and (min-width: 576px){
-	
+
 }
 @media print, screen and (min-width: 768px){
 	.top_youtube .box{
@@ -2121,7 +2121,7 @@ height: 100%;
 	color:#fff;
 	padding:0px 6px;
 	float:right;
-	border-radius:3px; 
+	border-radius:3px;
 	font-weight: normal;
 	background-color: #e36927;
 }
@@ -2148,7 +2148,7 @@ height: 100%;
 		padding:15px 20px;
 		display:table-cell;
 	}
-	
+
 	.table_form.sen_none .last td{padding-bottom: 10px;}
 	.table_form.sen_none th{
 		padding:10px 20px 0 20px;
@@ -2172,15 +2172,15 @@ input[type="email"]{color: #041e42;}
 
 input:focus[type="text"]{border:1px solid #06c;}
 textarea{font-size:100%;border:1px solid #ccc;width:99%; border-radius:3px; }
-input,textarea{ 
-  /*display: inline-block; 
+input,textarea{
+  /*display: inline-block;
   font-family: FontAwesome; */
-  font-style: normal; 
-  font-weight: normal; 
-  line-height: 1; 
-  -Webkit-font-smoothing: antialiased; 
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -Webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} 
+}
 select {padding: 9px; color: #041e42; }
 
 .form-control {color: #041e42;}
@@ -2346,7 +2346,7 @@ footer .in {padding: 30px 0;}
 		vertical-align: middle;
 	}
 	.foot_logo_list li.migi {padding-left: 15px;}
-	
+
 	.logo_mark{
 		margin: 0;
 	}
@@ -2439,7 +2439,7 @@ footer .contact_sen .en2 {font-size: 110%;}
 		margin-bottom: 5px;
 		display: block;
 	}
-	
+
 	footer .sns_list{margin: 0;}
 	footer .sns_list p {padding-left: 0; padding-right: 20px;}
 }
@@ -2536,3 +2536,75 @@ footer .contact_sen .en2 {font-size: 110%;}
 .home-works .box a:hover img, .home-works .box a:focus-visible img { transform: scale(1.018); }
 .home-works .box a:focus-visible { outline: 3px solid #e36927; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { .home-works .box img { transition: none; } }
+
+/* 2026-07-28: approved shared page heading for Business, Artist, About us,
+   artist profiles and Achievements. The thin navy divider and white title
+   field intentionally match the approved About us / Works relationship. */
+#midashi_h2 {
+  background: #041e42;
+  display: block !important;
+  height: 40px;
+  margin-bottom: 170px;
+  margin-top: 45px;
+  padding: 0;
+  position: relative;
+}
+#midashi_h2 .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  position: static;
+}
+#midashi_h2 .yohaku {
+  background: #eee;
+  color: #041e42;
+  display: block;
+  left: 0;
+  margin: 0;
+  padding: 28px max(5vw, calc((100vw - 1540px) / 2)) 22px;
+  position: absolute;
+  right: 0;
+  top: 40px;
+}
+#midashi_h2 h1 {
+  display: block;
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(18px, 1.6vw, 25px);
+  font-weight: 600;
+  letter-spacing: .025em;
+  line-height: 1.45;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+#midashi_h2 h1 span {
+  display: block;
+  font-family: "Urbanist", sans-serif;
+  font-size: clamp(54px, 6vw, 86px);
+  font-weight: 500;
+  letter-spacing: .1em;
+  line-height: 1.12;
+  margin-bottom: 12px;
+}
+#midashi_h2 [data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+#midashi_h2 .pankuzu { display: none; }
+main > .content_pd:first-child,
+#banner1 + main > section:first-child > .content_pd:first-child { padding-top: 18px; }
+.company-profile p { line-height: 2; margin-bottom: 1em; }
+.company-profile + .company-profile {
+  border-top: 1px solid rgba(4, 30, 66, .18);
+  padding-top: 50px;
+}
+@media print, screen and (min-width: 768px) { #midashi_h2 { margin-top: 60px; } }
+@media print, screen and (min-width: 1200px) { #midashi_h2 { margin-top: 80px; } }
+@media screen and (max-width: 767px) {
+  #midashi_h2 { margin-bottom: 132px; }
+  #midashi_h2 .yohaku { padding: 24px 24px 18px; }
+  #midashi_h2 h1 { font-size: 17px; }
+  #midashi_h2 h1 span { font-size: clamp(44px, 13vw, 60px); margin-bottom: 8px; }
+  main > .content_pd:first-child,
+  #banner1 + main > section:first-child > .content_pd:first-child { padding-top: 16px; }
+}

@@ -23,6 +23,7 @@ SEO_ROOT = WORKSPACE / "new_site" / "seo_deployment"
 SEO_MANIFEST = SEO_ROOT / "seo_manifest.json"
 WORKS_ROOT = WORKSPACE / "new_site" / "works_deployment"
 WORKS_GALLERY_MANIFEST = WORKS_ROOT / "performance_gallery_manifest.json"
+ARTIST_ROOT = WORKSPACE / "new_site" / "artist_deployment"
 ACHIEVEMENTS_CSS = WORKSPACE / "new_site" / "deployment" / "app" / "webroot" / "css" / "recent_achievements.css"
 ROLLBACK_ROOT = WORKSPACE / "new_site" / "production_backups"
 
@@ -224,6 +225,16 @@ def read_local_targets() -> tuple[dict[str, bytes], dict]:
     if manifest_mismatches:
         warn(f"SEO manifest hash mismatch for: {', '.join(manifest_mismatches)}")
 
+    # Artist is a reviewed source package. Merge it into the same atomic release
+    # so a Works/SEO deployment can never silently restore the old listing or
+    # omit Megumi Omachi's detail page and supplied image assets.
+    artist_files = sorted((ARTIST_ROOT / "app").rglob("*"))
+    for path in artist_files:
+        if not path.is_file():
+            continue
+        relative = path.relative_to(ARTIST_ROOT).as_posix()
+        targets[safe_relative(relative)] = path.read_bytes()
+
     works_files = sorted((WORKS_ROOT / "app").rglob("*"))
     for path in works_files:
         if not path.is_file():
@@ -263,6 +274,12 @@ def read_local_targets() -> tuple[dict[str, bytes], dict]:
         raise RuntimeError("Curated Works template is missing")
     if "app/webroot/css/works_showcase.css" not in targets:
         raise RuntimeError("Works stylesheet is missing")
+    if "app/View/catalog/cl02_4/default/index.html" not in targets:
+        raise RuntimeError("Reviewed Artist listing is missing")
+    if "app/View/catalog/cl02_4/default/view.html" not in targets:
+        raise RuntimeError("Reviewed Artist detail template is missing")
+    if "app/webroot/css/artist_megumi.css" not in targets:
+        raise RuntimeError("Megumi Artist stylesheet is missing")
 
     ordered = dict(
         sorted(
@@ -279,6 +296,7 @@ def read_local_targets() -> tuple[dict[str, bytes], dict]:
         "target_bytes": sum(len(value) for value in ordered.values()),
         "works_images": len(works_root_image_names),
         "works_gallery_images": len(actual_gallery),
+        "artist_files": len(artist_files),
         "manifest_file_count": manifest.get("file_count"),
         "manifest_mismatches": manifest_mismatches,
     }
