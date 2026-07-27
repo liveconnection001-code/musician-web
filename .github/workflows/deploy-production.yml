@@ -23,16 +23,25 @@ jobs:
           MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
         run: |
-          mkdir -p backup_2026-07-25/site_files
-          if [ ! -f backup_2026-07-25/site_files/.ftp_state.json ]; then
-            cat > backup_2026-07-25/site_files/.ftp_state.json <<'EOF'
-            {
-              "queue": ["/"],
-              "completed": [],
-              "started_utc": "2026-07-27T00:00:00Z"
-            }
-            EOF
-          fi
+          python - <<'PY'
+          import json, pathlib
+          state = pathlib.Path("backup_2026-07-25/site_files/.ftp_state.json")
+          state.parent.mkdir(parents=True, exist_ok=True)
+          if not state.exists():
+              state.write_text(
+                  json.dumps(
+                      {
+                          "queue": ["/"],
+                          "completed": [],
+                          "started_utc": "2026-07-27T00:00:00Z",
+                      },
+                      ensure_ascii=False,
+                      indent=2,
+                  )
+                  + "\n",
+                  encoding="utf-8",
+              )
+          PY
 
       - name: Deploy to production
         env:
