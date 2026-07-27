@@ -57,8 +57,8 @@ def validate_about() -> None:
     megumi = text.index("代表取締役</span> 大町めぐみ")
     miyazaki = text.index("プロデューサー</span> 宮﨑 隆")
     require(megumi < miyazaki, "About us profile order is wrong")
-    require("company_photo_megumi.jpg?v=20260728b" in text, "Megumi About image cache key missing")
-    require("company_photo_miyazaki_illustration.jpg?v=20260728b" in text, "Miyazaki illustration cache key missing")
+    require("company_photo_megumi.jpg?v=20260728c" in text, "Megumi About image cache key missing")
+    require("company_photo_miyazaki_illustration.jpg?v=20260728c" in text, "Miyazaki illustration cache key missing")
     require("recent-achievements" not in text and 'id="achievements"' not in text, "Achievements remain in About us")
     require("Career" not in text, "Removed Career section remains")
     require(text.count("<span>About us</span>私たちについて") == 1, "About us title is duplicated")
@@ -125,8 +125,8 @@ def validate_artist() -> None:
     ):
         require(url in detail, f"SNS URL missing: {url}")
     require("$tbl_id = 62" in home, "Homepage Megumi slot replacement missing")
-    require("/images/megumi-portrait-card.jpg?v=20260728b" in listing, "Artist image cache key missing")
-    require("/images/megumi-portrait-card.jpg?v=20260728b" in home, "Homepage artist image cache key missing")
+    require("/images/megumi-portrait-card.jpg?v=20260728c" in listing, "Artist image cache key missing")
+    require("/images/megumi-portrait-card.jpg?v=20260728c" in home, "Homepage artist image cache key missing")
     require(
         sha256(WORKS / "app/webroot/images/megumi-portrait-card.jpg")
         == sha256(ARTIST / "app/webroot/images/artists/megumi-omachi/megumi-portrait-card.jpg"),
@@ -138,9 +138,9 @@ def validate_works() -> None:
     template = (WORKS / "app/View/catalog/cl01_2/default/index.html").read_text(encoding="utf-8")
     css = (WORKS / "app/webroot/css/works_showcase.css").read_text(encoding="utf-8")
     require("style.css?v=20260728c" in template, "Works CSS cache key missing")
-    require("hero-corporate-show-clean.webp?v=20260728b" in template, "Works showcase image cache key missing")
-    require("-card.jpg?v=20260728b" in template, "Works gallery card cache key missing")
-    require("-large.jpg?v=20260728b" in template, "Works gallery large-image cache key missing")
+    require("hero-corporate-show-clean.webp?v=20260728c" in template, "Works showcase image cache key missing")
+    require("-card.jpg?v=20260728c" in template, "Works gallery card cache key missing")
+    require("-large.jpg?v=20260728c" in template, "Works gallery large-image cache key missing")
     require("grid-template-columns: repeat(4" in css, "Four-column Works gallery missing")
     for key in (
         "concert-opera-scene",

@@ -26,7 +26,7 @@ BUSINESS = SEO / "app" / "webroot" / "business.html"
 ROUTES = SEO / "app" / "Config" / "routes.php"
 SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
-ASSET_VERSION = "20260728b"
+ASSET_VERSION = "20260728c"
 STYLE_VERSION = "20260728c"
 
 
