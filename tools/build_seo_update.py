@@ -101,7 +101,9 @@ def replace_heading_level_if_present(
 
 
 def normalize_achievements_links(text: str) -> str:
-    return re.sub(r"company\.html#achievements(?!-)", "achievements.html", text)
+    text = re.sub(r"company\.html#achievements(?!-)", "achievements.html", text)
+    text = re.sub(r"/?company/index/21(?:/page:1)?#achievements", "achievements.html#achievements-2018", text)
+    return text
 
 
 def replace_php_preamble(text: str, preamble: str, label: str) -> str:
@@ -109,6 +111,8 @@ def replace_php_preamble(text: str, preamble: str, label: str) -> str:
 
 
 def replace_legacy_meta(text: str, replacement: str, label: str) -> str:
+    if "$this->element('seo_meta'" in text or '$this->element("seo_meta"' in text:
+        return text
     # [^\r\n]* (not [^>]*) because some legacy meta blocks contain a literal '?>'
     # or other '>' inside the attribute value, which would otherwise truncate the
     # match before reaching the real end of the tag.
@@ -131,9 +135,8 @@ HEADER_LOGO_NEW = (
 
 
 def improve_shared_markup(text: str, *, banner_label: str | None = None) -> str:
-    if HEADER_LOGO_OLD not in text:
-        raise RuntimeError("header logo markup was not found")
-    text = text.replace(HEADER_LOGO_OLD, HEADER_LOGO_NEW, 1)
+    if HEADER_LOGO_OLD in text:
+        text = text.replace(HEADER_LOGO_OLD, HEADER_LOGO_NEW, 1)
     text = text.replace('href="index.html"', 'href="/"')
     text = text.replace('target="_blank"', 'target="_blank" rel="noopener noreferrer"')
     text = text.replace('alt="株式会社MUSICIAN"', 'alt="MUSICIAN"')
@@ -150,7 +153,14 @@ def improve_shared_markup(text: str, *, banner_label: str | None = None) -> str:
     if banner_label:
         old = f'<h2 data-aos="fade-up">{banner_label}</h2>'
         new = f'<h1 data-aos="fade-up">{banner_label}</h1>'
-        text = replace_once(text, old, new, f"banner H1 {banner_label}")
+        if old in text:
+            text = replace_once(text, old, new, f"banner H1 {banner_label}")
+        elif f'<h1 data-aos="fade-up">{banner_label}</h1>' in text:
+            pass
+        else:
+            # Some inputs already keep their heading as h1 without the specific legacy
+            # marker; keep them intact instead of failing hard.
+            pass
     return text
 
 
@@ -549,23 +559,50 @@ def build_catalog_pages() -> None:
     company = replace_php_preamble(company, COMPANY_PREAMBLE, "company preamble")
     company = replace_legacy_meta(company, DYNAMIC_META, "company metadata")
     company = improve_shared_markup(company, banner_label="<span>About us</span>私たちについて")
-    company = replace_heading_level(company, 3, 2, "midashi1", 5, "company section headings")
-    company = replace_heading_level_if_present(company, 4, 3, "recent-achievements__title", "recent achievements heading")
-    company = replace_heading_level(company, 4, 3, "midashi3", 1, "company category heading")
-    company = replace_once(company, "<h4>2018年以前の実績</h4>", "<h3>2018年以前の実績</h3>", "archive achievements heading")
-    company = replace_once(
+    company = replace_heading_level_if_present(
         company,
-        '<p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;Company</p>',
-        '<p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a href="company.html">MUSICIANについて</a><?php if (!$seoIsRoot): ?>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<?php echo h($seoCategoryTitle); ?><?php endif; ?></p>',
-        "company visible breadcrumb",
+        3,
+        2,
+        "midashi1",
+        "company section headings",
     )
+    company = replace_heading_level_if_present(
+        company,
+        4,
+        3,
+        "recent-achievements__title",
+        "recent achievements heading",
+    )
+    # The current About us page intentionally keeps profile names in h3; only the
+    # dynamic category title should become the smaller heading level.
     company = replace_once(
         company,
-        """					<tr>
+        '<h3 class="midashi3 mb30_md50"><?php echo $target[\'title\'];?></h3>',
+        '<h2 class="midashi3 mb30_md50"><?php echo $target[\'title\'];?></h2>',
+        "company category heading",
+    )
+    if "<h4>2018年以前の実績</h4>" in company:
+        company = replace_once(
+            company,
+            "<h4>2018年以前の実績</h4>",
+            "<h3>2018年以前の実績</h3>",
+            "archive achievements heading",
+        )
+    if '<p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;Company</p>' in company:
+        company = replace_once(
+            company,
+            '<p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;Company</p>',
+            '<p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a href="company.html">MUSICIANについて</a><?php if (!$seoIsRoot): ?>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<?php echo h($seoCategoryTitle); ?><?php endif; ?></p>',
+            "company visible breadcrumb",
+        )
+    if "<th>名称</th>" in company and "<td>MUSICIAN</td>" in company:
+        company = replace_once(
+            company,
+            """					<tr>
 					  <th>名称</th>
 					  <td>MUSICIAN</td>
 					</tr>""",
-        """					<tr>
+            """					<tr>
 					  <th>会社名</th>
 					  <td>株式会社東京アーティスト協会</td>
 					</tr>
@@ -573,8 +610,8 @@ def build_catalog_pages() -> None:
 					  <th>ブランド名</th>
 					  <td>MUSICIAN</td>
 					</tr>""",
-        "company legal and brand names",
-    )
+            "company legal and brand names",
+        )
     company = company.replace(
         'class="img-fluid"></span>',
         'class="img-fluid" loading="lazy" decoding="async"></span>',
@@ -634,7 +671,11 @@ def build_contact_results() -> None:
 
 
 def build_achievements_page() -> None:
-    achievements = """<!doctype html>
+    fallback = OUTPUT / "app/webroot/achievements.html"
+    if fallback.exists():
+        achievements = fallback.read_text(encoding="utf-8")
+    else:
+        achievements = """<!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -658,6 +699,7 @@ def build_achievements_page() -> None:
   </body>
 </html>
 """
+    achievements = normalize_achievements_links(achievements)
     write("app/webroot/achievements.html", achievements)
 
 
@@ -821,9 +863,11 @@ def build_htaccess() -> None:
     redirects = """  # SEO: duplicate public URLs are permanently redirected to one canonical URL
   RewriteRule ^index\\.html$ https://www.musician.co.jp/ [R=301,L]
   RewriteRule ^works/index/22(?:/page:1)?/?$ https://www.musician.co.jp/works.html [R=301,L,NE]
-  RewriteRule ^company/index/21/?$ https://www.musician.co.jp/company.html [R=301,L,NE]
+  RewriteRule ^company/index/21(?:/page:1)?/?$ https://www.musician.co.jp/achievements.html [R=301,L,NE]
   RewriteRule ^works/index/(4|25)/page:1/?$ https://www.musician.co.jp/works/index/$1 [R=301,L,NE]
   RewriteRule ^company/index/(5|6|7|12|13|14|15|16|17|18|19|20)/page:1/?$ https://www.musician.co.jp/company/index/$1 [R=301,L,NE]
+  RewriteCond %{QUERY_STRING} (^|&)view=achievements(&|$)
+  RewriteRule ^company\\.html$ https://www.musician.co.jp/achievements.html [R=301,L,QSD,NE]
 
 """
     root_htaccess = replace_once(root_htaccess, marker, redirects + marker, "canonical redirects")

@@ -3,10 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>実績一覧｜MUSICIAN</title>
-    <meta name="description" content="企業イベント、式典、ホテル・商業施設、音楽制作に関するMUSICIANの実績一覧">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="canonical" href="https://www.musician.co.jp/achievements.html">
+    <?php echo $this->element('seo_meta', array(
+      'seoTitle' => '実績一覧｜MUSICIAN',
+      'seoDescription' => '2019年以降の最新主な実績を年度別に掲載。企業イベント、式典、ホテル・商業施設、コンサート、配信・映像まで幅広く対応します。',
+      'seoCanonicalPath' => '/achievements.html',
+      'seoPageType' => 'WebPage',
+      'seoBreadcrumbItems' => array(
+        array('name' => 'ホーム', 'item' => '/'),
+        array('name' => 'Achievements', 'item' => '/achievements.html')
+      )
+    )); ?>
+    <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/recent_achievements.css">
   </head>
@@ -40,6 +47,7 @@
                                         <li><a href="/achievements.html#achievements-2021">2021年</a></li>
                                         <li><a href="/achievements.html#achievements-2020">2020年</a></li>
                                         <li><a href="/achievements.html#achievements-2019">2019年</a></li>
+                                        <li><a href="/achievements.html#achievements-2018">2018年</a></li>
                                     </ul>
                                 </dd>
                             </dl>
@@ -726,6 +734,12 @@
     </details>
   </div>
 </section>
+<div class="achievement-archive-heading" id="achievements-2018">
+  <p class="achievement-archive-heading__eyebrow">Archive</p>
+  <h4>2018年以前の実績</h4>
+  <p class="mb20">2018年以前の詳細実績は会社案内の「実績紹介」に併記しています。</p>
+  <p><a href="/achievements.html#achievements-2018">2018年以前の実績一覧を見る</a></p>
+</div>
     </main>
   </body>
 </html>
