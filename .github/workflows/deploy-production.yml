@@ -49,3 +49,10 @@ jobs:
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
         run: |
           python tools/deploy_full_production.py deploy
+          
+      - name: Deploy artist/achievement refinements
+        env:
+          MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
+          MUSICIAN_WORKSPACE: ${{ github.workspace }}
+        run: |
+          python tools/deploy_artist_achievements_production.py deploy
