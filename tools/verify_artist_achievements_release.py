@@ -98,7 +98,14 @@ def verify_achievements() -> int:
     for path in ACHIEVEMENT_TEMPLATES:
         text = path.read_text(encoding="utf-8")
         for year in expected_years:
-            require(text.count(f'company.html#achievements-{year}') == 1, f"Sidebar link mismatch: {path}, {year}")
+            require(
+                text.count(f'achievements.html#achievements-{year}') == 1,
+                f"Sidebar link mismatch: {path}, {year}",
+            )
+            require(
+                text.count(f'company.html#achievements-{year}') == 0,
+                f"Old company anchor remains: {path}, {year}",
+            )
             require(text.count(f'id="achievements-{year}"') == 1, f"Year section mismatch: {path}, {year}")
         require(text.count('<details class="achievement-year"') == 8, f"Eight year sections required: {path}")
         require(text.count('<li class="achievement-list__item">') == expected_entries, f"Entry count mismatch: {path}")
@@ -107,7 +114,8 @@ def verify_achievements() -> int:
         require("achievement-list__date" not in text, f"Month/all-year column remains: {path}")
         require("achievement-year__caption" not in text, f"Redundant year caption remains: {path}")
         require("recent-achievements__intro" not in text, f"Removed intro remains: {path}")
-        require("<?php foreach($category_all as $category_id => $category):?>" in text, f"Older CMS categories removed: {path}")
+        require("<?php foreach($category_all as $category_id => $category):?>" not in text, f"Old CMS categories remain: {path}")
+        require("<?php if (!$isCategoryAll): ?>" not in text, f"Unexpected old category guard remains: {path}")
     css = ACHIEVEMENT_CSS.read_text(encoding="utf-8")
     require("grid-template-columns: 170px minmax(0, 1fr);" in css, "Desktop achievements layout missing")
     require("achievement-list__date" not in css and "recent-achievements__intro" not in css, "Removed achievements CSS remains")

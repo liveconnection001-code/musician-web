@@ -236,7 +236,7 @@ def main() -> int:
                 "mode": "deploy",
                 "backup_dir": str(backup_dir),
                 "verification": verification,
-                "url": "https://www.musician.co.jp/company.html#achievements",
+                "url": "https://www.musician.co.jp/achievements.html",
                 "remote_backups": {
                     name: str(path) if path is not None else None
                     for name, path in remote_backups.items()

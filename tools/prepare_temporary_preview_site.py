@@ -56,7 +56,7 @@ def main() -> None:
 
     write_text(
         PROJECT / "app" / "page.tsx",
-        '''import type { Metadata } from "next";\n\nexport const metadata: Metadata = {\n  title: "MUSICIAN 実績ページ｜公開前確認",\n  description: "MUSICIAN実績ページの公開前確認用サイトです。",\n};\n\nexport default function Home() {\n  return (\n    <main className="preview-gate">\n      <div className="preview-gate__card">\n        <p className="preview-gate__eyebrow">Private Preview</p>\n        <h1>MUSICIAN 実績ページ</h1>\n        <p>2019〜2026年の実績を追加した、公開前の確認用ページです。</p>\n        <a href="/company.html#achievements">実績ページを開く</a>\n      </div>\n    </main>\n  );\n}\n''',
+        '''import type { Metadata } from "next";\n\nexport const metadata: Metadata = {\n  title: "MUSICIAN 実績ページ｜公開前確認",\n  description: "MUSICIAN実績ページの公開前確認用サイトです。",\n};\n\nexport default function Home() {\n  return (\n    <main className="preview-gate">\n      <div className="preview-gate__card">\n        <p className="preview-gate__eyebrow">Private Preview</p>\n        <h1>MUSICIAN 実績ページ</h1>\n        <p>2019〜2026年の実績を追加した、公開前の確認用ページです。</p>\n        <a href="/achievements.html">実績ページを開く</a>\n      </div>\n    </main>\n  );\n}\n''',
     )
 
     write_text(

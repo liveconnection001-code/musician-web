@@ -1,9 +1,9 @@
 {
-  "generated_at_jst": "2026-07-26",
+  "generated_at_jst": "2026-07-27T18:40:36+09:00",
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
-  "production_uploaded": false,
-  "file_count": 22,
+  "production_uploaded": true,
+  "file_count": 23,
   "files": [
     {
       "path": ".htaccess",
@@ -27,28 +27,28 @@
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
-      "bytes": 57708,
-      "sha256": "47c73f216a214ad4558d566f0694caacde5f2c63b986b5429f5ca49584c48c2e"
+      "bytes": 58325,
+      "sha256": "1229c56c0abe3695805574f6380a52d7b06d3d6075c732b8501deaca01f421b8"
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
-      "bytes": 13968,
-      "sha256": "e351a274c21a78ad4800dbab131e3d703b59113d73096f100e7bfd1cb6e9e4a3"
+      "bytes": 13982,
+      "sha256": "f770179b07ff004480047ebb685233e7aea209660d473c690a97bb89886125b0"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
-      "bytes": 18868,
-      "sha256": "45df8313b251756be91be17e26111f33eebeb48a7a83e6ce2877112c418b3963"
+      "bytes": 18885,
+      "sha256": "1929cfb62141cbd84fa7323a10dd0901ea11235d1a88fc29532f21c88597f599"
     },
     {
       "path": "app/View/Contact/msg.html",
-      "bytes": 14850,
-      "sha256": "0b57d99b0b05fdeea23f87c0a9e5dfb4f8a860d7cb467a467842e9e9cb3c846d"
+      "bytes": 14866,
+      "sha256": "5c1c6b46ae24c384e865f80bcf855bce39230a4cfa9f04990433a9e2b6f19ab2"
     },
     {
       "path": "app/View/Contact/thanks.html",
-      "bytes": 11798,
-      "sha256": "8334e5edca2e6526490d38f36ad0d4f03b921bbb0f42fd32833e4fc73f0e40b9"
+      "bytes": 11814,
+      "sha256": "1b3cd222cfeb0af40fd4323995c59c7199398c49d7809adc209b61375bf60277"
     },
     {
       "path": "app/View/Elements/seo_meta.html",
@@ -62,8 +62,8 @@
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 23450,
-      "sha256": "866dbfb47adaab49e53e7cf04d9bcacf8061ee816d16f74c9f5df1aec11ed348"
+      "bytes": 23482,
+      "sha256": "400274ee71e09db07176bc49af56ac67f9e4c58122afad9af487354ad97fe4d5"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -77,8 +77,8 @@
     },
     {
       "path": "app/webroot/achievements.html",
-      "bytes": 1144,
-      "sha256": "c52de5581ff7b12e423bb9b03834d8842de6d1e79625d5b68b5dd0386c9c8d88"
+      "bytes": 39742,
+      "sha256": "a869cae20895c4e3a77d04e2832f84e3268bb94dafd0921e91a2b84e0aa1af13"
     },
     {
       "path": "app/webroot/business.html",
@@ -89,6 +89,11 @@
       "path": "app/webroot/contact.html",
       "bytes": 24999,
       "sha256": "67bf1feee8ec3ee23237e8247660d320c59c23a4274fa7748db19a966003d308"
+    },
+    {
+      "path": "app/webroot/css/recent_achievements.css",
+      "bytes": 3501,
+      "sha256": "03c74ad38610e6c9ed9620c97fc783c8a3e4c3312a62aa5de6ad0e7937cd729d"
     },
     {
       "path": "app/webroot/css/style.css",

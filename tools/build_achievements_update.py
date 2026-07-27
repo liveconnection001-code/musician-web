@@ -63,14 +63,14 @@ CSS_LINK = (
 SIDEBAR_ANCHOR = """                                    <ul>
                                         <?php foreach($category_all as $category_id => $category):?>"""
 SIDEBAR_REPLACEMENT = """                                    <ul>
-                                        <li><a href="company.html#achievements-2026">2026年</a></li>
-                                        <li><a href="company.html#achievements-2025">2025年</a></li>
-                                        <li><a href="company.html#achievements-2024">2024年</a></li>
-                                        <li><a href="company.html#achievements-2023">2023年</a></li>
-                                        <li><a href="company.html#achievements-2022">2022年</a></li>
-                                        <li><a href="company.html#achievements-2021">2021年</a></li>
-                                        <li><a href="company.html#achievements-2020">2020年</a></li>
-                                        <li><a href="company.html#achievements-2019">2019年</a></li>
+                                        <li><a href="achievements.html#achievements-2026">2026年</a></li>
+                                        <li><a href="achievements.html#achievements-2025">2025年</a></li>
+                                        <li><a href="achievements.html#achievements-2024">2024年</a></li>
+                                        <li><a href="achievements.html#achievements-2023">2023年</a></li>
+                                        <li><a href="achievements.html#achievements-2022">2022年</a></li>
+                                        <li><a href="achievements.html#achievements-2021">2021年</a></li>
+                                        <li><a href="achievements.html#achievements-2020">2020年</a></li>
+                                        <li><a href="achievements.html#achievements-2019">2019年</a></li>
                                         <?php foreach($category_all as $category_id => $category):?>"""
 
 TEMPLATE_CONTENT_ANCHOR = """<h4 class="midashi3 mb30_md50"><?php echo $target['title'];?></h4>"""

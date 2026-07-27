@@ -122,7 +122,8 @@ def main() -> int:
                 "files": len(files),
                 "bytes": uploaded_bytes,
                 "remote_root": str(REMOTE_ROOT),
-                "url": "https://www.musician.co.jp/preview-achievements-20260726-8a2f/company.html#achievements",
+                "company_url": "https://www.musician.co.jp/preview-achievements-20260726-8a2f/company.html",
+                "home_url": "https://www.musician.co.jp/preview-achievements-20260726-8a2f/home.html",
             },
             ensure_ascii=False,
         )

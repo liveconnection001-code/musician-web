@@ -76,7 +76,7 @@ SHOWCASE = r'''<main class="works-showcase">
   <p class="works-showcase__kicker works-showcase__kicker--dark">START A CONVERSATION</p>
   <h2 id="works-cta-title">まだ形になっていない段階から、<br>ご相談ください。</h2>
   <p>会場、目的、ご予算、希望する雰囲気を伺い、編成と進行をご提案します。</p>
-  <div><a class="works-showcase__button works-showcase__button--primary" href="contact.html">演奏・イベント制作を相談する</a><a class="works-showcase__button" href="company.html#achievements">実績一覧を見る</a></div>
+  <div><a class="works-showcase__button works-showcase__button--primary" href="contact.html">演奏・イベント制作を相談する</a><a class="works-showcase__button" href="achievements.html">実績一覧を見る</a></div>
 </section>
 </main>'''
 

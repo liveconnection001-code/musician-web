@@ -650,8 +650,8 @@ def build_achievements_page() -> None:
       <section class="pd_yohaku_r">
         <div class="container">
           <h1 class="midashi1 mb30_md50 tal_sptac"><span class="en">Achievements</span>実績一覧</h1>
-          <p class="p_22">MUSICIANの代表的な実績は <a href="company.html#achievements">MUSICIANについて</a> のページ内に年度別で掲載しています。</p>
-          <p><a href="company.html#achievements" class="btn btn-1">MUSICIANについて（実績セクション）へ</a></p>
+          <p class="p_22">MUSICIANの代表的な実績は <a href="achievements.html">MUSICIANについて</a> のページ内に年度別で掲載しています。</p>
+          <p><a href="achievements.html" class="btn btn-1">実績一覧を見る</a></p>
         </div>
       </section>
     </main>
