@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import re
 import shutil
@@ -28,6 +29,29 @@ SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
 ASSET_VERSION = "20260728c"
 STYLE_VERSION = "20260728c"
+
+
+ARCHIVE_DATE_RE = re.compile(
+    r"^\s*(?:19|20)\d{2}年(?:\s*\d{1,2}月(?:\s*\d{1,2}日)?)?"
+    r"(?:\s*[～〜-]\s*(?:\d{1,2}月)?\s*\d{1,2}日)?\s*"
+)
+ARCHIVE_CATEGORY_RULES = (
+    ("クルーズ", ("クルーズ", "ぱしふぃっくびいなす", "ぱしふぃっく びいなす", "飛鳥", "にっぽん丸", "船上", "船内", "船長主催")),
+    ("CM・広告", ("CM", "ＣＭ", "広告", "キャンペーン", "プロモーション", "PRイベント", "キャスティング")),
+    ("テレビ・メディア", ("テレビ", "TV", "ＴＶ", "番組", "ラジオ", "放送", "NHK", "ＮＨＫ", "取材", "雑誌")),
+    ("録音・楽曲制作", ("レコーディング", "録音", "音源", "編曲", "作曲", "譜面", "アルバム", "CD制作", "ＣＤ制作", "ミキシング", "マスタリング")),
+    ("式典・表彰", ("授賞", "受賞", "表彰", "式典", "贈呈式", "賀詞", "祝賀", "竣工", "落成", "開業", "開所", "開会式", "閉会式", "セレモニー", "入学式", "卒業式", "結婚式", "披露宴", "叙勲", "記念式", "周年記念")),
+    ("国際イベント", ("国際", "大使館", "外国人", "海外", "ワールド", "サウジアラビア", "シンガポール", "ドバイ", "中国政府", "日中", "日韓")),
+    ("スポーツイベント", ("競馬", "ファンファーレ", "ゴルフ", "サッカー", "野球", "マラソン", "スポーツ", "モーターサイクル", "オリンピック", "パラリンピック")),
+    ("音響・運営", ("音響", "PA", "ＰＡ", "舞台監督", "オペレーション", "会場運営", "制作運営", "進行管理")),
+    ("ホテル・施設", ("ホテル", "ハーヴェスト", "ハーベスト", "リゾート", "宴会場", "レストラン", "病院", "ロビー", "BAR", "ＢＡＲ", "Bar", "ラウンジ")),
+    ("百貨店・商業施設", ("百貨店", "髙島屋", "高島屋", "マルイ", "丸井", "イオン", "モール", "商業施設", "デパート", "東武", "伊勢丹", "三越", "そごう", "ルミネ", "ららぽーと", "銀座スクエア")),
+    ("定期公演", ("定期公演", "定例公演", "定期演奏会", "月例コンサート", "ランチタイムコンサート")),
+    ("コンサート", ("コンサート", "リサイタル", "ライブ", "LIVE", "ＬＩＶＥ", "演奏会", "音楽会", "公演", "ステージ", "ショー")),
+    ("企業イベント", ("株式会社", "会社", "企業", "懇親会", "パーティ", "Party", "Ｐａｒｔｙ", "新年会", "忘年会", "総会", "会議", "セミナー", "展示会", "イベント", "フェア", "代理店会", "販売店")),
+    ("地域・文化イベント", ("神社", "寺", "祭", "文化", "自治体", "市民", "学校", "学園", "新春", "お正月", "獅子舞")),
+    ("出張演奏", ("出張演奏", "演奏サービス", "演奏", "出演", "奏者", "アーティスト")),
+)
 
 
 SHARED_HEADING_CSS = r"""
@@ -362,6 +386,47 @@ def group_recent_achievements(recent: str) -> str:
     )
 
 
+def archive_entry_text(raw_html: str) -> str:
+    """Return an archive entry without its former publication date."""
+    text = html.unescape(re.sub(r"<[^>]+>", " ", raw_html))
+    text = " ".join(text.replace("\u3000", " ").split())
+    return ARCHIVE_DATE_RE.sub("", text).strip()
+
+
+def archive_category(title: str) -> str:
+    folded = title.casefold()
+    for category, keywords in ARCHIVE_CATEGORY_RULES:
+        if any(keyword.casefold() in folded for keyword in keywords):
+            return category
+    return "その他の実績"
+
+
+def group_archive_achievements(archive_html: str) -> str:
+    """Group legacy entries like the 2019+ layout and remove event dates."""
+    grouped: dict[str, list[str]] = {}
+    for raw_entry in re.findall(r"<p>(.*?)</p>", archive_html, flags=re.S):
+        title = archive_entry_text(raw_entry)
+        if not title:
+            continue
+        grouped.setdefault(archive_category(title), []).append(title)
+
+    blocks: list[str] = []
+    for category, entries in grouped.items():
+        lines = "\n".join(
+            f'''              <li class="achievement-category-group__item achievement-category-group__item--archive">
+                <p class="achievement-list__line"><span class="achievement-list__title">{html.escape(title, quote=False)}</span></p>
+              </li>'''
+            for title in entries
+        )
+        blocks.append(f'''          <section class="achievement-category-group">
+            <h3 class="achievement-list__category">{category}</h3>
+            <ul class="achievement-category-group__list">
+{lines}
+            </ul>
+          </section>''')
+    return "\n".join(blocks)
+
+
 def prepare_achievements() -> None:
     source = RECENT_ACHIEVEMENTS_SOURCE.read_text(encoding="utf-8")
     recent_start = source.find('<section class="recent-achievements"')
@@ -414,7 +479,7 @@ def prepare_achievements() -> None:
     )
     archives = []
     for year in range(2018, 2005, -1):
-        archive_html = by_year[year]["html"]
+        archive_html = group_archive_achievements(by_year[year]["html"])
         archives.append(f"""      <details class="achievement-year achievement-year--archive" id="achievements-{year}" open>
         <summary class="achievement-year__summary">
           <span class="achievement-year__number">{year}</span>

@@ -103,15 +103,22 @@ def main() -> int:
         "/achievements.html": "/achievements.html",
         "/contact.html": "/contact.html",
         "/artist/view/38": "/artist/view/38",
-        "/company/index/20": "/company/index/20",
         "/works/index/4": "/works/index/4",
     }
     rendered = {path: verify_html(path, canonical) for path, canonical in pages.items()}
     company = rendered["/company.html"]
     achievements = rendered["/achievements.html"]
     check(
-        achievements.count('class="achievement-list__item"') == 85,
+        achievements.count('class="achievement-category-group__item"') == 85,
         "achievements: 85 recent achievements",
+    )
+    check(
+        achievements.count('class="achievement-category-group__item achievement-category-group__item--archive"') == 2672,
+        "achievements: 2,672 recovered archive achievements",
+    )
+    check(
+        re.search(r'<details[^>]+id="achievements-2018"[\s\S]*?(?:19|20)\d{2}年\d{1,2}月\d{1,2}日', achievements) is None,
+        "achievements: recovered event dates are hidden",
     )
     check(
         "アーティスト協会 MUSICIAN事業部として継続している実績を含みます。" not in company,
@@ -123,6 +130,7 @@ def main() -> int:
         "/works/index/22": "/works.html",
         "/works/index/22/page:1": "/works.html",
         "/company/index/21": "/achievements.html",
+        "/company/index/20": "/achievements.html#achievements-2017",
         "/company.html?view=achievements": "/achievements.html",
         "/works/index/4/page:1": "/works/index/4",
         "/works/index/25/page:1": "/works/index/25",
@@ -143,9 +151,14 @@ def main() -> int:
     check(status == 200, f"sitemap.xml: expected 200, got {status}")
     try:
         root = ET.fromstring(payload)
-        namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        namespace = {
+            "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
+            "image": "http://www.google.com/schemas/sitemap-image/1.1",
+        }
         locations = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
-        check(len(locations) == 48, f"sitemap.xml: 48 URLs, found {len(locations)}")
+        image_locations = [node.text or "" for node in root.findall("sm:url/image:image/image:loc", namespace)]
+        check(len(locations) == 36, f"sitemap.xml: 36 URLs, found {len(locations)}")
+        check(len(image_locations) == 36, f"sitemap.xml: 36 Works images, found {len(image_locations)}")
         check(f"{BASE}/achievements.html" in locations, "sitemap.xml: independent achievements URL")
         check(len(locations) == len(set(locations)), "sitemap.xml: URLs are unique")
     except ET.ParseError as exc:

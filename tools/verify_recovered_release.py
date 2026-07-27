@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 from PIL import Image
@@ -98,8 +100,42 @@ def validate_achievements() -> None:
 
     recovered = {int(item["year"]): item for item in json.loads(RECOVERED.read_text(encoding="utf-8"))}
     require(set(recovered) == set(range(2006, 2019)), "Recovered years incomplete")
+    archive_total = 0
     for year, item in recovered.items():
-        require(item["html"] in text, f"Recovered {year} content changed")
+        match = re.search(
+            rf'<details class="achievement-year achievement-year--archive" id="achievements-{year}" open>(.*?)</details>',
+            text,
+            flags=re.S,
+        )
+        require(match is not None, f"Recovered {year} section missing")
+        rendered_titles = [
+            html.unescape(re.sub(r"<[^>]+>", " ", value)).strip()
+            for value in re.findall(r'<span class="achievement-list__title">(.*?)</span>', match.group(1), flags=re.S)
+        ]
+        source_titles = []
+        for raw_entry in re.findall(r"<p>(.*?)</p>", item["html"], flags=re.S):
+            title = html.unescape(re.sub(r"<[^>]+>", " ", raw_entry))
+            title = " ".join(title.replace("\u3000", " ").split())
+            title = re.sub(
+                r"^\s*(?:19|20)\d{2}年(?:\s*\d{1,2}月(?:\s*\d{1,2}日)?)?"
+                r"(?:\s*[～〜-]\s*(?:\d{1,2}月)?\s*\d{1,2}日)?\s*",
+                "",
+                title,
+            ).strip()
+            if title:
+                source_titles.append(title)
+        require(Counter(rendered_titles) == Counter(source_titles), f"Recovered {year} entries changed")
+        require(
+            not any(re.match(r"^(?:19|20)\d{2}年\d{1,2}月", title) for title in rendered_titles),
+            f"Recovered {year} still displays event dates",
+        )
+        require('class="achievement-list__category"' in match.group(1), f"Recovered {year} is not grouped")
+        archive_total += len(rendered_titles)
+    require(archive_total == 2672, f"Recovered archive item count changed: {archive_total}")
+    require(
+        text.count('class="achievement-category-group__item achievement-category-group__item--archive"') == 2672,
+        "Archive grouping item count changed",
+    )
 
     css = ACHIEVEMENTS_CSS.read_text(encoding="utf-8")
     require("grid-template-columns: minmax(0, 1fr) 150px" in css, "Category width is not 150px")
