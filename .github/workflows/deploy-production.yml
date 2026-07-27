@@ -13,14 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
 
-      - name: Deploy to production
-        env:
-          MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
-          MUSICIAN_WORKSPACE: ${{ github.workspace }}
-        run: |
-          python tools/deploy_full_production.py deploy
+    - name: Snapshot before deploy
+      env:
+        MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
+        MUSICIAN_WORKSPACE: ${{ github.workspace }}
+      run: |
+        python tools/deploy_full_production.py snapshot
+
+    - name: Deploy to production
+      env:
+        MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
+        MUSICIAN_WORKSPACE: ${{ github.workspace }}
+      run: |
+        python tools/deploy_full_production.py deploy
