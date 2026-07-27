@@ -130,13 +130,17 @@ def main() -> int:
         "アーティスト協会 MUSICIAN事業部として継続している実績を含みます。" not in company,
         "company: removed association sentence is absent",
     )
+    megumi_company_position = company.find("代表取締役 大町めぐみ")
+    miyazaki_company_position = company.find("プロデューサー</span> 宮﨑 隆")
     check(
-        company.find("大町 めぐみ") < company.find("宮﨑 隆")
-        and company.find("大町 めぐみ") >= 0,
+        0 <= megumi_company_position < miyazaki_company_position,
         "company: Megumi Omachi appears before Takashi Miyazaki",
     )
     check("/artist/view/62" in artist and "大町 めぐみ" in artist, "artist: Megumi listing")
-    check("上海音楽院" in megumi and "2年間" in megumi, "Megumi profile: Shanghai study details")
+    check(
+        ("上海音楽学院" in megumi or "上海音楽院" in megumi) and "2年間" in megumi,
+        "Megumi profile: Shanghai study details",
+    )
     for social in (
         "x.com/MUSICIAN_MEGUMI",
         "threads.com/@megmilk323",
