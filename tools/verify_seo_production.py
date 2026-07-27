@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import ssl
 import sys
@@ -228,6 +229,14 @@ def main() -> int:
         "errors": ERRORS,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        for error in ERRORS:
+            annotation = (
+                error.replace("%", "%25")
+                .replace("\r", "%0D")
+                .replace("\n", "%0A")
+            )
+            print(f"::error title=Production verification failed::{annotation}")
     return 1 if ERRORS else 0
 
 

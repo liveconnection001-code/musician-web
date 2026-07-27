@@ -72,8 +72,8 @@
     },
     {
       "path": "app/webroot/.htaccess",
-      "bytes": 3737,
-      "sha256": "d6f5ac37b987af7a5eb6dbf3a64b36361f104947554f58cc74ea12c9f513c50b"
+      "bytes": 4007,
+      "sha256": "447af7c72f2e5cb87bfbdf1ed652a0a93509ebabcc4cfaeecded9d62678931bc"
     },
     {
       "path": "app/webroot/achievements.html",
