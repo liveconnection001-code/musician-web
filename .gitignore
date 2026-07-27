@@ -12,6 +12,7 @@ temporary_preview_site/
 default_snapshots/*.tmp
 new_site/production_backups/
 backup_2026-07-25/
+release_backups/
 
 # Python / cache
 __pycache__/
