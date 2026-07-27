@@ -1,0 +1,95 @@
+{
+  "photos": [
+    {
+      "key": "hero-corporate-show",
+      "sourceFile": "PXL_20260226_092253137.jpg",
+      "sourcePixels": [
+        4032,
+        2268
+      ],
+      "outputPixels": [
+        1920,
+        1080
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "corporate-party",
+      "sourceFile": "PXL_20260226_092251706.jpg",
+      "sourcePixels": [
+        4032,
+        2268
+      ],
+      "outputPixels": [
+        1440,
+        900
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "international-reception",
+      "sourceFile": "PXL_20250724_094047556.jpg",
+      "sourcePixels": [
+        4032,
+        2268
+      ],
+      "outputPixels": [
+        1440,
+        900
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "japanese-hospitality",
+      "sourceFile": "PXL_20260106_234608706.jpg",
+      "sourcePixels": [
+        4032,
+        2268
+      ],
+      "outputPixels": [
+        1440,
+        900
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "hotel-live",
+      "sourceFile": "PXL_20250319_105246876.jpg",
+      "sourcePixels": [
+        4080,
+        3072
+      ],
+      "outputPixels": [
+        1440,
+        900
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "large-event",
+      "sourceFile": "PXL_20250330_024327763.jpg",
+      "sourcePixels": [
+        4032,
+        2268
+      ],
+      "outputPixels": [
+        1440,
+        900
+      ],
+      "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "live-streaming",
+      "sourceFile": "1-Photo-1.jpg",
+      "sourcePixels": [
+        1280,
+        720
+      ],
+      "outputPixels": [
+        1440,
+        900
+      ],
+      "metadata": "stripped during re-encode"
+    }
+  ]
+}

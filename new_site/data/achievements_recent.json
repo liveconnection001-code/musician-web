@@ -1,0 +1,133 @@
+{
+  "updatedThrough": "2026年7月",
+  "intro": "企業イベント、コンサート、公演制作、楽曲制作、メディア出演、ライブ配信・映像制作など、近年の主な実績をご紹介します。",
+  "years": [
+    {
+      "year": 2026,
+      "label": "2026年（7月現在）",
+      "entries": [
+        {"date": "1月", "category": "式典・表彰", "title": "ISEKI Global Awards", "detail": "ソプラノ歌唱の出演手配"},
+        {"date": "1月", "category": "コンサート", "title": "ROLLY2.0 -DEAD or ALIVE !", "detail": "中西俊博出演"},
+        {"date": "1月", "category": "式典・表彰", "title": "JRA賞 授賞式", "detail": "オーケストラ、迎賓・歓談演奏、譜面制作"},
+        {"date": "2月", "category": "コンサート", "title": "ピティナ 特級ガラコンサート", "detail": "公演制作・運営"},
+        {"date": "2月", "category": "企業イベント", "title": "Audi Annual Dealer Awards Dinner Party", "detail": "Black Venus出演"},
+        {"date": "3月", "category": "コンサート", "title": "鈴木慶江 ミモザリサイタル2026", "detail": "公演制作・運営"},
+        {"date": "3月", "category": "音響・運営", "title": "第53回東京モーターサイクルショー", "detail": "音響オペレーション・会場運営"},
+        {"date": "5月", "category": "メディア・制作", "title": "ソニーヘッドフォンイベント", "detail": "サヌカイト演奏・収録"},
+        {"date": "6月", "category": "式典・表彰", "title": "2026年全国大会（ジャパンアワード）", "detail": "演奏者手配"},
+        {"date": "通年", "category": "ホテル・施設", "title": "東急ハーヴェストクラブ／VIALA 各施設", "detail": "ロビーコンサート、記念公演、ディナー演奏"}
+      ]
+    },
+    {
+      "year": 2025,
+      "entries": [
+        {"date": "1月", "category": "クルーズ", "title": "Silver Dawn World Cruise Pre Event", "detail": "箏演奏"},
+        {"date": "1月", "category": "式典・表彰", "title": "JRA賞 授賞式", "detail": "オーケストラ、迎賓・歓談演奏、譜面制作"},
+        {"date": "1月", "category": "CM・広告", "title": "スマホゲーム『にゃんこ大戦争』CM", "detail": "指揮者キャスティング"},
+        {"date": "2月", "category": "コンサート", "title": "鈴木慶江 ミモザリサイタル2025", "detail": "公演制作・運営"},
+        {"date": "3月", "category": "国際イベント", "title": "2025年大阪・関西万博 サウジアラビアPR", "detail": "出演者手配"},
+        {"date": "3月", "category": "音響・運営", "title": "第52回東京モーターサイクルショー", "detail": "音響オペレーション・会場運営"},
+        {"date": "6月", "category": "式典・表彰", "title": "2025年全国大会（ジャパンアワード）", "detail": "演奏者手配"},
+        {"date": "7〜8月", "category": "配信・映像", "title": "ピティナ・ピアノコンペティション", "detail": "特級ほか各全国大会のライブ配信"},
+        {"date": "11月", "category": "出張演奏", "title": "東京競馬場 ジャパンカップ", "detail": "場内演奏"},
+        {"date": "通年", "category": "ホテル・施設", "title": "箱根翡翠、VIALA鬼怒川渓翠、品川シーズンテラスほか", "detail": "ロビーコンサート、周年公演、クリスマス公演"}
+      ]
+    },
+    {
+      "year": 2024,
+      "entries": [
+        {"date": "1月", "category": "出張演奏", "title": "東京スカイツリー お正月イベント", "detail": "和楽器演奏"},
+        {"date": "1月", "category": "配信・映像", "title": "夢のかけ橋 コンサート Vol.4", "detail": "ライブ配信・回線手配"},
+        {"date": "1月", "category": "式典・表彰", "title": "JRA賞 授賞式", "detail": "オーケストラ、迎賓・歓談演奏、譜面制作"},
+        {"date": "2月", "category": "テレビ", "title": "日本テレビ『行列のできる相談所』", "detail": "演奏者出演"},
+        {"date": "3月", "category": "音響・運営", "title": "第51回東京モーターサイクルショー", "detail": "音響オペレーション・会場運営"},
+        {"date": "7月", "category": "式典・表彰", "title": "FOREVER JAPAN AWARD 2024", "detail": "出演者手配"},
+        {"date": "7〜8月", "category": "配信・映像", "title": "ピティナ・ピアノコンペティション", "detail": "特級予選・セミファイナルのライブ配信"},
+        {"date": "秋", "category": "百貨店・商業施設", "title": "日本橋髙島屋 フランス展", "detail": "館内演奏"},
+        {"date": "通年", "category": "ホテル・施設", "title": "箱根翡翠、軽井沢＆VIALAほか", "detail": "新春、周年、クリスマスの各コンサート"},
+        {"date": "12月", "category": "コンサート", "title": "レクサス高崎 クリスマスコンサート", "detail": "出演者手配・公演運営"}
+      ]
+    },
+    {
+      "year": 2023,
+      "entries": [
+        {"date": "1月", "category": "式典・表彰", "title": "JRA賞 授賞式", "detail": "オーケストラ、弦楽四重奏、歌手出演、録音・譜面制作"},
+        {"date": "3月", "category": "企業イベント", "title": "三陽商会 創業100周年記念パーティー", "detail": "弦楽八重奏"},
+        {"date": "3月", "category": "テレビ", "title": "NHK連続テレビ小説『らんまん』", "detail": "外国人弦楽器奏者キャスティング"},
+        {"date": "3月", "category": "展覧会・文化", "title": "野村グループ ルーヴル美術館展", "detail": "弦楽四重奏 SNOWDROPS出演"},
+        {"date": "夏", "category": "クルーズ", "title": "船上花火大会", "detail": "BGM演奏"},
+        {"date": "7〜8月", "category": "配信・映像", "title": "ピティナ・ピアノコンペティション", "detail": "特級予選・セミファイナルのライブ配信"},
+        {"date": "秋", "category": "企業イベント", "title": "RICHARD MILLE GINZA Special Dinner", "detail": "演奏出演"},
+        {"date": "10月", "category": "コンサート", "title": "Bohemian Love ROLLY", "detail": "中西俊博出演"},
+        {"date": "12月", "category": "コンサート", "title": "二胡フェスティバル2023", "detail": "制作・運営"},
+        {"date": "12月", "category": "ホテル・施設", "title": "箱根翡翠 クリスマスコンサート", "detail": "公演制作・運営"}
+      ]
+    },
+    {
+      "year": 2022,
+      "entries": [
+        {"date": "1月", "category": "ホテル・施設", "title": "箱根翡翠 お正月ロビーコンサート", "detail": "新春演奏"},
+        {"date": "5月", "category": "コンサート", "title": "FFS DISNEY & MOVIE MUSIC LIVE", "detail": "出演、編曲、デザイン、ライブ配信"},
+        {"date": "4〜5月", "category": "配信・映像", "title": "丸の内ミュージックフェス", "detail": "エリアコンサート収録・ライブ配信"},
+        {"date": "5月", "category": "コンサート", "title": "ライオンズ チャリティーコンサート", "detail": "公演制作・運営"},
+        {"date": "7〜8月", "category": "配信・映像", "title": "ピティナ・ピアノコンペティション", "detail": "特級各予選・セミファイナルのライブ配信"},
+        {"date": "9月", "category": "配信・映像", "title": "夢のかけ橋 コンサート Vol.3", "detail": "配信・音響・ステージ運営"},
+        {"date": "10月", "category": "式典・祝賀会", "title": "日本港湾協会 祝賀会", "detail": "弦楽四重奏"},
+        {"date": "11月", "category": "コンサート", "title": "二胡フェスティバル2022", "detail": "制作・出演手配・運営"},
+        {"date": "12月", "category": "コンサート", "title": "ミューズたちの響宴2022", "detail": "公演制作・運営"},
+        {"date": "12月", "category": "ホテル・施設", "title": "箱根翡翠 クリスマスコンサート", "detail": "公演制作・運営"}
+      ]
+    },
+    {
+      "year": 2021,
+      "entries": [
+        {"date": "夏", "category": "配信・映像", "title": "ピティナ・ピアノコンペティション", "detail": "特級各予選・セミファイナルのライブ配信"},
+        {"date": "10月", "category": "CM・広告", "title": "Google 翻訳 CM", "detail": "チェロ演奏指導・手元ボディダブル"},
+        {"date": "秋", "category": "企業イベント", "title": "RICHARD MILLE Press Dinner", "detail": "演奏出演"},
+        {"date": "11月", "category": "配信・映像", "title": "夢のかけ橋 コンサート Vol.2", "detail": "映像撮影・ライブ配信"},
+        {"date": "12月", "category": "式典・表彰", "title": "YOSAアワード2021", "detail": "テノール歌唱"},
+        {"date": "通年", "category": "コンサート", "title": "Neo Artist Live II", "detail": "公演制作・配信"},
+        {"date": "通年", "category": "コンサート", "title": "ミューズたちの響宴 第一夜・第二夜", "detail": "公演制作・配信"},
+        {"date": "通年", "category": "コンサート", "title": "福田泰子 ソプラノリサイタル", "detail": "公演制作・配信"},
+        {"date": "冬", "category": "コンサート", "title": "鈴木慶江 クリスマススペシャルコンサート", "detail": "公演制作・運営"},
+        {"date": "冬", "category": "商業施設", "title": "聖蹟桜ケ丘SC クリスマスコンサート", "detail": "出演者手配・公演運営"}
+      ]
+    },
+    {
+      "year": 2020,
+      "context": "緊急事態宣言などでライブ開催が難しかった期間は、配信・映像制作を活用して活動を継続しました。その後は状況の緩和に合わせ、通常のライブ、公演、出張演奏を段階的に再開しています。",
+      "entries": [
+        {"date": "1月", "category": "国際イベント", "title": "世界経済フォーラム年次総会（ダボス会議）Japan Night", "detail": "演奏出演"},
+        {"date": "1月", "category": "式典・表彰", "title": "JRA賞 授賞式", "detail": "オーケストラ演奏"},
+        {"date": "2月", "category": "テレビ", "title": "NHK BS時代劇『明治開化 新十郎探偵帖』", "detail": "弦楽四重奏の撮影出演"},
+        {"date": "4〜6月", "category": "配信・映像", "title": "演奏家向けオンライン収録・映像制作", "detail": "リモート収録、編集、配信準備"},
+        {"date": "7月", "category": "配信・映像", "title": "MUSIC FESTIVAL 2020", "detail": "オンライン公演の収録・配信"},
+        {"date": "7月", "category": "配信・映像", "title": "日生劇場『ひなたと月の姫』スピンオフ映像", "detail": "映像出演"},
+        {"date": "9月", "category": "楽曲制作", "title": "テルモ100周年記念企画", "detail": "楽曲制作"},
+        {"date": "10月", "category": "ライブ・舞台", "title": "KAAT神奈川芸術劇場 音楽劇『銀河鉄道の夜2020』", "detail": "中西俊博出演"},
+        {"date": "10月", "category": "配信・映像", "title": "市川慎 プレミアムソロライブ", "detail": "ライブ配信"},
+        {"date": "11月", "category": "配信・映像", "title": "東京都『アートにエールを！』", "detail": "中西俊博オリジナル音楽映像の制作"},
+        {"date": "10〜12月", "category": "出張演奏", "title": "JRA GIファンファーレ、ホテル・商業施設の季節公演", "detail": "状況に合わせてライブ演奏を段階的に再開"}
+      ]
+    },
+    {
+      "year": 2019,
+      "entries": [
+        {"date": "1月2日", "category": "ホテル・施設", "title": "東急ハーヴェストクラブ軽井沢＆VIALA 新春演奏会", "detail": "新春コンサート"},
+        {"date": "1月15日", "category": "コンサート", "title": "ア・ラ・カルト 30th Anniversary", "detail": "中西俊博出演"},
+        {"date": "1月28日", "category": "式典・表彰", "title": "JRA賞 授賞式", "detail": "オーケストラ演奏"},
+        {"date": "1月30日", "category": "コンサート", "title": "TAP DANCER KENTA 30TH ANNIVERSARY LIVE", "detail": "公演出演"},
+        {"date": "2〜12月", "category": "クルーズ", "title": "ぱしふぃっく びいなす 各クルーズ", "detail": "メインショー、ラウンジ演奏、各種ステージ"},
+        {"date": "3月29日", "category": "コンサート", "title": "池田綾子コンサートツアー『風を紡ぐ』", "detail": "中西俊博出演"},
+        {"date": "5月7日", "category": "スポーツイベント", "title": "ワールドレディスチャンピオンシップ 前夜祭", "detail": "演奏出演"},
+        {"date": "8月23日", "category": "国際イベント", "title": "2019 World Judo Championships GALA", "detail": "演奏出演"},
+        {"date": "9月23日", "category": "コンサート", "title": "Global ROLLY Groovy 2019", "detail": "中西俊博出演"},
+        {"date": "10月19日", "category": "テレビ・録音", "title": "NHK連続テレビ小説『スカーレット』", "detail": "レコーディング"},
+        {"date": "11月15日", "category": "企業イベント", "title": "RICHARD MILLE in TOKYO 2019", "detail": "ビッグバンドほか演奏演出"},
+        {"date": "12月21日", "category": "ホテル・施設", "title": "箱根翡翠 クリスマスロビーコンサート", "detail": "公演制作・運営"},
+        {"date": "12月24日", "category": "商業施設", "title": "ナイトアクアリウム コンサート", "detail": "演奏出演"},
+        {"date": "通年", "category": "定期公演", "title": "柏の杜 ランチタイムコンサート", "detail": "月例コンサートの出演者手配・運営"}
+      ]
+    }
+  ]
+}

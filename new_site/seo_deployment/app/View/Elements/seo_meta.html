@@ -1,0 +1,121 @@
+<?php
+$seoBaseUrl = 'https://www.musician.co.jp';
+$seoTitle = isset($seoTitle) ? trim($seoTitle) : 'MUSICIAN';
+$seoDescription = isset($seoDescription) ? trim($seoDescription) : '';
+$seoCanonicalPath = isset($seoCanonicalPath) ? trim($seoCanonicalPath) : '/';
+$seoPageType = isset($seoPageType) ? $seoPageType : 'WebPage';
+$seoOgType = isset($seoOgType) ? $seoOgType : 'website';
+$seoImage = !empty($seoImage) ? trim($seoImage) : '/images/mv/mv_img01.jpg';
+$seoBreadcrumbItems = isset($seoBreadcrumbItems) ? $seoBreadcrumbItems : array();
+$seoAdditionalSchema = isset($seoAdditionalSchema) ? $seoAdditionalSchema : array();
+
+if (preg_match('#^https?://#i', $seoCanonicalPath)) {
+  $seoCanonicalUrl = $seoCanonicalPath;
+} else {
+  $seoCanonicalUrl = $seoBaseUrl . '/' . ltrim($seoCanonicalPath, '/');
+}
+if (preg_match('#^https?://#i', $seoImage)) {
+  $seoImageUrl = $seoImage;
+} else {
+  $seoImageUrl = $seoBaseUrl . '/' . ltrim($seoImage, '/');
+}
+
+$seoEscape = function ($value) {
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+};
+
+$seoOrganization = array(
+  '@type' => 'Organization',
+  '@id' => $seoBaseUrl . '/#organization',
+  'name' => '株式会社東京アーティスト協会',
+  'alternateName' => 'MUSICIAN',
+  'url' => $seoBaseUrl . '/',
+  'logo' => array(
+    '@type' => 'ImageObject',
+    'url' => $seoBaseUrl . '/images/head_logo_1.png',
+    'width' => 478,
+    'height' => 138
+  ),
+  'telephone' => '+81-3-6261-4348',
+  'contactPoint' => array(
+    '@type' => 'ContactPoint',
+    'telephone' => '+81-3-6261-4348',
+    'contactType' => 'sales',
+    'availableLanguage' => array('ja')
+  ),
+  'sameAs' => array(
+    'https://www.facebook.com/MUSICIANoffice/',
+    'https://www.instagram.com/musician_office_/',
+    'https://www.youtube.com/user/MUSICIANCOMPANY'
+  )
+);
+$seoWebsite = array(
+  '@type' => 'WebSite',
+  '@id' => $seoBaseUrl . '/#website',
+  'url' => $seoBaseUrl . '/',
+  'name' => 'MUSICIAN',
+  'inLanguage' => 'ja-JP',
+  'publisher' => array('@id' => $seoBaseUrl . '/#organization')
+);
+$seoWebPage = array(
+  '@type' => $seoPageType,
+  '@id' => $seoCanonicalUrl . '#webpage',
+  'url' => $seoCanonicalUrl,
+  'name' => $seoTitle,
+  'description' => $seoDescription,
+  'inLanguage' => 'ja-JP',
+  'isPartOf' => array('@id' => $seoBaseUrl . '/#website'),
+  'about' => array('@id' => $seoBaseUrl . '/#organization'),
+  'primaryImageOfPage' => array(
+    '@type' => 'ImageObject',
+    'url' => $seoImageUrl
+  )
+);
+
+$seoGraph = array($seoOrganization, $seoWebsite, $seoWebPage);
+if (!empty($seoBreadcrumbItems)) {
+  $seoItemList = array();
+  $seoPosition = 1;
+  foreach ($seoBreadcrumbItems as $seoBreadcrumbItem) {
+    $seoItemPath = isset($seoBreadcrumbItem['item']) ? $seoBreadcrumbItem['item'] : '/';
+    if (!preg_match('#^https?://#i', $seoItemPath)) {
+      $seoItemPath = $seoBaseUrl . '/' . ltrim($seoItemPath, '/');
+    }
+    $seoItemList[] = array(
+      '@type' => 'ListItem',
+      'position' => $seoPosition,
+      'name' => $seoBreadcrumbItem['name'],
+      'item' => $seoItemPath
+    );
+    $seoPosition++;
+  }
+  $seoGraph[] = array(
+    '@type' => 'BreadcrumbList',
+    '@id' => $seoCanonicalUrl . '#breadcrumb',
+    'itemListElement' => $seoItemList
+  );
+}
+foreach ($seoAdditionalSchema as $seoSchemaNode) {
+  $seoGraph[] = $seoSchemaNode;
+}
+$seoJson = json_encode(
+  array('@context' => 'https://schema.org', '@graph' => $seoGraph),
+  JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+);
+?>
+<title><?php echo $seoEscape($seoTitle); ?></title>
+<meta name="description" content="<?php echo $seoEscape($seoDescription); ?>">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="canonical" href="<?php echo $seoEscape($seoCanonicalUrl); ?>">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:type" content="<?php echo $seoEscape($seoOgType); ?>">
+<meta property="og:site_name" content="MUSICIAN">
+<meta property="og:title" content="<?php echo $seoEscape($seoTitle); ?>">
+<meta property="og:description" content="<?php echo $seoEscape($seoDescription); ?>">
+<meta property="og:url" content="<?php echo $seoEscape($seoCanonicalUrl); ?>">
+<meta property="og:image" content="<?php echo $seoEscape($seoImageUrl); ?>">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?php echo $seoEscape($seoTitle); ?>">
+<meta name="twitter:description" content="<?php echo $seoEscape($seoDescription); ?>">
+<meta name="twitter:image" content="<?php echo $seoEscape($seoImageUrl); ?>">
+<script type="application/ld+json"><?php echo $seoJson; ?></script>

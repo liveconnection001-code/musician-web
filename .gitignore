@@ -1,0 +1,33 @@
+# Local/runtime/build artifacts
+/tmp/
+/.tmp/
+.tmp/
+.pnpm-store/
+node_modules/
+work/
+temporary_preview_site/
+.codex-remote-attachments/
+
+# Keep ephemeral snapshots/backups out of git history
+default_snapshots/*.tmp
+new_site/production_backups/
+backup_2026-07-25/
+
+# Python / cache
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Sensitive local env
+**/.env
+**/*.env
+*.pem
+*.key
+
+# Logs
+*.log

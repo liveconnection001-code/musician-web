@@ -1,0 +1,18 @@
+User-agent: *
+<?php if (Configure::read('debug') > 0):?>
+Disallow: /
+<?php else:?>
+Disallow: /admin/
+Disallow: /admin_sp/
+Disallow: /data_files/
+Disallow: /catalog_preview/
+Disallow: /_bk_20221124/
+Disallow: /_dl/
+Disallow: /SampleKit/
+Disallow: /securimage/example_form
+Disallow: /ez_js/eq/
+Disallow: /ez_js/pdf/web/
+Disallow: /maintenance.html
+<?php endif;?>
+
+Sitemap: https://www.musician.co.jp/sitemap.xml

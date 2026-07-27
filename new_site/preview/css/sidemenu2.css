@@ -1,0 +1,126 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Accordion side menu
+---------------------------------------------------- */
+.accordion {
+	border: 1px solid #041e42;
+	position: relative;
+	z-index: 2;
+	font-family: 'Urbanist', sans-serif;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+}
+.accordion dt  {
+	display: inline-block;
+	padding: 15px 20px;
+	width: 100%;
+	font-size: 120%;
+	line-height: 1.4em;
+	/*font-weight: 700;*/
+	color: #fff;
+	background:#041e42 ;
+	cursor:pointer;
+}
+
+
+.accordion dd{ display:none;}
+
+.accordion dd ul {
+	list-style: none;
+	padding: 0px;
+	margin:0px;
+}
+.accordion dd li {
+	border-bottom: 1px solid #ccc;
+	/*background-color: #f3f3f3;*/
+	width: 50%;
+	float: left;
+}
+.accordion dd li a {
+	display: block;
+	/*padding: 18px 20px;*/
+	color: #3c3c40;
+	padding: 10px;
+	display: block;
+	/*font-size: 14px;*/
+	/*ゆっくり動かす（ポイントはhoverではなくaの箇所のcssに記載）*/
+	-webkit-transition: 0.8s;
+	-moz-transition: 0.8s;
+	-o-transition: 0.8s;
+	-ms-transition: 0.8s;
+	transition: 0.8s;
+	/*ここまで*/
+}
+.accordion dd li a:before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: "\f0da";
+	margin-right: 5px;
+}
+.accordion dd li a:hover,
+.accordion dd li.navi-on a{
+	background-color: #56659e;
+	color: #fff;
+	opacity: 1;
+}
+@media print, screen and (min-width: 768px){
+	.accordion dd li {
+		width: 100%;
+		float: none;
+	}
+}
+
+.hamburgerMenu,
+.hamburgerMenu span{display: inline-block;
+  transition: all .4s;
+  box-sizing: border-box;}
+
+.hamburgerMenu {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  float: right;
+  display: block;
+  background: none;
+  border: none;
+}
+.hamburgerMenu:focus{ outline: none;}
+.hamburgerMenu span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+.hamburgerMenu span:nth-of-type(1) {
+  top: 0;
+}
+.hamburgerMenu span:nth-of-type(2) {
+  top: 11px;
+}
+.hamburgerMenu span:nth-of-type(3) {
+  bottom: 0;
+}
+.active .hamburgerMenu span:nth-of-type(1) {
+  -webkit-transform: translateY(11px) rotate(-315deg);
+  transform: translateY(11px) rotate(-315deg);
+}
+.active .hamburgerMenu span:nth-of-type(2) {
+  opacity: 0;
+}
+.active .hamburgerMenu span:nth-of-type(3) {
+  -webkit-transform: translateY(-11px) rotate(315deg);
+  transform: translateY(-11px) rotate(315deg);
+}
+
+@media (min-width: 768px),print{
+	 .accordion dt  {background-image:none; cursor:default;}
+	 .accordion dt.active  { background-image:none;}
+	 .accordion dd{ display: block}
+   .hamburgerMenu { display: none;}
+}
+
+/*   ===   END   ===   */
+

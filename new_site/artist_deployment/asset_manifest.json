@@ -1,0 +1,153 @@
+{
+  "photos": [
+    {
+      "source": "0D4A4679.jpg",
+      "slug": "portrait",
+      "original_size": [
+        4480,
+        6720
+      ],
+      "large_size": [
+        1333,
+        2000
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "二胡を手にした大町めぐみのスタジオポートレート"
+    },
+    {
+      "source": "0D4A4652.jpg",
+      "slug": "studio-seated",
+      "original_size": [
+        4480,
+        6720
+      ],
+      "large_size": [
+        1333,
+        2000
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "二胡とともに座る大町めぐみのスタジオ写真"
+    },
+    {
+      "source": "0D4A4755.jpg",
+      "slug": "studio-qipao",
+      "original_size": [
+        4480,
+        6720
+      ],
+      "large_size": [
+        1333,
+        2000
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "緑のチャイナドレスで二胡を持つ大町めぐみ"
+    },
+    {
+      "source": "20250608_075124780_iOS.jpg",
+      "slug": "hangzhou-garden",
+      "original_size": [
+        8192,
+        5464
+      ],
+      "large_size": [
+        2000,
+        1334
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "杭州の庭園に立つ大町めぐみ"
+    },
+    {
+      "source": "20250608_075810310_iOS.jpg",
+      "slug": "hangzhou-erhu",
+      "original_size": [
+        8192,
+        5464
+      ],
+      "large_size": [
+        2000,
+        1334
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "杭州の庭園で二胡を演奏する大町めぐみ"
+    },
+    {
+      "source": "220620_megumi_00103.tif",
+      "slug": "white-hydrangea",
+      "original_size": [
+        6570,
+        4380
+      ],
+      "large_size": [
+        2000,
+        1333
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "紫陽花と白い衣装で二胡を持つ大町めぐみ"
+    },
+    {
+      "source": "220620_megumi_00967arr.jpg",
+      "slug": "black-portrait",
+      "original_size": [
+        3500,
+        4480
+      ],
+      "large_size": [
+        1562,
+        2000
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "黒い衣装で二胡を持つ大町めぐみ"
+    },
+    {
+      "source": "220620_megumi_01667.tif",
+      "slug": "red-lantern",
+      "original_size": [
+        4380,
+        6570
+      ],
+      "large_size": [
+        1333,
+        2000
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "赤いチャイナドレスで二胡を持つ大町めぐみ"
+    },
+    {
+      "source": "220620_megumi_01683.tif",
+      "slug": "red-full",
+      "original_size": [
+        4300,
+        6449
+      ],
+      "large_size": [
+        1334,
+        2000
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "赤い提灯の街並みに立つ大町めぐみ"
+    },
+    {
+      "source": "FRA20221122_00675.jpg",
+      "slug": "stage",
+      "original_size": [
+        5168,
+        3447
+      ],
+      "large_size": [
+        2000,
+        1334
+      ],
+      "metadata": "stripped by re-encoding",
+      "alt": "コンサートで二胡を演奏する大町めぐみ"
+    }
+  ],
+  "video": {
+    "type": "youtube",
+    "url": "https://youtu.be/kZvvnMDZHXU?si=pn71GfEo_R7wyUXJ",
+    "embed": "https://www.youtube-nocookie.com/embed/kZvvnMDZHXU?rel=0"
+  },
+  "outputs": [
+    "A:\\AI\\Web\\MUSICIAN\\temporary_preview_site\\public\\images\\artists\\megumi-omachi",
+    "A:\\AI\\Web\\MUSICIAN\\new_site\\artist_deployment\\app\\webroot\\images\\artists\\megumi-omachi"
+  ]
+}

@@ -1,0 +1,178 @@
+/* 2019年以降の実績。既存テーマの色・書体に合わせた追加スタイル。 */
+.recent-achievements {
+  --ma-navy: #041e42;
+  --ma-orange: #e36927;
+  --ma-beige: #fbe1bd;
+  color: var(--ma-navy);
+  margin: 0 0 72px;
+}
+
+.recent-achievements * {
+  box-sizing: border-box;
+}
+
+
+.achievement-archive-heading__eyebrow {
+  color: var(--ma-orange);
+  font-family: "Urbanist", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  margin: 0 0 7px;
+  text-transform: uppercase;
+}
+
+
+.achievement-year {
+  border-bottom: 1px solid rgba(4, 30, 66, .22);
+}
+
+.achievement-year:first-child {
+  border-top: 1px solid rgba(4, 30, 66, .22);
+}
+
+.achievement-year__summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr 32px;
+  list-style: none;
+  min-height: 92px;
+  padding: 18px 4px;
+}
+
+.achievement-year__summary::-webkit-details-marker {
+  display: none;
+}
+
+.achievement-year__number {
+  color: var(--ma-navy);
+  font-family: "Urbanist", sans-serif;
+  font-size: clamp(31px, 4vw, 43px);
+  font-weight: 800;
+  letter-spacing: .02em;
+  line-height: 1;
+}
+
+
+.achievement-year__toggle {
+  border: 1px solid rgba(4, 30, 66, .3);
+  border-radius: 50%;
+  height: 30px;
+  position: relative;
+  width: 30px;
+}
+
+.achievement-year__toggle::before,
+.achievement-year__toggle::after {
+  background: var(--ma-orange);
+  content: "";
+  height: 1px;
+  left: 7px;
+  position: absolute;
+  top: 14px;
+  transition: transform .22s ease;
+  width: 14px;
+}
+
+.achievement-year__toggle::after {
+  transform: rotate(90deg);
+}
+
+.achievement-year[open] .achievement-year__toggle::after {
+  transform: rotate(0);
+}
+
+.achievement-year__body {
+  padding: 0 4px 34px;
+}
+
+
+.achievement-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.achievement-list__item {
+  align-items: start;
+  border-top: 1px dotted rgba(4, 30, 66, .24);
+  display: grid;
+  gap: 14px 18px;
+  grid-template-columns: 170px minmax(0, 1fr);
+  padding: 17px 0 18px;
+}
+
+.achievement-list__item:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+
+
+.achievement-list__category {
+  border: 1px solid rgba(227, 105, 39, .55);
+  color: #b34c18;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 4px 7px;
+  text-align: center;
+}
+
+.achievement-list__title {
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.achievement-list__detail {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 4px 0 0;
+  opacity: .75;
+}
+
+
+.achievement-archive-heading {
+  border-top: 4px solid var(--ma-navy, #041e42);
+  margin: 0 0 38px;
+  padding-top: 25px;
+}
+
+.achievement-archive-heading h4 {
+  font-size: 25px;
+  margin: 0;
+}
+
+@media (max-width: 767.98px) {
+  .recent-achievements {
+    margin-bottom: 54px;
+  }
+
+
+  .achievement-year__summary {
+    gap: 10px;
+    grid-template-columns: 1fr 30px;
+    min-height: 78px;
+  }
+
+  .achievement-list__item {
+    gap: 7px 10px;
+    grid-template-columns: 1fr;
+    padding: 15px 0 16px;
+  }
+
+  .achievement-list__category {
+    justify-self: start;
+  }
+
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achievement-year__toggle::before,
+  .achievement-year__toggle::after {
+    transition: none;
+  }
+}

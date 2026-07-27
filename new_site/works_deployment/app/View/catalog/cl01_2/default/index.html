@@ -1,0 +1,718 @@
+<?php
+$seoIsRoot = ((int)$target_id === 22);
+$seoCategoryTitle = !empty($target['title']) ? trim(strip_tags($target['title'])) : '実施例';
+$seoTitle = $seoIsRoot
+  ? '出張演奏・イベント演奏の実施例｜企業式典・ホテル・配信｜MUSICIAN'
+  : $seoCategoryTitle . 'の出張演奏・イベント実施例｜MUSICIAN';
+$seoDescription = $seoIsRoot
+  ? '企業の表彰式・国際レセプション・ホテル宴会場・大規模展示会・ライブ配信まで、MUSICIANが企画から本番まで担当した出張演奏・イベント音楽制作の実施例をご紹介します。'
+  : (!empty($target['description'])
+    ? trim(strip_tags($target['description']))
+    : $seoCategoryTitle . 'でMUSICIANが担当した出張演奏やイベント音楽制作の実施例をご紹介します。');
+$seoCanonicalPath = $seoIsRoot ? '/works.html' : '/works/index/' . (int)$target_id;
+$seoImage = $seoIsRoot ? '/images/works/hero-corporate-show-clean.jpg' : '/images/mv/mv_img01.jpg';
+$seoBreadcrumbItems = array(
+  array('name' => 'ホーム', 'item' => '/'),
+  array('name' => '実施例', 'item' => '/works.html')
+);
+if (!$seoIsRoot) {
+  $seoBreadcrumbItems[] = array('name' => $seoCategoryTitle, 'item' => $seoCanonicalPath);
+}
+$worksPerformanceGallery = array(
+  array('image' => 'unit-live-band', 'category' => '企業式典・祝賀会', 'title' => 'バンドと和楽器による祝宴ステージ', 'alt' => '宴会場のステージ全体でヴォーカル、ヴァイオリン、和太鼓などを演奏するライブバンド'),
+  array('image' => 'unit-modern-trio', 'category' => '商業施設・集客イベント', 'title' => '商業施設を彩るエレクトリック弦楽トリオ', 'alt' => '商業施設の吹き抜けステージで演奏する鍵盤、ヴァイオリン、電子チェロの女性トリオ'),
+  array('image' => 'unit-big-band', 'category' => 'ホテル宴会・懇親会', 'title' => 'ホテル宴会場のビッグバンド', 'alt' => 'ホテル宴会場のステージ全体で演奏する女性ビッグバンド'),
+  array('image' => 'unit-brass-quintet', 'category' => '企業式典・祝賀会', 'title' => '祝宴を盛り上げるブラスユニット', 'alt' => '金屏風の前でクラリネット、トロンボーン、トランペット、バンジョー、スーザフォンを演奏する5人組'),
+  array('image' => 'unit-christmas', 'category' => '季節イベント', 'title' => 'クリスマスイベントの弦楽ユニット', 'alt' => 'クリスマスツリーの前で演奏するヴァイオリンと電子チェロのユニット'),
+  array('image' => 'unit-electric-strings', 'category' => 'パーティー・ステージ', 'title' => '躍動感のあるエレクトリック弦楽', 'alt' => '観客を前にヴァイオリンと電子チェロを演奏する女性ユニット'),
+  array('image' => 'unit-concert-production', 'category' => 'コンサート・大規模公演', 'title' => '大ホールでのコンサート制作', 'alt' => 'パイプオルガンのある大ホールで行われる合唱とオーケストラの公演'),
+  array('image' => 'traditional-koto-gala', 'category' => '国際大会・レセプション', 'title' => '大規模レセプションの箏アンサンブル', 'alt' => '大規模レセプション会場のステージで箏を演奏する和装の女性アンサンブル'),
+  array('image' => 'unit-kimono', 'category' => '国際レセプション', 'title' => '着物で魅せる和洋楽器ユニット', 'alt' => '国際交流の宴会場で着物姿で演奏するヴァイオリンと和洋楽器のユニット'),
+  array('image' => 'unit-outdoor-night', 'category' => '商業施設・集客イベント', 'title' => '屋外ステージの和洋楽器ユニット', 'alt' => '夜の屋外ステージで和楽器とヴァイオリン、パーカッションを演奏するユニット'),
+  array('image' => 'unit-vocal-balcony', 'category' => '空間演出・ヴォーカル', 'title' => '吹き抜け空間を使ったヴォーカル演出', 'alt' => '吹き抜け会場のバルコニーで歌う4名のヴォーカルグループ'),
+  array('image' => 'traditional-taiko', 'category' => '和のおもてなし', 'title' => '和太鼓による力強いステージ', 'alt' => '和の舞台背景で和太鼓、ヴァイオリン、キーボードを演奏するグループ全体'),
+  array('image' => 'traditional-japanese-fusion', 'category' => '国際レセプション', 'title' => '和楽器とジャズのクロスオーバー', 'alt' => '宴会場で箏、尺八、サックス、ベース、ドラム、鍵盤が共演する和洋楽器バンド'),
+  array('image' => 'traditional-koto-quartet', 'category' => '和のおもてなし', 'title' => '着物による箏四重奏', 'alt' => '金屏風の前で着物姿の4名が箏を演奏するアンサンブル'),
+  array('image' => 'traditional-koto-duo', 'category' => '国際レセプション', 'title' => 'レセプション会場の箏デュオ', 'alt' => '赤いステージで着物姿の2名が箏を演奏するデュオ'),
+  array('image' => 'traditional-shamisen-solo', 'category' => '和のおもてなし', 'title' => '津軽三味線のソロステージ', 'alt' => '袴姿で津軽三味線を演奏する男性奏者'),
+  array('image' => 'traditional-flamenco', 'category' => '海外文化・ショー', 'title' => 'フラメンコと生演奏', 'alt' => 'ギターと歌に合わせて踊るフラメンコダンサー'),
+  array('image' => 'traditional-japanese-dance', 'category' => '和のおもてなし', 'title' => '和装による舞踊と笛の演出', 'alt' => '宴会場で和装の舞踊家と笛奏者が出演する日本文化ステージ'),
+  array('image' => 'traditional-gospel', 'category' => '式典・セレモニー', 'title' => 'ゴスペル・ヴォーカルステージ', 'alt' => '紫色の照明に包まれた舞台で歌う4名のゴスペルシンガー'),
+  array('image' => 'traditional-vocal-show', 'category' => '海外ゲスト・ショー', 'title' => '海外ヴォーカルグループのショー', 'alt' => '宴会場のステージで歌う海外ヴォーカルグループ'),
+  array('image' => 'jazz-church-concert', 'category' => 'コンサート', 'title' => '教会コンサートのジャズ編成', 'alt' => '教会の礼拝堂で満席の観客に演奏するジャズバンド'),
+  array('image' => 'jazz-quartet', 'category' => '商業施設・集客イベント', 'title' => '商業施設でのジャズカルテット', 'alt' => '商業施設の吹き抜けで演奏するサックス、ピアノ、ベース、ドラムの編成'),
+  array('image' => 'jazz-big-band-concert', 'category' => 'コンサート・大規模公演', 'title' => 'ホール公演のジャズビッグバンド', 'alt' => 'コンサートホールでピアノと共演する大編成ジャズバンド'),
+  array('image' => 'pops-string-live', 'category' => 'コンサート・大規模公演', 'title' => 'ポップスライブの大編成ストリングス', 'alt' => 'ライブハウスでピアノと共演する大編成のヴァイオリン奏者'),
+  array('image' => 'pops-erhu-piano', 'category' => '国際交流・文化公演', 'title' => '二胡・ピアノ・パーカッション', 'alt' => '美術作品に囲まれた会場で二胡、ピアノ、パーカッションを演奏するユニット'),
+  array('image' => 'classic-orchestra', 'category' => 'コンサート・大規模公演', 'title' => 'オーケストラによる華やかなステージ', 'alt' => '赤い舞台幕のホールで演奏するオーケストラ'),
+  array('image' => 'classic-public-concert', 'category' => '商業施設・集客イベント', 'title' => '商業施設での公開コンサート', 'alt' => '大勢の観客が集まる商業施設で行われた公開コンサート'),
+  array('image' => 'classic-cruise-brass', 'category' => 'ホテル・客船公演', 'title' => '客船内の金管アンサンブル', 'alt' => '客船内のステージで演奏する金管五重奏'),
+  array('image' => 'classic-string-ensemble', 'category' => '企業式典・表彰式', 'title' => '式典を彩る弦楽アンサンブル', 'alt' => 'ホテル宴会場でドレス姿で演奏する弦楽アンサンブル'),
+  array('image' => 'classic-film-production', 'category' => 'ライブ配信・映像収録', 'title' => '映像収録でのストリングス演奏', 'alt' => '照明と撮影機材が組まれた会場でストリングス演奏を収録する現場'),
+  array('image' => 'classic-mariachi-trio', 'category' => '海外文化・ショー', 'title' => 'マリアッチ・トリオの祝宴ステージ', 'alt' => 'ホテル宴会場でギターとサックスを演奏するマリアッチの3人組'),
+  array('image' => 'classic-gallery-trio', 'category' => '文化施設・コンサート', 'title' => 'ギャラリーでの室内楽コンサート', 'alt' => '美術作品に囲まれた会場でヴァイオリン、チェロ、ピアノを演奏する女性トリオ'),
+);
+$worksGallerySchemaItems = array();
+if ($seoIsRoot) {
+  foreach ($worksPerformanceGallery as $index => $photo) {
+    $worksGallerySchemaItems[] = array(
+      '@type' => 'ListItem',
+      'position' => $index + 1,
+      'item' => array(
+        '@type' => 'ImageObject',
+        'name' => $photo['title'],
+        'description' => $photo['alt'],
+        'contentUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-large.jpg',
+        'thumbnailUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-card.jpg'
+      )
+    );
+  }
+}
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php echo $this->element('seo_meta', array(
+  'seoTitle' => $seoTitle,
+  'seoDescription' => $seoDescription,
+  'seoCanonicalPath' => $seoCanonicalPath,
+  'seoImage' => $seoImage,
+  'seoPageType' => 'CollectionPage',
+  'seoBreadcrumbItems' => $seoBreadcrumbItems
+)); ?>
+<?php if ($seoIsRoot): ?>
+<script type="application/ld+json"><?php echo json_encode(array(
+  '@context' => 'https://schema.org',
+  '@type' => 'ItemList',
+  'name' => 'MUSICIAN 出張演奏・イベント演奏フォトギャラリー',
+  'numberOfItems' => count($worksGallerySchemaItems),
+  'itemListElement' => $worksGallerySchemaItems
+), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?></script>
+<?php endif; ?>
+<meta name="format-detection" content="telephone=no">
+<link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
+<link href="css/style.css?v=20260727p" rel="stylesheet">
+<link href="css/works_showcase.css?v=20260727p" rel="stylesheet">
+<link rel="preload" as="image" href="images/works/hero-corporate-show-clean.webp" type="image/webp" fetchpriority="high">
+<link href="css/bootstrap4-print.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
+<link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
+<link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
+<link href="css/sidemenu.css" rel="stylesheet"><!--サイドメニュー-->
+<link rel="stylesheet" type="text/css" href="css/fotorama.css"><!--ギャラリー-->
+<!--Googleフォント-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@600;800&display=swap" rel="stylesheet">
+<!--end-->
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
+</head>
+<body>
+	
+	
+<header>
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-11 col-md-3">
+                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家派遣のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
+					<ul class="btn_tel2 osu2 d-block d-md-none">
+						<li><span data-action="call"><img src="images/phone.png" alt="03-6261-4348" class="img-fluid" loading="lazy" decoding="async"></span></li>
+						<li><a href="contact.html"><img src="images/mail.png" alt="mail" class="img-fluid"></a></li>
+					</ul>
+					<p></p>
+                </div>
+                <div class="col-12 col-md-9">
+					<ul class="head_tel d-none d-md-block">
+						<li><span data-action="call" class="text_link_sp"><i class="fa-solid fa-phone"></i>03-6261-4348</span></li>
+						<li><a href="contact.html"><i class="fa-solid fa-envelope"></i>Mail Form</a></li>
+					</ul>
+                    <nav>
+                    <div class="menu-container osu1">
+                            <div class="menu menu_sp">
+                                <ul>
+                                    <li class="d-block d-md-none"><a href="/"><span class="en">Home</span></a></li>
+                                    <li><a href="business.html"><span class="en">Business</span></a></li>
+                                    <li class="navi-on"><a href="works.html"><span class="en">Works</span></a></li>
+                                    <li><a href="artist.html"><span class="en">Artist</span></a></li>
+                                    <li><a href="company.html"><span class="en">About us</span></a></li>
+                                    <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li class="d-block d-md-none"><a href="contact.html"><span class="en">Contact</span></a></li>
+                                    <li class="d-block d-md-none">
+										<div class="sns_list">
+											<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+											<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+											<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+										</div>
+									</li>
+                                </ul>
+                            </div>
+                    </div>
+                    </nav>
+
+                </div>
+            </div>
+    </div>
+</header>
+
+
+
+<?php if (!$seoIsRoot): ?>
+<div id="banner1">
+ <div id="midashi_h2" class="h2_bg">
+	<div class="container-fluid">
+		<div class="yohaku">
+			<h1 data-aos="fade-up"><span>Works</span>実施例</h1>
+			<p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a href="works.html">Works</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<?php echo $target['title'];?></p>
+		</div>
+	</div>
+</div>
+</div>
+<?php endif; ?>
+
+<?php if ($seoIsRoot): ?>
+<main class="works-showcase">
+<div class="works-showcase__page-band" aria-hidden="true"></div>
+
+<section class="works-showcase__intro" id="selected-works" aria-labelledby="works-selected-heading">
+  <h1 id="works-selected-heading"><span>Works</span>私たちの仕事</h1>
+  <p>MUSICIANが手がけるのは、演奏家の手配だけではありません。演者と音楽を核に、音響・照明はもちろん、空間の佇まい、動線、進行までを一つの表現として設計し、五感に響く音楽芸術の場を制作・演出します。</p>
+</section>
+
+<section class="works-showcase__grid" aria-label="主な仕事例">
+  <article class="works-case" id="work-corporate-event">
+    <div class="works-case__image"><picture><source srcset="images/works/corporate-party-clean.webp" type="image/webp"><img src="images/works/corporate-party-clean.jpg" alt="企業パーティーのステージに並ぶ6名編成の女性バンド" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">01</span></div>
+    <div class="works-case__content"><p class="works-case__category">CORPORATE EVENT</p><h3>練り歩くライブショー</h3><p>ディナーパーティーの空間と進行に合わせ、女性バンドを編成。選曲・ステージ構成・出演準備まで一体で整え、祝宴のクライマックスを華やかに演出しました。</p><ul aria-label="対応内容"><li>出演者編成</li><li>選曲・進行</li><li>ステージ連携</li></ul></div>
+  </article>
+  <article class="works-case" id="work-international-reception">
+    <div class="works-case__image"><picture><source srcset="images/works/international-reception-clean.webp" type="image/webp"><img src="images/works/international-reception-clean.jpg" alt="国際レセプション会場で演奏するヴァイオリンとチェロのデュオ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">02</span></div>
+    <div class="works-case__content"><p class="works-case__category">INTERNATIONAL RECEPTION</p><h3>ゲストに上質な響きを</h3><p>来場者の会話を妨げず、ブランドの雰囲気を引き立てるヴァイオリンとチェロのデュオ。会場規模や導線に合わせて音量・配置・レパートリーを設計します。</p><ul aria-label="対応内容"><li>弦楽デュオ</li><li>BGM設計</li><li>会場調整</li></ul></div>
+  </article>
+  <article class="works-case" id="work-japanese-culture">
+    <div class="works-case__image"><picture><source srcset="images/works/japanese-hospitality-clean.webp" type="image/webp"><img src="images/works/japanese-hospitality-clean.jpg" alt="国際会議の歓迎演出で和楽器を演奏するステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">03</span></div>
+    <div class="works-case__content"><p class="works-case__category">JAPANESE CULTURE</p><h3>和のお出迎え</h3><p>和楽器の音色を、国際会議やレセプションのステージへ。伝統性を大切にしながら、式次第と観客に合わせた見せ方まで組み立てます。</p><ul aria-label="対応内容"><li>和楽器手配</li><li>衣装・編成</li><li>舞台進行</li></ul></div>
+  </article>
+  <article class="works-case" id="work-hotel-party">
+    <div class="works-case__image"><picture><source srcset="images/works/hotel-live-clean.webp" type="image/webp"><img src="images/works/hotel-live-clean.jpg" alt="ホテル宴会場で演奏するジャズカルテット" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">04</span></div>
+    <div class="works-case__content"><p class="works-case__category">HOTEL &amp; PARTY</p><h3>宴会場をライブステージへ</h3><p>サックスを中心に、ピアノ・ベース・ドラムを組み合わせたジャズ編成。歓談のBGMからメインショーまで、会場の温度に合わせて演奏を設計します。</p><ul aria-label="対応内容"><li>ジャズカルテット</li><li>BGM〜ショー</li><li>音響調整</li></ul></div>
+  </article>
+  <article class="works-case" id="work-large-venue">
+    <div class="works-case__image"><picture><source srcset="images/works/large-event-clean.webp" type="image/webp"><img src="images/works/large-event-clean.jpg" alt="多くの来場者が集まる大規模展示会のステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">05</span></div>
+    <div class="works-case__content"><p class="works-case__category">LARGE VENUE</p><h3>展示会を支える</h3><p>多くの来場者が行き交う会場で、ステージ音響、進行、現場オペレーションを連携。出演者だけでなく、イベント全体が滞りなく進むところまで支えます。</p><ul aria-label="対応内容"><li>音響オペレーション</li><li>進行連携</li><li>会場運営</li></ul></div>
+  </article>
+  <article class="works-case" id="work-live-streaming">
+    <div class="works-case__image"><picture><source srcset="images/works/live-streaming-clean.webp" type="image/webp"><img src="images/works/live-streaming-clean.jpg" alt="ライブ配信現場の映像と音声のオペレーション卓" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">06</span></div>
+    <div class="works-case__content"><p class="works-case__category">LIVE STREAMING</p><h3>臨場感を演出</h3><p>複数カメラ、音声、配信画面を同時に管理し、コンサートやコンクールをライブ配信。演奏のニュアンスが伝わる音と映像を、本番進行に合わせて届けます。</p><ul aria-label="対応内容"><li>配信設計</li><li>音声・映像</li><li>本番オペレーション</li></ul></div>
+  </article>
+</section>
+
+<section class="works-performance" aria-labelledby="works-performance-title">
+  <div class="works-performance__heading">
+    <h2 id="works-performance-title">PERFORMANCE GALLERY</h2>
+  </div>
+  <div class="works-performance__grid">
+    <?php foreach ($worksPerformanceGallery as $index => $photo): ?>
+    <a class="works-performance__item" href="#works-photo-<?php echo sprintf('%02d', $index + 1); ?>" aria-label="写真<?php echo sprintf('%02d', $index + 1); ?>：<?php echo htmlspecialchars($photo['title'], ENT_QUOTES, 'UTF-8'); ?>を拡大表示">
+      <img src="images/works/gallery/<?php echo $photo['image']; ?>-card.jpg" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" decoding="async">
+    </a>
+    <?php endforeach; ?>
+  </div>
+  <?php foreach ($worksPerformanceGallery as $index => $photo): ?>
+  <div class="works-performance__lightbox" id="works-photo-<?php echo sprintf('%02d', $index + 1); ?>" role="dialog" aria-modal="true" aria-label="<?php echo htmlspecialchars($photo['title'], ENT_QUOTES, 'UTF-8'); ?>の拡大写真">
+    <a class="works-performance__lightbox-backdrop" href="#works-performance-title" aria-label="拡大写真を閉じる"></a>
+    <figure>
+      <img src="images/works/gallery/<?php echo $photo['image']; ?>-large.jpg" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" decoding="async">
+      <a class="works-performance__lightbox-close" href="#works-performance-title" aria-label="拡大写真を閉じる"><span aria-hidden="true">&times;</span></a>
+    </figure>
+  </div>
+  <?php endforeach; ?>
+</section>
+
+<section class="works-showcase__scope" aria-labelledby="works-scope-title">
+  <p class="works-showcase__kicker">TOTAL CREATIVE DIRECTION</p>
+  <h2 id="works-scope-title">ご希望に寄り添い、音楽を中心に、心に残る新しい芸術体験を一緒につくります。</h2>
+  <div class="works-showcase__steps">
+    <div><span>01</span><strong>ご希望と空間を読み解く</strong><p>場の役割、来場者、ご要望、進行、ご予算を丁寧に整理します。</p></div>
+    <div><span>02</span><strong>芸術体験を構想・制作</strong><p>演者、音楽、音響、照明、空間演出を一つの表現として設計します。</p></div>
+    <div><span>03</span><strong>本番まで一貫して統括</strong><p>制作準備から当日の進行まで、MUSICIANが責任をもって統括します。</p></div>
+  </div>
+</section>
+
+<section class="works-showcase__cta" aria-labelledby="works-cta-title">
+  <p class="works-showcase__kicker works-showcase__kicker--dark">START A CONVERSATION</p>
+  <h2 id="works-cta-title">まだ形になっていない段階から、<br>ご相談ください。</h2>
+  <p>会場、目的、ご予算、希望する雰囲気を伺い、編成と進行をご提案します。</p>
+  <div><a class="works-showcase__button works-showcase__button--primary" href="contact.html">演奏・イベント制作を相談する</a><a class="works-showcase__button" href="/achievements.html">実績一覧を見る</a></div>
+</section>
+</main>
+<?php else: ?>
+<main>
+
+<section>
+	
+<div class="content_pd">
+    <div class="container-fluid">
+        <div class="yohaku">
+			
+			<div id="cate_head"></div>
+			
+			
+			<dl class="accordion mb_content">
+				<dt>Category<button class="hamburgerMenu"><span></span><span></span><span></span></button></dt>
+				<dd>
+					<ul>
+						<?php foreach($category_all as $category_id => $category):?>
+						<li<?php if ($category_id == $target_id):?> class="navi-on"<?php endif;?>><a href="works/index/<?php echo $category_id; ?>#cate_head"><?php echo $category['title']; ?></a></li>
+						<?php endforeach;?>
+					</ul>
+				</dd>
+			</dl>
+			
+			<h2 class="midashi3 mb_content tac"><?php echo $target['title'];?></h2>
+			<?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>
+			<!--1set-->
+            <section id="works-<?php echo $tbl_id; ?>">
+				<div class="mb_content">
+					<h3 class="midashi2 mb30_md50"><?php echo $tbl_title; ?></h3>
+					<?php if(!empty($tbl_image1) || !empty($tbl_image2) || !empty($tbl_image3) || !empty($tbl_image4) || !empty($tbl_image5) || !empty($tbl_image6) || !empty($tbl_image7) || !empty($tbl_image8) || !empty($tbl_image9) || !empty($tbl_image10)): ?>
+					<div class="row mb30_md50">
+						<div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+							<div class="fotorama" data-nav="thumbs" data-width="100%" data-ratio="960/720">
+								<?php if(!empty($tbl_image1)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-1" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image2)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image2,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-2" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image3)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image3,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-3" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image4)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image4,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-4" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image5)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image5,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-5" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image6)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image6,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-6" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image7)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image7,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-7" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image8)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image8,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-8" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image9)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image9,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-9" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+								<?php if(!empty($tbl_image10)): ?>
+								<div data-img="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image10,'width'=>800,'return'=>true)));?>" style="height:100%;">
+									<a data-toggle="modal" data-target=".p-lg-<?php echo $tbl_id; ?>-10" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;"></a>
+								</div>
+								<?php endif; ?>
+							</div>
+						</div>
+					</div>
+					<?php endif; ?>
+					<?php if(!empty($tbl_html1) || !empty($tbl_html2)): ?>
+					<div class="works_box clearfix">
+						<?php if(!empty($tbl_html2)): ?>
+						<div class="image">
+							<div class="video">
+							  <?php echo htmlspecialchars_decode($tbl_html2); ?>
+							</div>
+						</div>
+						<?php endif; ?>
+						<?php if(!empty($tbl_html1)): ?>
+						<div class="text"><?php echo $tbl_html1; ?></div>
+						<?php endif; ?>
+					</div>
+					<?php endif; ?>
+				</div><!--mb_content-->
+            </section>
+			<!--1set end-->
+			<?php
+			//使った変数を初期化
+			foreach($box['CatalogBox'] as $key=>$data){
+			  ${'tbl_'.$key} = null;
+			}
+			?>
+			<?php endforeach;?>
+			<?php
+			echo $this->element('paging',array('var'=>array(
+			'first'=>false,
+			'prev'=>array('text'=>'&laquo;&nbsp;Prev','escape'=>false),
+			'next'=>array('text'=>'Next&nbsp;&raquo;','escape'=>false),
+			'last'=>false
+			)));
+			?>
+			
+        </div>
+    </div>
+</div>
+	
+</section>
+</main>
+<?php endif; ?>
+
+	
+	
+	
+
+
+
+<?php if (!$seoIsRoot): ?>
+<!-- 大サイズ用モーダル -->
+<?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>
+<?php if(!empty($tbl_image1)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image2)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-2">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image2,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image2_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image3)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-3">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image3,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image3_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image4)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-4">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image4,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image4_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image5)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-5">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image5,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image5_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image6)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-6">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image6,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image6_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image7)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-7">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image7,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image7_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image8)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-8">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image8,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image8_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image9)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-9">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image9,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image9_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($tbl_image10)): ?>
+<div class="modal fade p-lg-<?php echo $tbl_id; ?>-10">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span>
+        </button>
+        <div class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image10,'width'=>1000,'return'=>true)));?>" alt="<?php echo $tbl_image10_alt;?>" class="img-fluid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<!-- end -->
+<?php
+//使った変数を初期化
+foreach($box['CatalogBox'] as $key=>$data){
+  ${'tbl_'.$key} = null;
+}
+?>
+<?php endforeach;?>
+
+<?php endif; ?>
+
+<footer>
+	<div class="in">
+		<div class="container-fluid">
+			<div class="yohaku">
+				<div class="row">
+					<div class="col-12 col-lg-8 mb20_sp">
+						<ul class="foot_logo_list">
+							<li class="logo_mark"><img src="images/foot_logo_mark.png" alt="MUSICIAN" class="img-fluid"></li>
+							<li class="migi">
+								<p class="foot_logo"><img src="images/foot_logo_1.png" alt="MUSICIAN" class="img-fluid"></p>
+								<p class="mb10_sp">〒102-0084　東京都千代田区二番町9番3号</p>
+							</li>
+						</ul>
+						<p class="foot_tel"><span data-action="call" class="text_link_sp2 tel">TEL.03-6261-4348</span>FAX.03-6261-4349</p>
+					</div>
+					<div class="col-12 col-lg-4">
+						<div class="foot_link_box clearfix">
+							<ul class="foot_link d-none d-md-block">
+							  <li><a href="/"><span class="en">Home</span></a></li>
+							  <li><a href="business.html"><span class="en">Business</span></a></li>
+							  <li><a href="works.html"><span class="en">Works</span></a></li>
+							  <li><a href="artist.html"><span class="en">Artist</span></a></li>
+							</ul>
+							<ul class="foot_link d-none d-md-block">
+							  <li><a href="company.html"><span class="en">About us</span></a></li>
+							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
+							</ul>
+						</div>
+						
+                        <div class="sns_list">
+                            <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+                            <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+                            <p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+                        </div>
+						<p class="copy en"><small><i class="far fa-copyright"></i> 2022–2026 MUSICIAN.CO.JP</small></p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+<div id="sns_kotei" class="sns d-none d-md-block">
+	<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+	<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+	<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+</div>
+
+<div id="pagetop"><a href="#"><img src="images/pagetop.png" width="45" height="45" alt="pagetop"></a></div>
+
+
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/tel-3.1.js"></script>
+
+<!--pagetop-->
+<script src="js/pagetop.js"></script>
+
+<!--ナビ-->
+<script src="js/megamenu.js"></script>
+<script>
+$(function() {
+    $('.menu.menu_sp > .menu-mobile').click(function(){ // headerにclass名「open_nav」を追加及び削除
+        $('header').toggleClass('open_nav');
+    });
+
+    $('.menu.menu_sp > ul > li a').on('click', function(){
+        if (window.innerWidth <= 767) {
+            $('.menu.menu_sp > .menu-mobile').click();
+        }
+    });
+});
+</script>
+
+<!--スクロールして動きを出す-->
+<script src="js/aos.js"></script>
+<script>
+AOS.init({
+  offset: 120,
+  delay: 0,
+  duration: 1500,
+  easing: 'ease',
+  once: true,
+  mirror: false,
+});
+</script>
+
+<!--mainimage-->
+<script src="js/swiper-bundle.min.js"></script>
+<script src="js/swiper_custom.js"></script>
+
+
+<!--スクロールするとヘッダーが出てくる-->
+<script>
+$(function () {
+
+  // falg変数のデフォルト値として「up」を指定    
+  var flag = "up";
+
+  // scrollイベントを取得した際の処理を定義
+  $(window).on("scroll", function () {
+    // scrollTop()が「0」より大きい場合
+    if ($(this).scrollTop() > 0) {
+　　　　// flag変数が「up」だった場合の処理
+      if (flag === "up") {
+        // ヘッダーバーに対して、stop()メソッドを実行してから、
+        // animate()メソッドを実行
+        $(".cb-header").stop().animate({
+          // topの位置を「-56px」から「0」になるまでアニメーション
+          top: 0
+        // アニメーション時間を「500ms」に設定
+        }, 500)
+        // flag変数の値を「down」に変更
+        flag = "down";
+      }
+    // scrollTop()が「0」の場合
+    } else {
+      // flag変数が「down」だった場合の処理
+      if (flag === "down") {
+        // ヘッダーバーに対して、stop()メソッドを実行してから、
+        // animate()メソッドを実行
+        $(".cb-header").stop().animate({
+          // topの位置を「0」から「-145px」になるまでアニメーション
+          top: "-145px"
+        // アニメーション時間を「500ms」に設定
+        }, 500);
+        // flag変数の値を「up」に変更
+        flag = "up";
+      }
+
+    }
+
+  });
+
+});
+</script>
+
+
+<!--高さを揃える-->
+<script src="js/jquery.matchHeight.js"></script>
+<script>
+$(function(){
+　　$('.matchHeight').matchHeight();
+　　$('.matchHeight2').matchHeight();
+});
+</script>
+
+<!--画像縦横比固定-->
+<script src="js/ofi.min.js"></script>
+<script>
+ objectFitImages('.photo-ofi img');
+ objectFitImages('.object-fit img');
+</script>
+	
+<!--タイトルのエフェクト-->
+<script src="js/anime.min.js"></script>
+<script src="js/scrollMonitor.js"></script>
+<script src="js/main.js"></script>
+<script src="js/title.js"></script>	
+
+
+<!--サイドメニュー-->
+<script src="js/sidemenu.js"></script>
+
+<!--ギャラリー-->
+<script src="js/fotorama.js"></script>
+<script>
+	$(function () {
+		$('.fotorama').fotorama();
+	});
+</script>
+	
+
+
+</body>
+</html>

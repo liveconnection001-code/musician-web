@@ -1,0 +1,42 @@
+{
+  "status": "photo selection approved; prominent client logos neutralized",
+  "mode": "built-in image generation editing with local preservation compositing",
+  "fallbackUsed": false,
+  "assets": [
+    {
+      "key": "hero-corporate-show-clean",
+      "source": "hero-corporate-show.jpg",
+      "edit": "Removed the four-ring client mark; continued the existing black and red stage-screen artwork while preserving the original performers."
+    },
+    {
+      "key": "corporate-party-clean",
+      "source": "corporate-party.jpg",
+      "edit": "Removed the four-ring client mark; continued the existing black and red stage-screen artwork while preserving the original performers."
+    },
+    {
+      "key": "international-reception-clean",
+      "source": "international-reception.jpg",
+      "edit": "Replaced branded roll-up-banner surfaces with unbranded burgundy, beige, and gray abstract printed surfaces."
+    },
+    {
+      "key": "large-event-clean",
+      "source": "large-event.jpg",
+      "edit": "Replaced branded exhibition panels with unbranded orange geometric panels while keeping the live event scene."
+    },
+    {
+      "key": "japanese-hospitality-clean",
+      "source": "japanese-hospitality.jpg",
+      "edit": "No prominent client logo; approved photograph preserved."
+    },
+    {
+      "key": "hotel-live-clean",
+      "source": "hotel-live.jpg",
+      "edit": "No prominent client logo; approved photograph preserved."
+    },
+    {
+      "key": "live-streaming-clean",
+      "source": "1-Photo-1.jpg",
+      "edit": "Replaced the sponsor-logo screen with an unbranded live-production interface, blended the wall sign into a neutral dark panel, and neutralized recognizable equipment branding while preserving the operators and streaming setup."
+    }
+  ]
+}

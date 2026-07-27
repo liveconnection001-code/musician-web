@@ -1,0 +1,81 @@
+{
+  "captured_at_utc": "2026-07-27T05:36:16.851087+00:00",
+  "workspace": "A:\\AI\\Web\\MUSICIAN",
+  "defaults": {
+    "version": "pre-github-default",
+    "notes": "この時点の本番反映前提の現行状態をデフォルト化"
+  },
+  "target_files": {
+    "deploy_company": {
+      "path": "new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
+      "bytes": 57248,
+      "sha256": "2e10bb5eb0f4f37f3e58d92afb86fd273114c92a4814b52ee328fe63a85eacd3"
+    },
+    "deploy_css": {
+      "path": "new_site\\deployment\\app\\webroot\\css\\recent_achievements.css",
+      "bytes": 3501,
+      "sha256": "03c74ad38610e6c9ed9620c97fc783c8a3e4c3312a62aa5de6ad0e7937cd729d"
+    },
+    "works_template": {
+      "path": "new_site\\works_deployment\\app\\View\\catalog\\cl01_2\\default\\index.html",
+      "bytes": 44158,
+      "sha256": "0ec386998893bd0eac8937c99f31ab9a08a9623d2f57fa4a397f92c5dfbcfc92"
+    },
+    "works_css": {
+      "path": "new_site\\works_deployment\\app\\webroot\\css\\works_showcase.css",
+      "bytes": 13385,
+      "sha256": "f618b39e17328b405d71ef3ca6cb1c22d96ad31cd49fbdafd691e71b0f06d33b"
+    },
+    "artist_template": {
+      "path": "new_site\\artist_deployment\\app\\View\\catalog\\cl02_4\\default\\index.html",
+      "bytes": 16218,
+      "sha256": "8f8ec7e409586233ff90f4456ad00eaf64ca257e8822dd988593b07f46188f41"
+    },
+    "artist_css": {
+      "path": "new_site\\artist_deployment\\app\\webroot\\css\\artist_megumi.css",
+      "bytes": 6498,
+      "sha256": "8bdd934a9f6cc73822644d8e3b26edba74adfea0664aa5f0c0196790f487f215"
+    },
+    "seo_home": {
+      "path": "new_site\\seo_deployment\\app\\View\\Homes\\index.html",
+      "bytes": 23437,
+      "sha256": "ebdf36bcec8a0f0d2fbc699d9b5258109684b48605752f2e0dd9f2be7e4c54c8"
+    },
+    "seo_meta": {
+      "path": "new_site\\seo_deployment\\app\\View\\Elements\\seo_meta.html",
+      "bytes": 4661,
+      "sha256": "86bd04ad1e5129d91ae73c461e7646958cba3771c862136a29b961b137e6084d"
+    }
+  },
+  "manifests": {
+    "seo_manifest": {
+      "path": "new_site\\seo_deployment\\seo_manifest.json",
+      "bytes": 3839,
+      "sha256": "6a2f2d072aa5893558101d6137c11024fbfd8eb98f9496c3233d018fc9cd1693"
+    },
+    "works_manifest": {
+      "path": "new_site\\works_deployment\\performance_gallery_manifest.json",
+      "bytes": 1149,
+      "sha256": "48fec7fe5f5366dc47e0216fbd404fef4cff92ed0da36b663cb020f57a83c050"
+    },
+    "artist_manifest": {
+      "path": "new_site\\artist_deployment\\asset_manifest.json",
+      "bytes": 3740,
+      "sha256": "25dd0c70058d404d1f55e83740fc07be18c109447f4e8f39fcd1e14830049b52"
+    }
+  },
+  "image_summary": {
+    "works_gallery": {
+      "files": 118,
+      "bytes": 18409984
+    },
+    "works_root": {
+      "files": 133,
+      "bytes": 21417036
+    },
+    "artist_images": {
+      "files": 66,
+      "bytes": 9528329
+    }
+  }
+}

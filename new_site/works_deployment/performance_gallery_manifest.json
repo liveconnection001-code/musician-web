@@ -1,0 +1,37 @@
+{
+  "photos": [
+    {"key":"unit-live-band"},
+    {"key":"unit-modern-trio"},
+    {"key":"unit-big-band"},
+    {"key":"unit-brass-quintet"},
+    {"key":"unit-christmas"},
+    {"key":"unit-electric-strings"},
+    {"key":"unit-concert-production"},
+    {"key":"traditional-koto-gala"},
+    {"key":"unit-kimono"},
+    {"key":"unit-outdoor-night"},
+    {"key":"unit-vocal-balcony"},
+    {"key":"traditional-taiko"},
+    {"key":"traditional-japanese-fusion"},
+    {"key":"traditional-koto-quartet"},
+    {"key":"traditional-koto-duo"},
+    {"key":"traditional-shamisen-solo"},
+    {"key":"traditional-flamenco"},
+    {"key":"traditional-japanese-dance"},
+    {"key":"traditional-gospel"},
+    {"key":"traditional-vocal-show"},
+    {"key":"jazz-church-concert"},
+    {"key":"jazz-quartet"},
+    {"key":"jazz-big-band-concert"},
+    {"key":"pops-string-live"},
+    {"key":"pops-erhu-piano"},
+    {"key":"classic-orchestra"},
+    {"key":"classic-public-concert"},
+    {"key":"classic-cruise-brass"},
+    {"key":"classic-string-ensemble"},
+    {"key":"classic-film-production"},
+    {"key":"classic-mariachi-trio"},
+    {"key":"classic-gallery-trio"}
+  ]
+}
+

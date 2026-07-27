@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php echo $this->element('seo_meta', array(
+  'seoTitle' => '出張演奏・演奏家派遣ならMUSICIAN｜企業・式典・ホテル・学校公演',
+  'seoDescription' => '企業パーティー、表彰式、周年記念、ホテル・商業施設、学校・公共施設などへ、プロ演奏家を全国手配。クラシック、ジャズ、和楽器ほか、企画から演奏・音響・収録までご相談いただけます。',
+  'seoCanonicalPath' => '/',
+  'seoPageType' => 'WebPage',
+  'seoAdditionalSchema' => array(
+    array(
+      '@type' => 'Service',
+      '@id' => 'https://www.musician.co.jp/#performance-service',
+      'name' => '出張演奏・演奏家派遣サービス',
+      'serviceType' => array('出張演奏', '演奏家派遣', 'イベント音楽制作'),
+      'areaServed' => array('@type' => 'Country', 'name' => '日本'),
+      'provider' => array('@id' => 'https://www.musician.co.jp/#organization')
+    )
+  )
+)); ?>
+<meta name="format-detection" content="telephone=no">
+<link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
+<link href="css/style.css?v=20260727p" rel="stylesheet">
+<link href="css/bootstrap4-print.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
+<link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
+<link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
+<link rel="stylesheet" href="css/swiper-bundle.min.css"><!--mainimage-->
+<!--Googleフォント-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@600;800&display=swap" rel="stylesheet">
+<!--end-->
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
+</head>
+<body>
+	
+<!-- ローディング画面 -->
+<div id="loading">
+    <div class="load_logo"><img src="images/musician_logo.svg" alt="MUSICIAN">
+    </div>
+</div>
+	
+	
+<header>
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-11 col-md-3">
+                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家派遣のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
+					<ul class="btn_tel2 osu2 d-block d-md-none">
+						<li><span data-action="call"><img src="images/phone.png" alt="03-6261-4348" class="img-fluid" loading="lazy" decoding="async"></span></li>
+						<li><a href="contact.html"><img src="images/mail.png" alt="mail" class="img-fluid"></a></li>
+					</ul>
+					<p></p>
+                </div>
+                <div class="col-12 col-md-9">
+					<ul class="head_tel d-none d-md-block">
+						<li><span data-action="call" class="text_link_sp"><i class="fa-solid fa-phone"></i>03-6261-4348</span></li>
+						<li><a href="contact.html"><i class="fa-solid fa-envelope"></i>Mail Form</a></li>
+					</ul>
+                    <nav>
+                    <div class="menu-container osu1">
+                            <div class="menu menu_sp">
+                                <ul>
+                                    <li class="navi-on d-block d-md-none"><a href="/"><span class="en">Home</span></a></li>
+                                    <li><a href="business.html"><span class="en">Business</span></a></li>
+                                    <li><a href="works.html"><span class="en">Works</span></a></li>
+                                    <li><a href="artist.html"><span class="en">Artist</span></a></li>
+                                    <li><a href="company.html"><span class="en">About us</span></a></li>
+                                    <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li class="d-block d-md-none"><a href="contact.html"><span class="en">Contact</span></a></li>
+                                    <li class="d-block d-md-none">
+										<div class="sns_list">
+											<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+											<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+											<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+										</div>
+									</li>
+                                </ul>
+                            </div>
+                    </div>
+                    </nav>
+
+                </div>
+            </div>
+    </div>
+</header>
+
+
+<div id="mainimage">
+    <div class="mainVisual">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" src="images/mv/mv_img01.jpg" alt="企業イベントを彩るプロ演奏家の生演奏" fetchpriority="high" decoding="async"></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/mv_img02.jpg" alt=""></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async"
+                            src="images/mv/F0F514DD-4ED4-461F-815D-C3BCCF72B973.jpg" alt=""></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/HK_11859s02.jpg" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/IMG_6388.jpg" alt=""></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/IMG_8788.JPG" alt=""></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/Img221594a02.jpg" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="mv_photo"><img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/S__108961798.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<div class="content_pd">
+			<h1 class="ja caption mb40">大切な瞬間を彩る、華やかな生演奏</h1>
+			<p class="ja sub_caption">
+				企業パーティー、表彰式、周年行事、ホテル・商業施設、学校公演などへ、<br>
+				イベント制作経験豊富なスタッフが目的に合うプロ演奏家と演出をご提案します。<br>
+				<a href="works.html">演奏実績</a>・<a href="artist.html">アーティスト</a>をご覧のうえ、<a href="contact.html">お気軽にご相談ください</a>。
+			</p>
+		</div>
+    </div>
+</div>
+ <div id="main_print">
+	<div class="main_print_moji"><img src="images/main_print.jpg" alt="印刷用メイン画像" class="img-fluid"></div>
+</div><!--main_print-->
+ 
+
+
+
+<main>
+
+<section>
+	<div id="top01">
+		<div class="content_pd2">
+			<div class="container-fluid">
+				<div class="yohaku2" data-aos="fade-up">
+					<div class="row">
+						<div class="col-12 col-md-6 offset-md-6">
+							<div class="pd_yohaku">
+								<h2 class="midashi1 mb30_md50 tal_sptac"><span class="en">About</span>私たちについて</h2>
+								<p class="mb20">音楽家のみで運営しております。<br>
+	独自の手法により、低価格と素早いレスポンスで高クオリティの芸術をお届けいたします。導入したい芸術のコンセプトやイメージにあうビジュアル・演出もご相談が可能です。</p>
+								<p class="mb20">現在では多数の演奏家・作曲家・アレンジャーも在籍、あらゆる方面でサービスが承れます。<br>
+	日本人以外の外国人アーティストやダンサーなども幅広く参加しております。</p>
+								<p class="tar_sptac"><a href="business.html" class="btn btn-1 en">View More</a></p>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		<div class="photo"><span class="object-fit"><img src="images/top01_photo.jpg" alt="私たちについて" class="img-fluid" loading="lazy" decoding="async"></span></div>
+	</div>
+</section>
+	
+	
+<div class="content_pd">
+    <div class="container-fluid">
+        <div class="yohaku2" data-aos="fade-up">
+            <div class="row">
+                <div class="col-12 col-md-8 col-xl-9 mb50_sp">
+					<section class="pd_yohaku_r home-works" aria-labelledby="home-works-title">
+  <h2 id="home-works-title" class="midashi1 mb30_md50 tal_sptac"><span class="en">Works</span>実施例</h2>
+  <p class="home-works__lead">MUSICIANが企画から本番まで担当した仕事を、6つのテーマからご紹介します。</p>
+  <div class="top_works clearfix" role="list" aria-label="主な仕事例">
+    <div class="box" role="listitem"><a href="works.html#work-corporate-event"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/corporate-party-clean.webp" type="image/webp"><img src="images/works/corporate-party-clean.jpg" alt="企業パーティーのステージに並ぶ6名編成の女性バンド" class="img-fluid" width="1440" height="900" loading="lazy" decoding="async"></picture></span></div><div class="text">練り歩くライブショー</div></a></div>
+    <div class="box" role="listitem"><a href="works.html#work-international-reception"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/international-reception-clean.webp" type="image/webp"><img src="images/works/international-reception-clean.jpg" alt="国際レセプション会場で演奏するヴァイオリンとチェロのデュオ" class="img-fluid" width="1440" height="900" loading="lazy" decoding="async"></picture></span></div><div class="text">ゲストに上質な響きを</div></a></div>
+    <div class="box" role="listitem"><a href="works.html#work-japanese-culture"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/japanese-hospitality-clean.webp" type="image/webp"><img src="images/works/japanese-hospitality-clean.jpg" alt="国際会議の歓迎演出で和楽器を演奏するステージ" class="img-fluid" width="1440" height="900" loading="lazy" decoding="async"></picture></span></div><div class="text">和のお出迎え</div></a></div>
+    <div class="box" role="listitem"><a href="works.html#work-hotel-party"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/hotel-live-clean.webp" type="image/webp"><img src="images/works/hotel-live-clean.jpg" alt="ホテル宴会場で演奏するジャズカルテット" class="img-fluid" width="1440" height="900" loading="lazy" decoding="async"></picture></span></div><div class="text">宴会場をライブステージへ</div></a></div>
+    <div class="box" role="listitem"><a href="works.html#work-large-venue"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/large-event-clean.webp" type="image/webp"><img src="images/works/large-event-clean.jpg" alt="多くの来場者が集まる大規模展示会のステージ" class="img-fluid" width="1440" height="900" loading="lazy" decoding="async"></picture></span></div><div class="text">展示会を支える</div></a></div>
+    <div class="box" role="listitem"><a href="works.html#work-live-streaming"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/live-streaming-clean.webp" type="image/webp"><img src="images/works/live-streaming-clean.jpg" alt="ライブ配信現場の映像と音声のオペレーション卓" class="img-fluid" width="1440" height="900" loading="lazy" decoding="async"></picture></span></div><div class="text">臨場感を演出</div></a></div>
+  </div>
+  <p class="tar_sptac"><a href="works.html" class="btn btn-1">実施例を見る</a></p>
+</section>
+                </div>
+                <div class="col-12 col-md-4 col-xl-3">
+					<section class="facebook">
+                        <h2 class="midashi1 mb30_md50 tal_sptac"><span class="en"><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer">Facebook</a></span>公式Facebook</h2>
+						<div class="fb-page" data-href="https://www.facebook.com/MUSICIANoffice/" data-tabs="timeline" data-width="400" data-height="795" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/MUSICIANoffice/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MUSICIANoffice/">MUSICIAN</a></blockquote></div>						
+					</section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	
+
+	
+<section>
+	<div class="bg_kon">
+		<div class="content_pd">
+			<div class="container-fluid">
+				<div class="yohaku" data-aos="fade-up">
+					<h2 class="midashi1 mb30_md50 tal_sptac beijyu"><span class="en">Artist</span>アーティスト</h2>
+					
+						<div class="top_artist clearfix">
+							<?php $boxes = $this->requestAction(array('controller'=>'artist','action'=>'widget','conditions'=>array('on_top_page'=>'Y'),'limit'=>8));
+							foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>
+							<div class="box">
+								<?php if($tbl_has_page == 'Y'): ?>
+								<a href="artist/view/<?php echo $tbl_id; ?>">
+									<?php if(!empty($tbl_image1)): ?>
+									<div class="image"><span class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+									<?php endif; ?>
+									<div class="text"><?php echo $tbl_title; ?></div>
+								</a>
+								<?php else: ?>
+								<div>
+									<?php if(!empty($tbl_image1)): ?>
+									<div class="image"><span class="photo-ofi"><img src="<?php echo $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+									<?php endif; ?>
+									<div class="text"><?php echo $tbl_title; ?></div>
+								</div>
+								<?php endif; ?>
+							</div>
+							<?php
+							//使った変数を初期化
+							foreach($box['CatalogBox'] as $key=>$data){
+							  ${'tbl_'.$key} = null;
+							}
+							?>
+							<?php endforeach; ?>
+						</div><!--top_artist-->
+					
+					
+					
+					<p class="tac"><a href="artist.html" class="btn btn-1 en beijyu">View More</a></p>
+					
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	
+
+	
+<section>
+		<div class="content_pd">
+			<div class="container-fluid">
+				<div class="yohaku" data-aos="fade-up">
+					<h2 class="midashi1 mb30_md50 tal_sptac"><span class="en">Musician Youtube</span>公式Youtubeチャンネル</h2>
+					
+						<div class="top_youtube clearfix">
+							<div class="box">
+								<div class="video">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/Q3I7bU3JHng" title="MUSICIAN 出張演奏・イベント映像 1" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</div>
+							<div class="box">
+								<div class="video">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/Yqte27z2aww" title="MUSICIAN 出張演奏・イベント映像 2" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</div>
+							<div class="box">
+								<div class="video">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/-w4a-s-tlgo" title="MUSICIAN 出張演奏・イベント映像 3" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</div>
+						</div><!--top_artist-->
+					
+					
+				</div>
+			</div>
+		</div>
+</section>
+
+</main>
+
+
+<footer>
+	<div class="in">
+		<div class="container-fluid">
+			<div class="yohaku">
+				<div class="row">
+					<div class="col-12 col-lg-8 mb20_sp">
+						<ul class="foot_logo_list">
+							<li class="logo_mark"><img src="images/foot_logo_mark.png" alt="MUSICIAN" class="img-fluid"></li>
+							<li class="migi">
+								<p class="foot_logo"><img src="images/foot_logo_1.png" alt="MUSICIAN" class="img-fluid"></p>
+								<p class="mb10_sp">〒102-0084　東京都千代田区二番町9番3号</p>
+							</li>
+						</ul>
+						<p class="foot_tel"><span data-action="call" class="text_link_sp2 tel">TEL.03-6261-4348</span>FAX.03-6261-4349</p>
+					</div>
+					<div class="col-12 col-lg-4">
+						<div class="foot_link_box clearfix">
+							<ul class="foot_link d-none d-md-block">
+							  <li><a href="/"><span class="en">Home</span></a></li>
+							  <li><a href="business.html"><span class="en">Business</span></a></li>
+							  <li><a href="works.html"><span class="en">Works</span></a></li>
+							  <li><a href="artist.html"><span class="en">Artist</span></a></li>
+							</ul>
+							<ul class="foot_link d-none d-md-block">
+							  <li><a href="company.html"><span class="en">About us</span></a></li>
+							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
+							</ul>
+						</div>
+						
+                        <div class="sns_list">
+                            <p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+                            <p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+                            <p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+                        </div>
+						<p class="copy en"><small><i class="far fa-copyright"></i> 2022–2026 MUSICIAN.CO.JP</small></p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+<div id="sns_kotei" class="sns d-none d-md-block">
+	<p><a href="https://www.facebook.com/MUSICIANoffice/" target="_blank" rel="noopener noreferrer"><img src="images/icon_facebook.png" alt="facebook" class="img-fluid"></a></p>
+	<p><a href="https://www.instagram.com/musician_office_/" target="_blank" rel="noopener noreferrer"><img src="images/icon_instagram.png" alt="instagram" class="img-fluid"></a></p>
+	<p><a href="https://www.youtube.com/user/MUSICIANCOMPANY" target="_blank" rel="noopener noreferrer"><img src="images/icon_youtube.png" alt="youtube" class="img-fluid"></a></p>
+</div>
+
+<div id="pagetop"><a href="#"><img src="images/pagetop.png" width="45" height="45" alt="pagetop"></a></div>
+
+
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/tel-3.1.js"></script>
+
+<!--pagetop-->
+<script src="js/pagetop.js"></script>
+
+<!--ナビ-->
+<script src="js/megamenu.js"></script>
+<script>
+$(function() {
+    $('.menu.menu_sp > .menu-mobile').click(function(){ // headerにclass名「open_nav」を追加及び削除
+        $('header').toggleClass('open_nav');
+    });
+
+    $('.menu.menu_sp > ul > li a').on('click', function(){
+        if (window.innerWidth <= 767) {
+            $('.menu.menu_sp > .menu-mobile').click();
+        }
+    });
+});
+</script>
+
+<!--スクロールして動きを出す-->
+<script src="js/aos.js"></script>
+<script>
+AOS.init({
+  offset: 120,
+  delay: 0,
+  duration: 1500,
+  easing: 'ease',
+  once: true,
+  mirror: false,
+});
+</script>
+
+<!--mainimage-->
+<script src="js/swiper-bundle.min.js"></script>
+<script src="js/swiper_custom.js"></script>
+
+
+<!--スクロールするとヘッダーが出てくる-->
+<script>
+$(function () {
+
+  // falg変数のデフォルト値として「up」を指定    
+  var flag = "up";
+
+  // scrollイベントを取得した際の処理を定義
+  $(window).on("scroll", function () {
+    // scrollTop()が「0」より大きい場合
+    if ($(this).scrollTop() > 0) {
+　　　　// flag変数が「up」だった場合の処理
+      if (flag === "up") {
+        // ヘッダーバーに対して、stop()メソッドを実行してから、
+        // animate()メソッドを実行
+        $(".cb-header").stop().animate({
+          // topの位置を「-56px」から「0」になるまでアニメーション
+          top: 0
+        // アニメーション時間を「500ms」に設定
+        }, 500)
+        // flag変数の値を「down」に変更
+        flag = "down";
+      }
+    // scrollTop()が「0」の場合
+    } else {
+      // flag変数が「down」だった場合の処理
+      if (flag === "down") {
+        // ヘッダーバーに対して、stop()メソッドを実行してから、
+        // animate()メソッドを実行
+        $(".cb-header").stop().animate({
+          // topの位置を「0」から「-145px」になるまでアニメーション
+          top: "-145px"
+        // アニメーション時間を「500ms」に設定
+        }, 500);
+        // flag変数の値を「up」に変更
+        flag = "up";
+      }
+
+    }
+
+  });
+
+});
+</script>
+
+
+<!--高さを揃える-->
+<script src="js/jquery.matchHeight.js"></script>
+<script>
+$(function(){
+　　$('.matchHeight').matchHeight();
+　　$('.matchHeight2').matchHeight();
+});
+</script>
+
+<!--画像縦横比固定-->
+<script src="js/ofi.min.js"></script>
+<script>
+ objectFitImages('.photo-ofi img');
+ objectFitImages('.object-fit img');
+</script>
+	
+<!--タイトルのエフェクト-->
+<script src="js/anime.min.js"></script>
+<script src="js/scrollMonitor.js"></script>
+<script src="js/main.js"></script>
+<script src="js/title.js"></script>	
+
+<!--facebook-->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v15.0" nonce="lbOwv6SP"></script>
+	
+<!--ローディング-->
+<script src="js/common.js"></script>
+
+	
+</body>
+</html>
