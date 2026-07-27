@@ -8,6 +8,7 @@ import json
 import re
 import shutil
 from pathlib import Path
+from xml.sax.saxutils import escape as xml_escape
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +18,7 @@ WORKS = ROOT / "new_site" / "works_deployment"
 RECOVERED = ROOT / "work" / "recovered_achievements_2006_2018.json"
 STYLE = SEO / "app" / "webroot" / "css" / "style.css"
 ACHIEVEMENTS_CSS = ROOT / "new_site" / "deployment" / "app" / "webroot" / "css" / "recent_achievements.css"
+SEO_ACHIEVEMENTS_CSS = SEO / "app" / "webroot" / "css" / "recent_achievements.css"
 RECENT_ACHIEVEMENTS_SOURCE = ROOT / "new_site" / "deployment" / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html"
 COMPANY = SEO / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html"
 ACHIEVEMENTS = SEO / "app" / "webroot" / "achievements.html"
@@ -25,6 +27,7 @@ ROUTES = SEO / "app" / "Config" / "routes.php"
 SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
 ASSET_VERSION = "20260728b"
+STYLE_VERSION = "20260728c"
 
 
 SHARED_HEADING_CSS = r"""
@@ -113,8 +116,8 @@ ACHIEVEMENTS_LAYOUT_CSS = r"""
 .achievements-content { padding-top: 18px; }
 .achievements-layout {
   display: grid;
-  gap: clamp(34px, 5vw, 76px);
-  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: clamp(30px, 4vw, 60px);
+  grid-template-columns: minmax(0, 1fr) 150px;
 }
 .achievements-main { min-width: 0; }
 .achievements-sidebar { align-self: stretch; min-width: 0; }
@@ -123,19 +126,25 @@ ACHIEVEMENTS_LAYOUT_CSS = r"""
   border-top: 3px solid #041e42;
   max-height: calc(100vh - 130px);
   overflow-y: auto;
-  padding: 17px 16px 14px;
+  padding: 15px 11px 13px;
   position: sticky;
   scrollbar-color: rgba(4, 30, 66, .35) transparent;
   scrollbar-width: thin;
   top: 112px;
 }
+.achievements-category::-webkit-scrollbar { width: 3px; }
+.achievements-category::-webkit-scrollbar-track { background: transparent; }
+.achievements-category::-webkit-scrollbar-thumb {
+  background: rgba(4, 30, 66, .2);
+  border-radius: 999px;
+}
 .achievements-category h2 {
   color: #041e42;
   font-family: "Urbanist", sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: .06em;
-  margin: 0 0 12px;
+  margin: 0 3px 10px;
 }
 .achievements-category ul { list-style: none; margin: 0; padding: 0; }
 .achievements-category li { border-top: 1px solid rgba(4, 30, 66, .12); }
@@ -143,9 +152,9 @@ ACHIEVEMENTS_LAYOUT_CSS = r"""
   color: #041e42;
   display: block;
   font-family: "Urbanist", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: .04em;
-  padding: 7px 4px 7px 18px;
+  padding: 7px 2px 7px 16px;
   position: relative;
 }
 .achievements-category a::before {
@@ -153,7 +162,7 @@ ACHIEVEMENTS_LAYOUT_CSS = r"""
   border-top: 1px solid currentColor;
   content: "";
   height: 6px;
-  left: 3px;
+  left: 2px;
   position: absolute;
   top: 14px;
   transform: rotate(45deg);
@@ -189,7 +198,7 @@ def write_text(path: Path, text: str) -> None:
 def cache_bust(text: str) -> str:
     return re.sub(
         r'href="css/style\.css(?:\?v=[^"]+)?"',
-        f'href="css/style.css?v={ASSET_VERSION}"',
+        f'href="css/style.css?v={STYLE_VERSION}"',
         text,
     )
 
@@ -347,8 +356,8 @@ def group_recent_achievements(recent: str) -> str:
         flags=re.S,
     )
     return re.sub(
-        r'(<details class="achievement-year" id="achievements-\d{4}")\s+open>',
-        r'\1>',
+        r'(<details class="achievement-year" id="achievements-\d{4}")(?:\s+open)?>',
+        r'\1 open>',
         recent,
     )
 
@@ -387,9 +396,9 @@ def prepare_achievements() -> None:
     )
     prefix = cache_bust(prefix)
     prefix = prefix.replace(
-        '<link href="css/style.css?v=20260728b" rel="stylesheet">',
-        '<link href="css/style.css?v=20260728b" rel="stylesheet">\n'
-        '<link href="css/recent_achievements.css?v=20260728b" rel="stylesheet">',
+        '<link href="css/style.css?v=20260728c" rel="stylesheet">',
+        '<link href="css/style.css?v=20260728c" rel="stylesheet">\n'
+        '<link href="css/recent_achievements.css?v=20260728c" rel="stylesheet">',
         1,
     )
 
@@ -406,7 +415,7 @@ def prepare_achievements() -> None:
     archives = []
     for year in range(2018, 2005, -1):
         archive_html = by_year[year]["html"]
-        archives.append(f"""      <details class="achievement-year achievement-year--archive" id="achievements-{year}">
+        archives.append(f"""      <details class="achievement-year achievement-year--archive" id="achievements-{year}" open>
         <summary class="achievement-year__summary">
           <span class="achievement-year__number">{year}</span>
           <span class="achievement-year__toggle" aria-hidden="true"></span>
@@ -488,6 +497,7 @@ def prepare_achievements() -> None:
     if marker not in css:
         css = css.rstrip() + ACHIEVEMENTS_LAYOUT_CSS
     write_text(ACHIEVEMENTS_CSS, css)
+    write_text(SEO_ACHIEVEMENTS_CSS, css)
 
 
 def prepare_routes_and_sitemap() -> None:
@@ -515,6 +525,42 @@ def prepare_routes_and_sitemap() -> None:
         flags=re.S,
     )
     sitemap = re.sub(r"<lastmod>[^<]+</lastmod>", "<lastmod>2026-07-28</lastmod>", sitemap)
+
+    sitemap = sitemap.replace(
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+        '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
+        1,
+    )
+    sitemap = re.sub(
+        r"\s*<!-- works-image-gallery:start -->.*?<!-- works-image-gallery:end -->",
+        "",
+        sitemap,
+        flags=re.S,
+    )
+    works_template = (WORKS / "app/View/catalog/cl01_2/default/index.html").read_text(encoding="utf-8")
+    gallery_photos = re.findall(
+        r"array\('image' => '([^']+)', 'category' => '([^']+)', 'title' => '([^']+)', 'alt' => '([^']+)'\),",
+        works_template,
+    )
+    image_lines = ["    <!-- works-image-gallery:start -->"]
+    for image_key, _category, _title, _alt in gallery_photos:
+        image_lines.extend(
+            (
+                "    <image:image>",
+                f"      <image:loc>https://www.musician.co.jp/images/works/gallery/{xml_escape(image_key)}-large.jpg</image:loc>",
+                "    </image:image>",
+            )
+        )
+    image_lines.append("    <!-- works-image-gallery:end -->")
+    works_images = "\n".join(image_lines)
+    sitemap = re.sub(
+        r"(<url>\s*<loc>https://www\.musician\.co\.jp/works\.html</loc>.*?)(\s*</url>)",
+        rf"\1\n{works_images}\2",
+        sitemap,
+        count=1,
+        flags=re.S,
+    )
     write_text(SITEMAP, sitemap)
 
 
@@ -553,6 +599,8 @@ def prepare_static_preview() -> None:
     (public / "css").mkdir(parents=True, exist_ok=True)
     shutil.copyfile(STYLE, public / "css/style.css")
     shutil.copyfile(ACHIEVEMENTS_CSS, public / "css/recent_achievements.css")
+    if (public / "about.html").is_file():
+        shutil.copyfile(public / "about.html", public / "company.html")
     shutil.copyfile(
         ARTIST / "app/webroot/css/artist_megumi.css",
         public / "css/artist_megumi.css",

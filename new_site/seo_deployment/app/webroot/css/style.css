@@ -136,20 +136,23 @@ header{
 	background-color: #eee;
 }
 .site-logo {float: left;}
-.site-logo img{width: 150px; padding-top: 0; padding-bottom: 2px;}
+.site-logo img{width: 160px; padding-top: 0; padding-bottom: 2px;}
 @media print, screen and (min-width: 768px) {
 	header{
 		padding-top: 10px;
 		padding-bottom: 10px;
 	}
-	.site-logo img{width: 170px; padding-top: 0;}
+	.site-logo img{width: 180px; padding-top: 0;}
 	.head_right {padding-right: 0;}
 }
 @media print, screen and (min-width: 992px) {
-	.site-logo img{width: 200px;}
+	.site-logo img{width: 215px;}
 }
 @media print, screen and (min-width: 1200px) {
-	.site-logo img{width: 239px;}
+	.site-logo img{width: 250px;}
+}
+@media print, screen and (min-width: 1600px) {
+	.site-logo img{width: 270px;}
 }
 
 

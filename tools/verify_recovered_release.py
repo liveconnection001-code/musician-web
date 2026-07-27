@@ -45,7 +45,7 @@ def validate_shared_headers() -> None:
         require(text.count("<header>") == 1, f"{label}: header count")
         require(text.count("<footer>") == 1, f"{label}: footer count")
         require(text.count('id="midashi_h2"') == 1, f"{label}: shared heading missing")
-        require("style.css?v=20260728b" in text, f"{label}: CSS cache key missing")
+        require("style.css?v=20260728c" in text, f"{label}: CSS cache key missing")
     css = STYLE.read_text(encoding="utf-8")
     require("approved shared page heading" in css, "Approved heading CSS missing")
     require(re.search(r"#midashi_h2\s*\{[^}]*height:\s*40px", css, re.S), "Navy band is not 40px")
@@ -62,6 +62,11 @@ def validate_about() -> None:
     require("recent-achievements" not in text and 'id="achievements"' not in text, "Achievements remain in About us")
     require("Career" not in text, "Removed Career section remains")
     require(text.count("<span>About us</span>私たちについて") == 1, "About us title is duplicated")
+    preview_company = ROOT / "temporary_preview_site/public/company.html"
+    if preview_company.is_file():
+        preview = preview_company.read_text(encoding="utf-8")
+        require(preview.count("<span>About us</span>私たちについて") == 1, "Local About us preview has a duplicate page title")
+        require("Career" not in preview, "Local About us preview contains the removed Career section")
 
     deployed = WORKS / "app/webroot/images"
     require(
@@ -85,9 +90,9 @@ def validate_achievements() -> None:
     require(links == years, f"Achievements Category mismatch: {links}")
     require(text.count('class="achievement-category-group__item"') == 85, "Recent achievement item count changed")
     require('class="achievement-category-group"' in text, "Recent achievements are not grouped by category")
-    require(not re.search(r'<details class="achievement-year"[^>]*\sopen(?:\s|>)', text), "A year is open by default")
+    require(len(re.findall(r'<details class="achievement-year(?: achievement-year--archive)?"[^>]*\sopen(?:\s|>)', text)) == 21, "All 21 years must be open by default")
     require("ISEKI Global Awards</span><span class=\"achievement-list__detail\">ソプラノ歌唱の出演手配" in text, "Achievement title/detail are not kept inline")
-    require("recent_achievements.css?v=20260728b" in text, "Achievements CSS missing")
+    require("recent_achievements.css?v=20260728c" in text, "Achievements CSS missing")
     require("seoCanonicalPath' => '/achievements.html'" in text, "Achievements canonical missing")
     require("2006年から2026年" in text, "Achievements description does not cover full archive")
 
@@ -97,7 +102,7 @@ def validate_achievements() -> None:
         require(item["html"] in text, f"Recovered {year} content changed")
 
     css = ACHIEVEMENTS_CSS.read_text(encoding="utf-8")
-    require("grid-template-columns: minmax(0, 1fr) 180px" in css, "Category width is not 180px")
+    require("grid-template-columns: minmax(0, 1fr) 150px" in css, "Category width is not 150px")
     require("position: sticky" in css and "align-self: stretch" in css, "Sticky Category is incomplete")
     require(".achievements-category a::before" in css, "CSS year arrow missing")
     require("grid-template-columns: repeat(3, 1fr)" in css, "Mobile Category layout missing")
@@ -132,7 +137,7 @@ def validate_artist() -> None:
 def validate_works() -> None:
     template = (WORKS / "app/View/catalog/cl01_2/default/index.html").read_text(encoding="utf-8")
     css = (WORKS / "app/webroot/css/works_showcase.css").read_text(encoding="utf-8")
-    require("style.css?v=20260728b" in template, "Works CSS cache key missing")
+    require("style.css?v=20260728c" in template, "Works CSS cache key missing")
     require("hero-corporate-show-clean.webp?v=20260728b" in template, "Works showcase image cache key missing")
     require("-card.jpg?v=20260728b" in template, "Works gallery card cache key missing")
     require("-large.jpg?v=20260728b" in template, "Works gallery large-image cache key missing")

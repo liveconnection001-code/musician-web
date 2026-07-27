@@ -17,6 +17,7 @@ IMAGES = DEPLOY / "app/webroot/images/works/gallery"
 MANIFEST = DEPLOY / "performance_gallery_manifest.json"
 PREVIEW = ROOT / "temporary_preview_site/app/works/page.tsx"
 PREVIEW_IMAGES = ROOT / "temporary_preview_site/public/images/works/gallery"
+SITEMAP = ROOT / "new_site/seo_deployment/app/webroot/sitemap.xml"
 STAGING_IMAGES = ROOT / "work/release_upload/5_works_gallery/app/webroot/images/works/gallery"
 PROCESSOR = ROOT / "tools/prepare_works_performance_gallery.py"
 BUILDER = ROOT / "tools/build_works_release.py"
@@ -43,6 +44,7 @@ def main() -> None:
     require("works-performance__lightbox" in template, "In-page gallery enlargement is missing")
     require("works-performance__caption" not in template, "Gallery captions should remain hidden")
     require("'@type' => 'ImageObject'" in template and "'@type' => 'ItemList'" in template, "Image gallery schema is missing")
+    require("'keywords' => $photo['category']" in template and "'caption' => $photo['title']" in template, "Image genre metadata is missing")
     require("grid-template-columns: repeat(4" in css, "Desktop four-column gallery layout is missing")
     require("@media (max-width:820px)" in css and "grid-template-columns: repeat(2" in css, "Mobile gallery layout is missing")
     require("object-fit: cover" in css, "Uniform full-bleed 4:3 gallery fitting is missing")
@@ -75,6 +77,9 @@ def main() -> None:
         require((STAGING_IMAGES / name).read_bytes() == production_bytes, f"Staging image differs: {name}")
 
     require(total_size <= 35 * 1024 * 1024, f"Gallery payload is too large: {total_size / 1024 / 1024:.2f} MB")
+    sitemap = SITEMAP.read_text(encoding="utf-8")
+    require('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' in sitemap, "Image sitemap namespace is missing")
+    require(sitemap.count("<image:image>") == 36, "Image sitemap must list all 36 gallery images")
     print(f"Works gallery validation passed: 36 photos, 72 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
 
 

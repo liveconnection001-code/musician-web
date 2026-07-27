@@ -180,7 +180,7 @@ CSS = r"""
   border-top: 1px dotted rgba(4, 30, 66, .24);
   display: grid;
   gap: 14px 18px;
-  grid-template-columns: 170px minmax(0, 1fr);
+  grid-template-columns: 140px minmax(0, 1fr);
   padding: 17px 0 18px;
 }
 
@@ -270,7 +270,7 @@ def render_recent(data: dict) -> str:
     ]
 
     for index, year in enumerate(data["years"]):
-        is_open = " open" if index == 0 else ""
+        is_open = " open"
 
         chunks.extend(
             [

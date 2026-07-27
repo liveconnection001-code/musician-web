@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.musician.co.jp/</loc>
     <lastmod>2026-07-28</lastmod>
@@ -17,6 +18,116 @@
     <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <!-- works-image-gallery:start -->
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-live-band-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-modern-trio-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-big-band-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-brass-quintet-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-christmas-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-electric-strings-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-concert-production-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-koto-gala-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-kimono-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-outdoor-night-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/unit-vocal-balcony-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-taiko-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-japanese-fusion-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-koto-quartet-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-koto-duo-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-shamisen-solo-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-flamenco-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-japanese-dance-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-gospel-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-vocal-show-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/jazz-church-concert-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/jazz-quartet-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/jazz-big-band-concert-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/pops-string-live-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/pops-erhu-piano-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-orchestra-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-public-concert-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-cruise-brass-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-string-ensemble-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-film-production-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-mariachi-trio-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/classic-gallery-trio-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/concert-opera-scene-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/concert-operatic-heroines-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/concert-orchestra-amber-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/concert-soprano-stage-large.jpg</image:loc>
+    </image:image>
+    <!-- works-image-gallery:end -->
   </url>
   <url>
     <loc>https://www.musician.co.jp/artist.html</loc>

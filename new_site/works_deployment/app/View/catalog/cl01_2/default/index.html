@@ -66,6 +66,10 @@ if ($seoIsRoot) {
         '@type' => 'ImageObject',
         'name' => $photo['title'],
         'description' => $photo['alt'],
+        'caption' => $photo['title'] . '｜' . $photo['alt'],
+        'keywords' => $photo['category'] . ', 出張演奏, イベント演奏, 演奏家派遣, MUSICIAN',
+        'url' => 'https://www.musician.co.jp/works.html#works-photo-' . sprintf('%02d', $index + 1),
+        'encodingFormat' => 'image/jpeg',
         'contentUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-large.jpg?v=20260728b',
         'thumbnailUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-card.jpg?v=20260728b'
       )
@@ -97,7 +101,7 @@ if ($seoIsRoot) {
 <?php endif; ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css?v=20260728b" rel="stylesheet">
+<link href="css/style.css?v=20260728c" rel="stylesheet">
 <link href="css/works_showcase.css?v=20260727p" rel="stylesheet">
 <link rel="preload" as="image" href="images/works/hero-corporate-show-clean.webp?v=20260728b" type="image/webp" fetchpriority="high">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
