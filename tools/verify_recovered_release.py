@@ -63,6 +63,10 @@ def validate_about() -> None:
     require("company_photo_miyazaki_illustration.jpg?v=20260728c" in text, "Miyazaki illustration cache key missing")
     require("recent-achievements" not in text and 'id="achievements"' not in text, "Achievements remain in About us")
     require("Career" not in text, "Removed Career section remains")
+    require("私の音楽の原点は、小学生の頃にあります。" in text, "Miyazaki origin story is missing")
+    require("舞台監督として全体を見渡し" in text, "Miyazaki production leadership is missing")
+    require("約8,000曲分になりました。" in text, "Miyazaki arrangement archive count is missing")
+    require("その場にふさわしい音楽芸術をつくりましょう。" in text, "Miyazaki closing invitation is missing")
     require(text.count("<span>About us</span>私たちについて") == 1, "About us title is duplicated")
     preview_company = ROOT / "temporary_preview_site/public/company.html"
     if preview_company.is_file():

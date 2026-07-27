@@ -137,6 +137,10 @@ def main() -> int:
         0 <= megumi_company_position < miyazaki_company_position,
         "company: Megumi Omachi appears before Takashi Miyazaki",
     )
+    check("私の音楽の原点は、小学生の頃にあります。" in company, "company: Miyazaki origin story")
+    check("舞台監督として全体を見渡し" in company, "company: Miyazaki production leadership")
+    check("約8,000曲分になりました。" in company, "company: Miyazaki arrangement archive count")
+    check("その場にふさわしい音楽芸術をつくりましょう。" in company, "company: Miyazaki closing invitation")
     check("/artist/view/62" in artist and "大町 めぐみ" in artist, "artist: Megumi listing")
     check(
         ("上海音楽学院" in megumi or "上海音楽院" in megumi) and "2年間" in megumi,
