@@ -77,7 +77,7 @@ Options -Indexes
     RewriteRule (?:^|/)\.(?!well-known(?:/|$)) - [F,L]
     RewriteRule ^(?:wp-admin|wp-login\.php|xmlrpc\.php)(?:/|$) - [R=404,L,NC]
     RewriteRule ^(?:composer\.(?:json|lock)|phpinfo\.php|\.env)(?:/|$) - [F,L,NC]
-    RewriteRule ^app/(?:Config|Console|Controller|Lib|Locale|Model|Plugin|Test|tmp|Vendor)(?:/|$) - [F,L,NC]
+    RewriteRule ^(?:app/)?(?:Config|Console|Controller|Lib|Locale|Model|Plugin|Test|tmp|Vendor)(?:/|$) - [F,L,NC]
 
 	#SHOP専用ブロックここから
 	# リクエストされたurlが/shopか/shop/のみで終わっている場合、EZManagerの処理へ移行する
