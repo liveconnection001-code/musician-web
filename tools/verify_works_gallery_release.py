@@ -79,7 +79,13 @@ def main() -> None:
     require(total_size <= 35 * 1024 * 1024, f"Gallery payload is too large: {total_size / 1024 / 1024:.2f} MB")
     sitemap = SITEMAP.read_text(encoding="utf-8")
     require('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' in sitemap, "Image sitemap namespace is missing")
-    require(sitemap.count("<image:image>") == 36, "Image sitemap must list all 36 gallery images")
+    works_entry = re.search(
+        r"<url>\s*<loc>https://www\.musician\.co\.jp/works\.html</loc>(.*?)</url>",
+        sitemap,
+        re.DOTALL,
+    )
+    require(works_entry is not None, "Works sitemap entry is missing")
+    require(works_entry.group(1).count("<image:image>") == 36, "Works sitemap entry must list all 36 gallery images")
     print(f"Works gallery validation passed: 36 photos, 72 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
 
 

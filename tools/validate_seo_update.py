@@ -131,8 +131,9 @@ def validate_sitemap_and_robots() -> None:
     root = ET.parse(sitemap_path).getroot()
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     urls = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
-    check(len(urls) == 36, f"sitemap must contain 36 page URLs, found {len(urls)}")
+    check(len(urls) == 37, f"sitemap must contain 37 page URLs, found {len(urls)}")
     check("https://www.musician.co.jp/achievements.html" in urls, "independent achievements URL missing from sitemap")
+    check("https://www.musician.co.jp/artist-asakusa-taikoban.html" in urls, "Asakusa Taikoban URL missing from sitemap")
     check(len(urls) == len(set(urls)), "sitemap contains duplicate URLs")
     check(all(url.startswith("https://www.musician.co.jp/") for url in urls), "sitemap contains a non-canonical host")
     check(all("?" not in url and "#" not in url and "/page:1" not in url for url in urls), "sitemap contains non-canonical variants")
@@ -204,7 +205,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 23 files, 36 canonical URLs, 85 recent and 2672 historical achievements")
+    print("SEO validation passed: 23 files, 37 canonical URLs, 85 recent and 2672 historical achievements")
 
 
 if __name__ == "__main__":

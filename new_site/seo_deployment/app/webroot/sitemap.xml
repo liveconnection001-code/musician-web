@@ -286,6 +286,20 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.musician.co.jp/artist-asakusa-taikoban.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg</image:loc>
+      <image:caption>浅草を拠点に活動する和太鼓団体 浅草たいこばん</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/artists/asakusa-taikoban/asakusa-taikoban-performance.jpg</image:loc>
+      <image:caption>海辺で和太鼓を演奏する浅草たいこばん</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.musician.co.jp/artist/view/61</loc>
     <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>

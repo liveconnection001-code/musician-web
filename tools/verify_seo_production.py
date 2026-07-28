@@ -104,6 +104,7 @@ def main() -> int:
         "/achievements.html": "/achievements.html",
         "/contact.html": "/contact.html",
         "/artist/view/62": "/artist/view/62",
+        "/artist-asakusa-taikoban.html": "/artist-asakusa-taikoban.html",
         "/works/index/4": "/works/index/4",
     }
     rendered = {path: verify_html(path, canonical) for path, canonical in pages.items()}
@@ -111,6 +112,7 @@ def main() -> int:
     achievements = rendered["/achievements.html"]
     artist = rendered["/artist.html"]
     megumi = rendered["/artist/view/62"]
+    taikoban = rendered["/artist-asakusa-taikoban.html"]
     check(
         achievements.count('class="achievement-category-group__item"') == 85,
         "achievements: 85 recent achievements",
@@ -142,6 +144,10 @@ def main() -> int:
     check("約8,000曲分になりました。" in company, "company: Miyazaki arrangement archive count")
     check("その場にふさわしい音楽芸術をつくりましょう。" in company, "company: Miyazaki closing invitation")
     check("/artist/view/62" in artist and "大町 めぐみ" in artist, "artist: Megumi listing")
+    check("/artist-asakusa-taikoban.html" in artist and "浅草たいこばん" in artist, "artist: Asakusa Taikoban listing")
+    check("Japanese Taiko Drumming from the Heart of Asakusa" in taikoban, "Asakusa Taikoban: English profile")
+    check("youtube-nocookie.com/embed/Vp875mBKNOU" in taikoban, "Asakusa Taikoban: YouTube embed")
+    check("images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg" in taikoban, "Asakusa Taikoban: group image")
     check(
         ("上海音楽学院" in megumi or "上海音楽院" in megumi) and "2年間" in megumi,
         "Megumi profile: Shanghai study details",

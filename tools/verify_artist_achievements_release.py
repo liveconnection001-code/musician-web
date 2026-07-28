@@ -13,10 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTIST = ROOT / "new_site" / "artist_deployment"
 ASSETS = ARTIST / "app" / "webroot" / "images" / "artists" / "megumi-omachi"
 DATA = ROOT / "new_site" / "data" / "achievements_recent.json"
-ACHIEVEMENT_TEMPLATES = (
-    ROOT / "new_site" / "deployment" / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html",
-    ROOT / "new_site" / "seo_deployment" / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html",
-)
+ACHIEVEMENTS_PAGE = ROOT / "new_site" / "seo_deployment" / "app" / "webroot" / "achievements.html"
 ACHIEVEMENT_CSS = ROOT / "new_site" / "deployment" / "app" / "webroot" / "css" / "recent_achievements.css"
 
 GALLERY_SLUGS = (
@@ -58,7 +55,11 @@ def verify_artist() -> None:
     require('.artist_box .box .text p{user-select:text}' in css, "Artist text selection rule missing")
     require("(int)$tbl_id === 51" in home and "$tbl_id = 62" in home, "Home slot replacement missing")
     require("$tbl_title = '大町 めぐみ';" in home, "Home Megumi name text missing")
-    require(combined.count("(int)$tbl_id === 62 || !empty($tbl_image1)") == 4, "Megumi image gates are incomplete")
+    image_gates = re.findall(
+        r"\(int\)\$tbl_id === 62(?: \|\| \(int\)\$tbl_id === -101)? \|\| !empty\(\$tbl_image1\)",
+        combined,
+    )
+    require(len(image_gates) == 4, "Megumi image gates are incomplete")
 
     require("youtube-nocookie.com/embed/kZvvnMDZHXU" in detail, "YouTube embed missing")
     require("youtu.be/kZvvnMDZHXU" in detail, "YouTube link missing")
@@ -68,11 +69,11 @@ def verify_artist() -> None:
     require('data-rel="lightcase:megumi-profile"' in detail, "Click-to-enlarge gallery missing")
     require('aria-label="敦煌杯2025全日本二胡コンクール銀賞の賞状を拡大表示"' in detail, "Award image label missing")
     require(
-        'src="/images/megumi-award-certificate-card.jpg?v=20260727"' in detail,
+        'src="/images/megumi-award-certificate-card.jpg?v=20260728c"' in detail,
         "Award card image reference is missing or stale",
     )
     require(
-        'href="/images/megumi-award-certificate-large.jpg?v=20260727"' in detail,
+        'href="/images/megumi-award-certificate-large.jpg?v=20260728c"' in detail,
         "Award enlargement reference is missing or stale",
     )
     require(detail.count("<?php if (!$isMegumiOmachi): ?>") >= 3, "Legacy gallery/modal guards are incomplete")
@@ -95,32 +96,28 @@ def verify_achievements() -> int:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     expected_years = [str(year) for year in range(2026, 2018, -1)]
     expected_entries = sum(len(year["entries"]) for year in data["years"])
-    for path in ACHIEVEMENT_TEMPLATES:
-        text = path.read_text(encoding="utf-8")
-        for year in expected_years:
-            require(
-                text.count(f'achievements.html#achievements-{year}') == 1,
-                f"Sidebar link mismatch: {path}, {year}",
-            )
-            require(
-                text.count(f'company.html#achievements-{year}') == 0,
-                f"Old company anchor remains: {path}, {year}",
-            )
-            require(text.count(f'id="achievements-{year}"') == 1, f"Year section mismatch: {path}, {year}")
-        require(text.count('<details class="achievement-year"') == 8, f"Eight year sections required: {path}")
-        require(text.count('<li class="achievement-list__item">') == expected_entries, f"Entry count mismatch: {path}")
-        require("2019〜2026年" not in text, f"Grouped year label remains: {path}")
-        require("主な実績" not in text, f"Unrequested wording remains: {path}")
-        require("achievement-list__date" not in text, f"Month/all-year column remains: {path}")
-        require("achievement-year__caption" not in text, f"Redundant year caption remains: {path}")
-        require("recent-achievements__intro" not in text, f"Removed intro remains: {path}")
-        require("<?php foreach($category_all as $category_id => $category):?>" not in text, f"Old CMS categories remain: {path}")
-        require("<?php if (!$isCategoryAll): ?>" not in text, f"Unexpected old category guard remains: {path}")
+    text = ACHIEVEMENTS_PAGE.read_text(encoding="utf-8")
+    for year in expected_years:
+        require(text.count(f'href="#achievements-{year}"') == 1, f"Sidebar link mismatch: {year}")
+        require(text.count(f'id="achievements-{year}"') == 1, f"Year section mismatch: {year}")
+    require(
+        len(re.findall(r'<details class="achievement-year(?: achievement-year--archive)?"', text)) == 21,
+        "Twenty-one year sections required",
+    )
+    require(text.count('class="achievement-category-group__item"') == expected_entries, "Recent entry count mismatch")
+    require("2019〜2026年" not in text, "Grouped year label remains")
+    require("主な実績" not in text, "Unrequested wording remains")
+    require("achievement-list__date" not in text, "Month/all-year column remains")
+    require("achievement-year__caption" not in text, "Redundant year caption remains")
+    require("recent-achievements__intro" not in text, "Removed intro remains")
     css = ACHIEVEMENT_CSS.read_text(encoding="utf-8")
-    require("grid-template-columns: 170px minmax(0, 1fr);" in css, "Desktop achievements layout missing")
+    require(
+        "grid-template-columns: 140px minmax(0, 1fr);" in css
+        and ".achievement-category-group" in css,
+        "Grouped desktop achievements layout missing",
+    )
     require("achievement-list__date" not in css and "recent-achievements__intro" not in css, "Removed achievements CSS remains")
-    seo = ACHIEVEMENT_TEMPLATES[1].read_text(encoding="utf-8")
-    require("$seoTitle" in seo and "seo_meta" in seo, "Company SEO layer was lost")
+    require("seo_meta" in text and "'seoCanonicalPath' => '/achievements.html'" in text, "Achievements SEO layer was lost")
     return expected_entries
 
 

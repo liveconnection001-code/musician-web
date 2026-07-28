@@ -109,12 +109,16 @@ $seoBreadcrumbItems = array(
             // 大町めぐみ（ID 62）をCMS上の旧分類に関係なく「所属アーティスト」へ移動する。
             // 同分類の既存アーティストと同じグループにまとめ、二重表示を防ぐ。
             $affiliationCategoryId = null;
+            $generalArtistCategoryId = null;
             $affiliatedBoxes = array();
             $otherBoxes = array();
             foreach ($boxes as $artistBox) {
               $artistCategoryTitle = isset($artistBox['CatalogCategory']['title']) ? trim($artistBox['CatalogCategory']['title']) : '';
               if ($artistCategoryTitle === '所属アーティスト') {
                 $affiliationCategoryId = $artistBox['CatalogCategory']['id'];
+              }
+              if ($artistCategoryTitle === 'アーティスト') {
+                $generalArtistCategoryId = $artistBox['CatalogCategory']['id'];
               }
             }
             if ($affiliationCategoryId === null) {
@@ -135,6 +139,24 @@ $seoBreadcrumbItems = array(
                 $otherBoxes[] = $artistBox;
               }
             }
+            // 浅草たいこばんは本人提供素材による静的プロフィールへ接続する。
+            // 既存の「アーティスト」区分を残したまま、同区分の末尾へ追加する。
+            if ($generalArtistCategoryId !== null) {
+              $otherBoxes[] = array(
+                'CatalogBox' => array(
+                  'id' => -101,
+                  'has_page' => 'Y',
+                  'image1' => -101,
+                  'image1_alt' => '浅草を拠点に活動する和太鼓団体 浅草たいこばん',
+                  'title' => '浅草たいこばん',
+                  'word1' => 'アサクサ タイコバン'
+                ),
+                'CatalogCategory' => array(
+                  'id' => $generalArtistCategoryId,
+                  'title' => 'アーティスト'
+                )
+              );
+            }
             $boxes = array_merge($affiliatedBoxes, $otherBoxes);
             $c = 0;
             ?>
@@ -151,9 +173,9 @@ $seoBreadcrumbItems = array(
             <?php endif; ?>
                     <div class="box">
                         <?php if($tbl_has_page == 'Y'): ?>
-                        <a href="artist/view/<?php echo $tbl_id; ?>">
-                            <?php if((int)$tbl_id === 62 || !empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg?v=20260728c' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                        <a href="<?php echo ((int)$tbl_id === -101) ? '/artist-asakusa-taikoban.html' : 'artist/view/' . $tbl_id; ?>">
+                            <?php if((int)$tbl_id === 62 || (int)$tbl_id === -101 || !empty($tbl_image1)): ?>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg?v=20260728c' : (((int)$tbl_id === -101) ? '/images/artists/asakusa-taikoban/asakusa-taikoban-card.jpg?v=20260728d' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true))));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : (((int)$tbl_id === -101) ? '浅草を拠点に活動する和太鼓団体 浅草たいこばん' : $tbl_image1_alt);?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>

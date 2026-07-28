@@ -149,5 +149,19 @@
   "outputs": [
     "A:\\AI\\Web\\MUSICIAN\\temporary_preview_site\\public\\images\\artists\\megumi-omachi",
     "A:\\AI\\Web\\MUSICIAN\\new_site\\artist_deployment\\app\\webroot\\images\\artists\\megumi-omachi"
-  ]
+  ],
+  "asakusa_taikoban": {
+    "sources": [
+      "1feaf1cd-e580-4d20-b7f1-2ad12c851808.jpg",
+      "1a04ec78-ac98-465f-9ab2-b8ba5e95f3bb.jpg"
+    ],
+    "page": "/artist-asakusa-taikoban.html",
+    "images": [
+      "images/artists/asakusa-taikoban/asakusa-taikoban-card.jpg",
+      "images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg",
+      "images/artists/asakusa-taikoban/asakusa-taikoban-performance.jpg"
+    ],
+    "video": "https://youtu.be/Vp875mBKNOU",
+    "metadata": "stripped by re-encoding"
+  }
 }

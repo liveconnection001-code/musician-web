@@ -153,6 +153,7 @@ def validate_artist() -> None:
     listing = (ARTIST / "app/View/catalog/cl02_4/default/index.html").read_text(encoding="utf-8")
     detail = (ARTIST / "app/View/catalog/cl02_4/default/view.html").read_text(encoding="utf-8")
     home = (ARTIST / "app/View/Homes/index.html").read_text(encoding="utf-8")
+    taikoban = (ARTIST / "app/webroot/artist-asakusa-taikoban.html").read_text(encoding="utf-8")
     require("$artistId === 62" in listing and "所属アーティスト" in listing, "Megumi affiliation is missing")
     require("オリジナルユニット" not in listing or "$boxes" in listing, "Artist categories were hard-coded away")
     require("kZvvnMDZHXU" in detail, "Requested YouTube video missing")
@@ -172,6 +173,24 @@ def validate_artist() -> None:
         == sha256(ARTIST / "app/webroot/images/artists/megumi-omachi/megumi-portrait-card.jpg"),
         "Artist listing image differs from approved portrait",
     )
+    require("/artist-asakusa-taikoban.html" in listing, "Asakusa Taikoban listing link missing")
+    require("浅草たいこばん" in listing and "アサクサ タイコバン" in listing, "Asakusa Taikoban listing text missing")
+    require("浅草たいこばん" in taikoban and "Asakusa Taikoban" in taikoban, "Asakusa Taikoban bilingual name missing")
+    require("Japanese Taiko Drumming from the Heart of Asakusa" in taikoban, "English profile heading missing")
+    require("corporate events" in taikoban and "inbound tourism programs" in taikoban, "English booking copy missing")
+    require("youtube-nocookie.com/embed/Vp875mBKNOU" in taikoban, "Asakusa Taikoban YouTube embed missing")
+    require("youtu.be/Vp875mBKNOU" in taikoban, "Asakusa Taikoban YouTube link missing")
+    require("<span>Artist</span>アーティスト" in taikoban, "Asakusa Taikoban shared Artist header missing")
+    require("株式会社MUSICIAN" not in taikoban, "Prohibited company name remains on Asakusa Taikoban page")
+    taikoban_images = ARTIST / "app/webroot/images/artists/asakusa-taikoban"
+    for name, expected in (
+        ("asakusa-taikoban-card.jpg", (800, 600)),
+        ("asakusa-taikoban-group.jpg", (1200, 900)),
+        ("asakusa-taikoban-performance.jpg", (1200, 1600)),
+    ):
+        with Image.open(taikoban_images / name) as image:
+            require(image.size == expected, f"Asakusa Taikoban image size mismatch: {name} {image.size}")
+            require(not image.getexif(), f"Asakusa Taikoban EXIF remains: {name}")
 
 
 def validate_works() -> None:
@@ -210,6 +229,8 @@ def validate_seo_security() -> None:
     sitemap = (SEO / "app/webroot/sitemap.xml").read_text(encoding="utf-8")
     require("/achievements.html" in sitemap, "Achievements missing from sitemap")
     require("/artist/view/62" in sitemap, "Megumi page missing from sitemap")
+    require("/artist-asakusa-taikoban.html" in sitemap, "Asakusa Taikoban page missing from sitemap")
+    require("images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg" in sitemap, "Asakusa Taikoban image missing from sitemap")
     require("/company/index/" not in sitemap, "Redirected company archives remain in sitemap")
     require("2026-07-28" in sitemap, "Sitemap lastmod not updated")
     routes = (SEO / "app/Config/routes.php").read_text(encoding="utf-8")
@@ -252,6 +273,11 @@ def validate_manifest_and_targets() -> None:
         "app/webroot/css/style.css",
         "app/webroot/css/works_showcase.css",
         "app/webroot/css/artist_megumi.css",
+        "app/webroot/css/artist_taikoban.css",
+        "app/webroot/artist-asakusa-taikoban.html",
+        "app/webroot/images/artists/asakusa-taikoban/asakusa-taikoban-card.jpg",
+        "app/webroot/images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg",
+        "app/webroot/images/artists/asakusa-taikoban/asakusa-taikoban-performance.jpg",
         "app/webroot/images/company_photo_megumi.jpg",
         "app/webroot/images/company_photo_miyazaki_illustration.jpg",
         "app/webroot/images/megumi-portrait-card.jpg",

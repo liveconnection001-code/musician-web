@@ -32,8 +32,8 @@
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
-      "bytes": 16212,
-      "sha256": "bd67a0804291e2dc8e27087e9a4e3c2fc5c3ac5fc8a9204dd538889b2c607dec"
+      "bytes": 17601,
+      "sha256": "7187aef98eeee7f681a2bfe3756a2126cda5b51bbd891e02fec3c5f6793d408e"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
@@ -62,8 +62,8 @@
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 24087,
-      "sha256": "ea1f66565d182138ed4f2b00eacc79eadde0f63ace7a96a02404e8aa10a3ce23"
+      "bytes": 24204,
+      "sha256": "3bbf5b78b9c7619d10eafa5e49462ef524bc9e232f33020a6aa936ea307f2cf1"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -112,8 +112,8 @@
     },
     {
       "path": "app/webroot/sitemap.xml",
-      "bytes": 11699,
-      "sha256": "01e612438cddcf244d18880b3d01ba20240eef99b67e9b949fb147f6383d2f57"
+      "bytes": 12394,
+      "sha256": "b0a9fc9c4e38571cc87287232883cb2ca65985cd9a41049e8ca375d060c9230a"
     },
     {
       "path": "README.md",
