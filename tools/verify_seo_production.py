@@ -203,9 +203,18 @@ def main() -> int:
         }
         locations = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
         image_locations = [node.text or "" for node in root.findall("sm:url/image:image/image:loc", namespace)]
-        check(len(locations) == 36, f"sitemap.xml: 36 URLs, found {len(locations)}")
-        check(len(image_locations) == 36, f"sitemap.xml: 36 Works images, found {len(image_locations)}")
+        check(len(locations) == 37, f"sitemap.xml: 37 URLs, found {len(locations)}")
+        check(len(image_locations) == 38, f"sitemap.xml: 38 images, found {len(image_locations)}")
         check(f"{BASE}/achievements.html" in locations, "sitemap.xml: independent achievements URL")
+        check(f"{BASE}/artist-asakusa-taikoban.html" in locations, "sitemap.xml: Asakusa Taikoban URL")
+        check(
+            f"{BASE}/images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg" in image_locations,
+            "sitemap.xml: Asakusa Taikoban group image",
+        )
+        check(
+            f"{BASE}/images/artists/asakusa-taikoban/asakusa-taikoban-performance.jpg" in image_locations,
+            "sitemap.xml: Asakusa Taikoban performance image",
+        )
         check(len(locations) == len(set(locations)), "sitemap.xml: URLs are unique")
     except ET.ParseError as exc:
         ERRORS.append(f"sitemap.xml: invalid XML: {exc}")
