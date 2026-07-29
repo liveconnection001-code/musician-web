@@ -112,8 +112,8 @@
     },
     {
       "path": "app/webroot/sitemap.xml",
-      "bytes": 14647,
-      "sha256": "28dc112c97e8633942649919550b3c2810931d7745d5ba89ba7242e14bd7bb60"
+      "bytes": 14800,
+      "sha256": "9bd3128ffd409ce40a12596c65d4804dce23c5880ef5a4f34a26f23b363db312"
     },
     {
       "path": "README.md",

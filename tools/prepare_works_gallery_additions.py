@@ -36,6 +36,11 @@ PHOTOS = (
         "source": "jazz-female-big-band-stage-clean.png",
         "center": (0.50, 0.50),
     },
+    {
+        "key": "traditional-mariachi-festive",
+        "source": "traditional-mariachi-festive-clean.png",
+        "center": (0.50, 0.50),
+    },
 )
 
 

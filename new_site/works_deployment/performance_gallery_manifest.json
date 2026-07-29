@@ -1172,6 +1172,29 @@
         1086
       ],
       "metadata": "venue branding removed; stripped during re-encode"
+    },
+    {
+      "key": "traditional-mariachi-festive",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "traditional-mariachi-festive-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 4,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "venue advertising, promotional garment text, and cropped edge person removed; stripped during re-encode"
     }
   ]
 }
