@@ -210,7 +210,16 @@ def main() -> int:
         locations = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
         image_locations = [node.text or "" for node in root.findall("sm:url/image:image/image:loc", namespace)]
         check(len(locations) == 37, f"sitemap.xml: 37 URLs, found {len(locations)}")
-        check(len(image_locations) == 50, f"sitemap.xml: 50 images, found {len(image_locations)}")
+        check(len(image_locations) == 53, f"sitemap.xml: 53 images, found {len(image_locations)}")
+        for gallery_image in (
+            "traditional-taiko-ceremony-large.jpg",
+            "traditional-shamisen-tatami-large.jpg",
+            "jazz-female-big-band-stage-large.jpg",
+        ):
+            check(
+                f"{BASE}/images/works/gallery/{gallery_image}" in image_locations,
+                f"sitemap.xml: missing Works gallery image {gallery_image}",
+            )
         check(f"{BASE}/achievements.html" in locations, "sitemap.xml: independent achievements URL")
         check(f"{BASE}/artist-asakusa-taikoban.html" in locations, "sitemap.xml: Asakusa Taikoban URL")
         check(
