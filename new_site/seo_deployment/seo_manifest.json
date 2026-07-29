@@ -62,8 +62,8 @@
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 25298,
-      "sha256": "5d4340fdd7ee1918ca340a79bc78527216b2045fff200d1d8b5fb82564ca588b"
+      "bytes": 25919,
+      "sha256": "b480d9d4003fdd493de21bfdee00722c6dd5047bf4dc821dbf6398ef43aaef8a"
     },
     {
       "path": "app/View/Homes/robots.html",
