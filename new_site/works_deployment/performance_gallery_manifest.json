@@ -1103,6 +1103,75 @@
         1004
       ],
       "metadata": "stripped during re-encode"
+    },
+    {
+      "key": "traditional-taiko-ceremony",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "traditional-taiko-ceremony-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 2,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "identifying event banners removed; stripped during re-encode"
+    },
+    {
+      "key": "traditional-shamisen-tatami",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "traditional-shamisen-tatami-clean.png",
+      "sourcePixels": [
+        1560,
+        1008
+      ],
+      "redactions": 5,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1344,
+        1008
+      ],
+      "metadata": "identifying display text and edge distractions removed; stripped during re-encode"
+    },
+    {
+      "key": "jazz-female-big-band-stage",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides",
+      "sourceFile": "jazz-female-big-band-stage-clean.png",
+      "sourcePixels": [
+        1448,
+        1086
+      ],
+      "redactions": 1,
+      "smallPixels": [
+        480,
+        360
+      ],
+      "cardPixels": [
+        960,
+        720
+      ],
+      "largePixels": [
+        1448,
+        1086
+      ],
+      "metadata": "venue branding removed; stripped during re-encode"
     }
   ]
 }

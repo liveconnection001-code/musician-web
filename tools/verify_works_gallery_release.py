@@ -35,8 +35,8 @@ def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))["photos"]
 
     keys = [photo["key"] for photo in manifest]
-    require(len(keys) == 48, f"Expected 48 photos, found {len(keys)}")
-    require(len(set(keys)) == 48, "Gallery keys are not unique")
+    require(len(keys) == 51, f"Expected 51 photos, found {len(keys)}")
+    require(len(set(keys)) == 51, "Gallery keys are not unique")
     template_keys = re.findall(r"array\('image' => '([^']+)'", template)
     preview_keys = re.findall(r'\{ image: "([^"]+)"', preview)
     template_front_match = re.search(r"\$worksFrontOrder = array\((.*?)\);", template, re.DOTALL)
@@ -93,8 +93,8 @@ def main() -> None:
         re.DOTALL,
     )
     require(works_entry is not None, "Works sitemap entry is missing")
-    require(works_entry.group(1).count("<image:image>") == 48, "Works sitemap entry must list all 48 gallery images")
-    print(f"Works gallery validation passed: 48 photos, 96 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
+    require(works_entry.group(1).count("<image:image>") == 51, "Works sitemap entry must list all 51 gallery images")
+    print(f"Works gallery validation passed: 51 photos, 102 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
 
 
 if __name__ == "__main__":

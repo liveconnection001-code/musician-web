@@ -163,6 +163,15 @@
     <image:image>
       <image:loc>https://www.musician.co.jp/images/works/gallery/recent-erhu-vocal-ensemble-large.jpg</image:loc>
     </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-taiko-ceremony-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/traditional-shamisen-tatami-large.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.musician.co.jp/images/works/gallery/jazz-female-big-band-stage-large.jpg</image:loc>
+    </image:image>
     <!-- works-image-gallery:end -->
   </url>
   <url>

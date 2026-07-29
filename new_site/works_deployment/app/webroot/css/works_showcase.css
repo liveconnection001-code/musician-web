@@ -114,6 +114,7 @@
   .works-performance__heading h2 { font-size: 11px; letter-spacing: .11em; }
   .works-performance__grid { gap: 8px; grid-template-columns: repeat(2,minmax(0,1fr)); }
   .works-performance__item:nth-last-child(2):nth-child(4n + 1) { grid-column: auto; }
+  .works-performance__item:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc((100% - 8px)/2); }
   .works-performance__lightbox { padding: 56px 12px 18px; }
   .works-performance__lightbox figure, .works-performance__lightbox figure > img { max-height: calc(100vh - 74px); max-width: calc(100vw - 24px); }
   .works-performance__lightbox-close { font-size: 24px; height: 40px; right: 12px; top: 10px; width: 40px; }
