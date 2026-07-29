@@ -21,7 +21,7 @@ $seoBreadcrumbItems = array(
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css?v=20260728c" rel="stylesheet">
+<link href="css/style.css?v=20260730a" rel="stylesheet">
 <link href="css/artist_megumi.css" rel="stylesheet"><!--アーティスト一覧の文字配置-->
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
@@ -175,7 +175,7 @@ $seoBreadcrumbItems = array(
                         <?php if($tbl_has_page == 'Y'): ?>
                         <a href="<?php echo ((int)$tbl_id === -101) ? '/artist-asakusa-taikoban.html' : 'artist/view/' . $tbl_id; ?>">
                             <?php if((int)$tbl_id === 62 || (int)$tbl_id === -101 || !empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg?v=20260728c' : (((int)$tbl_id === -101) ? '/images/artists/asakusa-taikoban/asakusa-taikoban-card.jpg?v=20260728d' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true))));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : (((int)$tbl_id === -101) ? '浅草を拠点に活動する和太鼓団体 浅草たいこばん' : $tbl_image1_alt);?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg?v=20260730a' : (((int)$tbl_id === -101) ? '/images/artists/asakusa-taikoban/asakusa-taikoban-card.jpg?v=20260730a' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true))));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : (((int)$tbl_id === -101) ? '浅草を拠点に活動する和太鼓団体 浅草たいこばん' : $tbl_image1_alt);?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>
@@ -187,7 +187,7 @@ $seoBreadcrumbItems = array(
                         <?php else: ?>
                         <div>
                             <?php if((int)$tbl_id === 62 || !empty($tbl_image1)): ?>
-                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg?v=20260728c' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
+                            <div class="image"><span class="photo-ofi"><img src="<?php echo ((int)$tbl_id === 62) ? '/images/megumi-portrait-card.jpg?v=20260730a' : $this->element('media', array('var'=>array('id'=>$tbl_image1,'width'=>300,'return'=>true)));?>" alt="<?php echo ((int)$tbl_id === 62) ? '二胡奏者・ピアニスト 大町めぐみ' : $tbl_image1_alt;?>" class="img-fluid" loading="lazy" decoding="async"></span></div>
                             <?php endif; ?>
                             <div class="text">
                                 <p><?php echo $tbl_title; ?></p>

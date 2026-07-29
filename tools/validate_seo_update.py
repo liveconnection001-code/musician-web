@@ -88,10 +88,16 @@ def validate_templates() -> None:
     )
     check('class="pd_yohaku_r home-works"' in home, "home: curated Works section missing")
     check("requestAction(array('controller'=>'works'" not in home, "home: legacy Works CMS request returned")
-    check(len(re.findall(r'images/works/[^"\']+-clean\.jpg', home)) == 6, "home: expected six clean Works JPEGs")
+    for key in (
+        "recent-anniversary-big-band",
+        "recent-orchestra-soprano-gala",
+        "recent-roaming-jazz-band",
+        "recent-orchestra-banquet",
+    ):
+        check(key in home, f"home: prioritized Works photo missing: {key}")
     for case_id in case_ids:
         check(f'href="works.html#{case_id}"' in home, f"home: link to {case_id} missing")
-    first_image = re.search(r'<img[^>]+mv_img01\.jpg[^>]*>', home)
+    first_image = re.search(r'<img[^>]+fetchpriority="high"[^>]*>', home)
     check(first_image is not None, "home LCP image missing")
     if first_image:
         tag = first_image.group(0)
@@ -110,10 +116,19 @@ def validate_templates() -> None:
         achievements.count('class="achievement-category-group__item">') == 85,
         "expected 85 recent achievement items",
     )
+    archive_occurrences = [
+        int(value)
+        for value in re.findall(
+            r'achievement-category-group__item--archive" data-occurrences="(\d+)"',
+            achievements,
+        )
+    ]
+    check(sum(archive_occurrences) == 2672, "expected 2672 historical achievement occurrences")
     check(
-        achievements.count("achievement-category-group__item--archive") == 2672,
-        "expected 2672 date-free historical achievement items",
+        len(archive_occurrences) < 2672,
+        "historical recurring achievements were not collapsed",
     )
+    check("ランチタイムコンサート（年" in achievements, "recurring lunchtime concerts were not summarized")
 
     for relative_path in ("app/View/Contact/msg.html", "app/View/Contact/thanks.html"):
         page = text(relative_path)
@@ -190,7 +205,7 @@ def validate_preview() -> None:
         preview_home = preview_home_path.read_text(encoding="utf-8")
         check("<?php" not in preview_home and "?>" not in preview_home, "homepage preview contains PHP")
         check('name="robots" content="noindex, nofollow"' in preview_home, "homepage preview must remain noindex")
-        check(len(re.findall(r'images/works/[^"\']+-clean\.jpg', preview_home)) == 6, "homepage preview must show six clean Works images")
+        check(preview_home.count('class="box" role="listitem"') >= 6, "homepage preview must show six Works cards")
 
 
 def main() -> None:
@@ -205,7 +220,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 23 files, 37 canonical URLs, 85 recent and 2672 historical achievements")
+    print("SEO validation passed: 23 files, 37 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

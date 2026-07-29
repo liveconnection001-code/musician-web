@@ -8,7 +8,6 @@ import html
 import json
 import re
 import sys
-from collections import Counter
 from pathlib import Path
 
 from PIL import Image
@@ -47,7 +46,7 @@ def validate_shared_headers() -> None:
         require(text.count("<header>") == 1, f"{label}: header count")
         require(text.count("<footer>") == 1, f"{label}: footer count")
         require(text.count('id="midashi_h2"') == 1, f"{label}: shared heading missing")
-        require("style.css?v=20260728c" in text, f"{label}: CSS cache key missing")
+        require("style.css?v=20260730a" in text, f"{label}: CSS cache key missing")
     css = STYLE.read_text(encoding="utf-8")
     require("approved shared page heading" in css, "Approved heading CSS missing")
     require(re.search(r"#midashi_h2\s*\{[^}]*height:\s*40px", css, re.S), "Navy band is not 40px")
@@ -59,8 +58,8 @@ def validate_about() -> None:
     megumi = text.index("代表取締役</span> 大町めぐみ")
     miyazaki = text.index("プロデューサー</span> 宮﨑 隆")
     require(megumi < miyazaki, "About us profile order is wrong")
-    require("company_photo_megumi.jpg?v=20260728c" in text, "Megumi About image cache key missing")
-    require("company_photo_miyazaki_illustration.jpg?v=20260728c" in text, "Miyazaki illustration cache key missing")
+    require("company_photo_megumi.jpg?v=20260730a" in text, "Megumi About image cache key missing")
+    require("company_photo_miyazaki_illustration.jpg?v=20260730a" in text, "Miyazaki illustration cache key missing")
     require("recent-achievements" not in text and 'id="achievements"' not in text, "Achievements remain in About us")
     require("Career" not in text, "Removed Career section remains")
     require("私の音楽の原点は、小学生の頃にあります。" in text, "Miyazaki origin story is missing")
@@ -98,13 +97,14 @@ def validate_achievements() -> None:
     require('class="achievement-category-group"' in text, "Recent achievements are not grouped by category")
     require(len(re.findall(r'<details class="achievement-year(?: achievement-year--archive)?"[^>]*\sopen(?:\s|>)', text)) == 21, "All 21 years must be open by default")
     require("ISEKI Global Awards</span><span class=\"achievement-list__detail\">ソプラノ歌唱の出演手配" in text, "Achievement title/detail are not kept inline")
-    require("recent_achievements.css?v=20260728c" in text, "Achievements CSS missing")
+    require("recent_achievements.css?v=20260730a" in text, "Achievements CSS missing")
     require("seoCanonicalPath' => '/achievements.html'" in text, "Achievements canonical missing")
     require("2006年から2026年" in text, "Achievements description does not cover full archive")
 
     recovered = {int(item["year"]): item for item in json.loads(RECOVERED.read_text(encoding="utf-8"))}
     require(set(recovered) == set(range(2006, 2019)), "Recovered years incomplete")
     archive_total = 0
+    archive_rows = 0
     for year, item in recovered.items():
         match = re.search(
             rf'<details class="achievement-year achievement-year--archive" id="achievements-{year}" open>(.*?)</details>',
@@ -112,9 +112,17 @@ def validate_achievements() -> None:
             flags=re.S,
         )
         require(match is not None, f"Recovered {year} section missing")
-        rendered_titles = [
-            html.unescape(re.sub(r"<[^>]+>", " ", value)).strip()
-            for value in re.findall(r'<span class="achievement-list__title">(.*?)</span>', match.group(1), flags=re.S)
+        rendered_entries = [
+            (
+                html.unescape(re.sub(r"<[^>]+>", " ", title)).strip(),
+                int(count),
+            )
+            for count, title in re.findall(
+                r'<li class="achievement-category-group__item achievement-category-group__item--archive" '
+                r'data-occurrences="(\d+)">.*?<span class="achievement-list__title">(.*?)</span>',
+                match.group(1),
+                flags=re.S,
+            )
         ]
         source_titles = []
         for raw_entry in re.findall(r"<p>(.*?)</p>", item["html"], flags=re.S):
@@ -128,18 +136,22 @@ def validate_achievements() -> None:
             ).strip()
             if title:
                 source_titles.append(title)
-        require(Counter(rendered_titles) == Counter(source_titles), f"Recovered {year} entries changed")
+        require(sum(count for _title, count in rendered_entries) == len(source_titles), f"Recovered {year} occurrence count changed")
+        require(len(rendered_entries) <= len(source_titles), f"Recovered {year} aggregation increased rows")
         require(
-            not any(re.match(r"^(?:19|20)\d{2}年\d{1,2}月", title) for title in rendered_titles),
+            not any(re.match(r"^(?:19|20)\d{2}年\d{1,2}月", title) for title, _count in rendered_entries),
             f"Recovered {year} still displays event dates",
         )
         require('class="achievement-list__category"' in match.group(1), f"Recovered {year} is not grouped")
-        archive_total += len(rendered_titles)
+        archive_total += sum(count for _title, count in rendered_entries)
+        archive_rows += len(rendered_entries)
     require(archive_total == 2672, f"Recovered archive item count changed: {archive_total}")
     require(
-        text.count('class="achievement-category-group__item achievement-category-group__item--archive"') == 2672,
-        "Archive grouping item count changed",
+        text.count('class="achievement-category-group__item achievement-category-group__item--archive"') == archive_rows,
+        "Archive rendered row count changed",
     )
+    require(archive_rows < archive_total, "Recurring archive entries were not collapsed")
+    require("ランチタイムコンサート（年" in text, "Lunchtime concert series was not summarized")
 
     css = ACHIEVEMENTS_CSS.read_text(encoding="utf-8")
     require("grid-template-columns: minmax(0, 1fr) 150px" in css, "Category width is not 150px")
@@ -166,8 +178,8 @@ def validate_artist() -> None:
     ):
         require(url in detail, f"SNS URL missing: {url}")
     require("$tbl_id = 62" in home, "Homepage Megumi slot replacement missing")
-    require("/images/megumi-portrait-card.jpg?v=20260728c" in listing, "Artist image cache key missing")
-    require("/images/megumi-portrait-card.jpg?v=20260728c" in home, "Homepage artist image cache key missing")
+    require("/images/megumi-portrait-card.jpg?v=20260730a" in listing, "Artist image cache key missing")
+    require("/images/megumi-portrait-card.jpg?v=20260730a" in home, "Homepage artist image cache key missing")
     require(
         sha256(WORKS / "app/webroot/images/megumi-portrait-card.jpg")
         == sha256(ARTIST / "app/webroot/images/artists/megumi-omachi/megumi-portrait-card.jpg"),
@@ -196,10 +208,10 @@ def validate_artist() -> None:
 def validate_works() -> None:
     template = (WORKS / "app/View/catalog/cl01_2/default/index.html").read_text(encoding="utf-8")
     css = (WORKS / "app/webroot/css/works_showcase.css").read_text(encoding="utf-8")
-    require("style.css?v=20260728c" in template, "Works CSS cache key missing")
-    require("hero-corporate-show-clean.webp?v=20260728c" in template, "Works showcase image cache key missing")
-    require("-card.jpg?v=20260728c" in template, "Works gallery card cache key missing")
-    require("-large.jpg?v=20260728c" in template, "Works gallery large-image cache key missing")
+    require("style.css?v=20260730a" in template, "Works CSS cache key missing")
+    require("hero-corporate-show-clean.webp?v=20260730a" in template, "Works showcase image cache key missing")
+    require("-card.jpg?v=20260730a" in template, "Works gallery card cache key missing")
+    require("-large.jpg?v=20260730a" in template, "Works gallery large-image cache key missing")
     require("grid-template-columns: repeat(4" in css, "Four-column Works gallery missing")
     for key in (
         "concert-opera-scene",
@@ -232,7 +244,7 @@ def validate_seo_security() -> None:
     require("/artist-asakusa-taikoban.html" in sitemap, "Asakusa Taikoban page missing from sitemap")
     require("images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg" in sitemap, "Asakusa Taikoban image missing from sitemap")
     require("/company/index/" not in sitemap, "Redirected company archives remain in sitemap")
-    require("2026-07-28" in sitemap, "Sitemap lastmod not updated")
+    require("2026-07-30" in sitemap, "Sitemap lastmod not updated")
     routes = (SEO / "app/Config/routes.php").read_text(encoding="utf-8")
     for category_id in (21, 20, 19, 18, 17, 16, 15, 14, 6, 5, 7, 13, 12):
         require(f"/company/index/{category_id}" in routes, f"Old archive redirect missing: {category_id}")

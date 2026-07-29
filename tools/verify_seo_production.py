@@ -117,10 +117,16 @@ def main() -> int:
         achievements.count('class="achievement-category-group__item"') == 85,
         "achievements: 85 recent achievements",
     )
-    check(
-        achievements.count('class="achievement-category-group__item achievement-category-group__item--archive"') == 2672,
-        "achievements: 2,672 recovered archive achievements",
-    )
+    archive_occurrences = [
+        int(value)
+        for value in re.findall(
+            r'achievement-category-group__item--archive" data-occurrences="(\d+)"',
+            achievements,
+        )
+    ]
+    check(sum(archive_occurrences) == 2672, "achievements: 2,672 recovered archive occurrences")
+    check(len(archive_occurrences) < 2672, "achievements: recurring archive entries are collapsed")
+    check("ランチタイムコンサート（年" in achievements, "achievements: lunchtime concert series is summarized")
     check(
         re.search(r'<details[^>]+id="achievements-2018"[\s\S]*?(?:19|20)\d{2}年\d{1,2}月\d{1,2}日', achievements) is None,
         "achievements: recovered event dates are hidden",
@@ -204,7 +210,7 @@ def main() -> int:
         locations = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
         image_locations = [node.text or "" for node in root.findall("sm:url/image:image/image:loc", namespace)]
         check(len(locations) == 37, f"sitemap.xml: 37 URLs, found {len(locations)}")
-        check(len(image_locations) == 38, f"sitemap.xml: 38 images, found {len(image_locations)}")
+        check(len(image_locations) == 50, f"sitemap.xml: 50 images, found {len(image_locations)}")
         check(f"{BASE}/achievements.html" in locations, "sitemap.xml: independent achievements URL")
         check(f"{BASE}/artist-asakusa-taikoban.html" in locations, "sitemap.xml: Asakusa Taikoban URL")
         check(

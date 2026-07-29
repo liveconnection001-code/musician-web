@@ -27,8 +27,8 @@ BUSINESS = SEO / "app" / "webroot" / "business.html"
 ROUTES = SEO / "app" / "Config" / "routes.php"
 SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
-ASSET_VERSION = "20260728c"
-STYLE_VERSION = "20260728c"
+ASSET_VERSION = "20260730a"
+STYLE_VERSION = "20260730a"
 
 
 ARCHIVE_DATE_RE = re.compile(
@@ -401,6 +401,37 @@ def archive_category(title: str) -> str:
     return "その他の実績"
 
 
+def archive_group_key(title: str) -> str:
+    """Return a conservative key for repeated legacy entries in one year."""
+    normalized = re.sub(r"\s+", "", title).casefold()
+    if normalized == "株ランチタイムコンサート":
+        normalized = "ランチタイムコンサート"
+    normalized = normalized.replace("ランチコンサート", "ランチタイムコンサート")
+    return normalized
+
+
+def collapse_archive_entries(entries: list[str]) -> list[tuple[str, int]]:
+    """Collapse indistinguishable recurring work while preserving annual counts."""
+    grouped: dict[str, dict[str, object]] = {}
+    order: list[str] = []
+    for title in entries:
+        key = archive_group_key(title)
+        if key not in grouped:
+            display = re.sub(r"^株(?=ランチタイムコンサート$)", "", title)
+            display = display.replace("ランチコンサート", "ランチタイムコンサート")
+            grouped[key] = {"title": display, "count": 0}
+            order.append(key)
+        grouped[key]["count"] = int(grouped[key]["count"]) + 1
+
+    collapsed: list[tuple[str, int]] = []
+    for key in order:
+        item = grouped[key]
+        title = str(item["title"])
+        count = int(item["count"])
+        collapsed.append((f"{title}（年{count}回）" if count > 1 else title, count))
+    return collapsed
+
+
 def group_archive_achievements(archive_html: str) -> str:
     """Group legacy entries like the 2019+ layout and remove event dates."""
     grouped: dict[str, list[str]] = {}
@@ -412,11 +443,12 @@ def group_archive_achievements(archive_html: str) -> str:
 
     blocks: list[str] = []
     for category, entries in grouped.items():
+        entries = collapse_archive_entries(entries)
         lines = "\n".join(
-            f'''              <li class="achievement-category-group__item achievement-category-group__item--archive">
+            f'''              <li class="achievement-category-group__item achievement-category-group__item--archive" data-occurrences="{count}">
                 <p class="achievement-list__line"><span class="achievement-list__title">{html.escape(title, quote=False)}</span></p>
               </li>'''
-            for title in entries
+            for title, count in entries
         )
         blocks.append(f'''          <section class="achievement-category-group">
             <h3 class="achievement-list__category">{category}</h3>
@@ -461,9 +493,9 @@ def prepare_achievements() -> None:
     )
     prefix = cache_bust(prefix)
     prefix = prefix.replace(
-        '<link href="css/style.css?v=20260728c" rel="stylesheet">',
-        '<link href="css/style.css?v=20260728c" rel="stylesheet">\n'
-        '<link href="css/recent_achievements.css?v=20260728c" rel="stylesheet">',
+        '<link href="css/style.css?v=20260730a" rel="stylesheet">',
+        '<link href="css/style.css?v=20260730a" rel="stylesheet">\n'
+        '<link href="css/recent_achievements.css?v=20260730a" rel="stylesheet">',
         1,
     )
 
@@ -589,7 +621,7 @@ def prepare_routes_and_sitemap() -> None:
         sitemap,
         flags=re.S,
     )
-    sitemap = re.sub(r"<lastmod>[^<]+</lastmod>", "<lastmod>2026-07-28</lastmod>", sitemap)
+    sitemap = re.sub(r"<lastmod>[^<]+</lastmod>", "<lastmod>2026-07-30</lastmod>", sitemap)
 
     sitemap = sitemap.replace(
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -651,7 +683,7 @@ def refresh_manifest() -> None:
         payload = path.read_bytes()
         entry["bytes"] = len(payload)
         entry["sha256"] = hashlib.sha256(payload).hexdigest()
-    manifest["generated_at_jst"] = "2026-07-28"
+    manifest["generated_at_jst"] = "2026-07-30"
     manifest["file_count"] = len(manifest["files"])
     write_text(MANIFEST, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
 
@@ -707,11 +739,19 @@ def prepare_static_preview() -> None:
     # Browsers ignore server-side SEO blocks in production, so remove them from
     # local file previews while keeping the production files untouched.
     for source, destination in (
+        (SEO / "app/View/Homes/index.html", public / "home.html"),
         (ACHIEVEMENTS, public / "achievements.html"),
         (BUSINESS, public / "business.html"),
         (COMPANY, public / "about.html"),
     ):
         text = re.sub(r"<\?php.*?\?>", "", source.read_text(encoding="utf-8"), flags=re.S)
+        if 'name="robots" content="noindex, nofollow"' not in text:
+            text = text.replace(
+                '<meta name="viewport" content="width=device-width, initial-scale=1">',
+                '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+                '<meta name="robots" content="noindex, nofollow">',
+                1,
+            )
         write_text(destination, text)
 
 

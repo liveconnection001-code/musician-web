@@ -35,12 +35,20 @@ def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))["photos"]
 
     keys = [photo["key"] for photo in manifest]
-    require(len(keys) == 36, f"Expected 36 photos, found {len(keys)}")
-    require(len(set(keys)) == 36, "Gallery keys are not unique")
+    require(len(keys) == 48, f"Expected 48 photos, found {len(keys)}")
+    require(len(set(keys)) == 48, "Gallery keys are not unique")
     template_keys = re.findall(r"array\('image' => '([^']+)'", template)
     preview_keys = re.findall(r'\{ image: "([^"]+)"', preview)
-    require(template_keys == keys, "Production gallery keys/order must match the manifest exactly")
-    require(preview_keys == keys, "Preview gallery keys/order must match the manifest exactly")
+    template_front_match = re.search(r"\$worksFrontOrder = array\((.*?)\);", template, re.DOTALL)
+    preview_front_match = re.search(r"const performanceFrontOrder = \[(.*?)\];", preview, re.DOTALL)
+    require(template_front_match is not None, "Production front-order definition is missing")
+    require(preview_front_match is not None, "Preview front-order definition is missing")
+    template_front = re.findall(r"'([^']+)'", template_front_match.group(1))
+    preview_front = re.findall(r'"([^"]+)"', preview_front_match.group(1))
+    template_runtime = template_front + [key for key in template_keys if key not in template_front]
+    preview_runtime = preview_front + [key for key in preview_keys if key not in preview_front]
+    require(template_runtime == keys, "Production gallery keys/order must match the manifest exactly")
+    require(preview_runtime == keys, "Preview gallery keys/order must match the manifest exactly")
     require("works-performance__lightbox" in template, "In-page gallery enlargement is missing")
     require("works-performance__caption" not in template, "Gallery captions should remain hidden")
     require("'@type' => 'ImageObject'" in template and "'@type' => 'ItemList'" in template, "Image gallery schema is missing")
@@ -85,8 +93,8 @@ def main() -> None:
         re.DOTALL,
     )
     require(works_entry is not None, "Works sitemap entry is missing")
-    require(works_entry.group(1).count("<image:image>") == 36, "Works sitemap entry must list all 36 gallery images")
-    print(f"Works gallery validation passed: 36 photos, 72 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
+    require(works_entry.group(1).count("<image:image>") == 48, "Works sitemap entry must list all 48 gallery images")
+    print(f"Works gallery validation passed: 48 photos, 96 required JPEG derivatives, {total_size / 1024 / 1024:.2f} MB total")
 
 
 if __name__ == "__main__":

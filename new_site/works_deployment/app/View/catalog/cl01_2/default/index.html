@@ -10,7 +10,7 @@ $seoDescription = $seoIsRoot
     ? trim(strip_tags($target['description']))
     : $seoCategoryTitle . 'でMUSICIANが担当した出張演奏やイベント音楽制作の実施例をご紹介します。');
 $seoCanonicalPath = $seoIsRoot ? '/works.html' : '/works/index/' . (int)$target_id;
-$seoImage = $seoIsRoot ? '/images/works/hero-corporate-show-clean.jpg?v=20260728c' : '/images/mv/mv_img01.jpg';
+$seoImage = $seoIsRoot ? '/images/works/hero-corporate-show-clean.jpg?v=20260730a' : '/images/mv/mv_img01.jpg';
 $seoBreadcrumbItems = array(
   array('name' => 'ホーム', 'item' => '/'),
   array('name' => '実施例', 'item' => '/works.html')
@@ -18,7 +18,7 @@ $seoBreadcrumbItems = array(
 if (!$seoIsRoot) {
   $seoBreadcrumbItems[] = array('name' => $seoCategoryTitle, 'item' => $seoCanonicalPath);
 }
-$worksPerformanceGallery = array(
+$worksExistingPerformanceGallery = array(
   array('image' => 'unit-live-band', 'category' => '企業式典・祝賀会', 'title' => 'バンドと和楽器による祝宴ステージ', 'alt' => '宴会場のステージ全体でヴォーカル、ヴァイオリン、和太鼓などを演奏するライブバンド'),
   array('image' => 'unit-modern-trio', 'category' => '商業施設・集客イベント', 'title' => '商業施設を彩るエレクトリック弦楽トリオ', 'alt' => '商業施設の吹き抜けステージで演奏する鍵盤、ヴァイオリン、電子チェロの女性トリオ'),
   array('image' => 'unit-big-band', 'category' => 'ホテル宴会・懇親会', 'title' => 'ホテル宴会場のビッグバンド', 'alt' => 'ホテル宴会場のステージ全体で演奏する女性ビッグバンド'),
@@ -56,6 +56,42 @@ $worksPerformanceGallery = array(
   array('image' => 'concert-orchestra-amber', 'category' => 'オーケストラ・クラシック', 'title' => 'クラシック・オーケストラ定例公演', 'alt' => '本格的なオーケストラ編成で室内外の舞台を彩る演奏会の一場面'),
   array('image' => 'concert-soprano-stage', 'category' => 'オペラ・舞台作品', 'title' => 'ソプラノのためのステージ', 'alt' => '舞台の照明に照らされたソプラノを中心とした演奏シーン'),
 );
+$worksNewPerformanceGallery = array(
+  array('image' => 'recent-erhu-koto-gala', 'category' => '国際レセプション・中国楽器', 'title' => '国際宴席を彩る中国楽器デュオ', 'alt' => '大型スクリーンと舞台照明を備えた宴会場で二胡と古箏を演奏する女性デュオ'),
+  array('image' => 'recent-orchestra-soprano-gala', 'category' => '企業パーティー・オーケストラ', 'title' => '華やかなオーケストラ・ガラ', 'alt' => '花々に囲まれたステージで赤いドレスのソプラノとピアニストを囲んで演奏するオーケストラ'),
+  array('image' => 'recent-concert-hall-orchestra', 'category' => '文化施設・オーケストラ', 'title' => 'コンサートホールのオーケストラ', 'alt' => '大規模コンサートホールの舞台で演奏するフルオーケストラ'),
+  array('image' => 'recent-corporate-jazz-band', 'category' => '企業式典・祝賀会', 'title' => '祝賀会のジャズバンド', 'alt' => 'ホテル宴会場でサックス、ヴォーカル、ピアノ、ベース、ドラム、ギターを演奏するジャズバンド'),
+  array('image' => 'recent-anniversary-big-band', 'category' => '周年イベント・ビッグバンド', 'title' => '周年パーティーのビッグバンド', 'alt' => '海辺を思わせる装飾の会場で演奏するピアノ、ベース、ドラム、管楽器のビッグバンド'),
+  array('image' => 'recent-corporate-live-band', 'category' => '企業宴席・ライブバンド', 'title' => '法人懇親会のライブバンド', 'alt' => 'ホテル宴会場のステージで歌手、キーボード、ギター、サックス、ドラムが演奏するライブバンド'),
+  array('image' => 'recent-awards-live-band', 'category' => '表彰式・企業イベント', 'title' => '表彰式を華やかにするライブバンド', 'alt' => '青い舞台照明の表彰式会場で赤いドレスの女性歌手とバンドが演奏するステージ'),
+  array('image' => 'recent-hotel-jazz-quintet', 'category' => 'ホテル宴会・ジャズ', 'title' => 'ホテル宴会場のジャズライブ', 'alt' => '青い照明とシャンデリアの宴会場で女性歌手、サックス、ピアノ、ベース、ドラムが演奏するジャズライブ'),
+  array('image' => 'recent-roaming-jazz-band', 'category' => 'ホテル宴会・練り歩き', 'title' => 'ゲストの間を練り歩くジャズバンド', 'alt' => 'ホテル宴会場でクラリネット、トランペット、スーザフォンなどを演奏しながら練り歩くジャズバンド'),
+  array('image' => 'recent-orchestra-banquet', 'category' => '企業パーティー・オーケストラ', 'title' => '大宴会場のオーケストラ', 'alt' => '華やかな照明と造作が施された大宴会場で演奏する大規模オーケストラ'),
+  array('image' => 'recent-fusion-stage', 'category' => '文化施設・和洋楽器', 'title' => '和洋楽器による舞台作品', 'alt' => '舞台で歌手、ヴァイオリン、打楽器、和楽器が共演する和洋アンサンブル'),
+  array('image' => 'recent-erhu-vocal-ensemble', 'category' => '文化施設・中国楽器', 'title' => '二胡と声楽の華やかなアンサンブル', 'alt' => 'コンサートホールで青いドレスの歌手を中心に二胡、ピアノ、弦楽器が共演するアンサンブル'),
+);
+$worksGalleryByImage = array();
+foreach (array_merge($worksExistingPerformanceGallery, $worksNewPerformanceGallery) as $photo) {
+  $worksGalleryByImage[$photo['image']] = $photo;
+}
+$worksFrontOrder = array(
+  'recent-orchestra-banquet', 'unit-live-band', 'recent-orchestra-soprano-gala', 'unit-big-band',
+  'recent-roaming-jazz-band', 'recent-erhu-koto-gala', 'concert-operatic-heroines', 'recent-erhu-vocal-ensemble',
+  'recent-anniversary-big-band', 'jazz-big-band-concert', 'recent-fusion-stage', 'traditional-japanese-fusion',
+  'recent-awards-live-band', 'unit-modern-trio', 'recent-concert-hall-orchestra', 'classic-string-ensemble',
+  'recent-hotel-jazz-quintet', 'traditional-taiko', 'recent-corporate-live-band', 'unit-kimono',
+  'recent-corporate-jazz-band', 'unit-brass-quintet', 'classic-orchestra', 'traditional-koto-gala'
+);
+$worksPerformanceGallery = array();
+foreach ($worksFrontOrder as $image) {
+  if (isset($worksGalleryByImage[$image])) {
+    $worksPerformanceGallery[] = $worksGalleryByImage[$image];
+    unset($worksGalleryByImage[$image]);
+  }
+}
+foreach ($worksGalleryByImage as $photo) {
+  $worksPerformanceGallery[] = $photo;
+}
 $worksGallerySchemaItems = array();
 if ($seoIsRoot) {
   foreach ($worksPerformanceGallery as $index => $photo) {
@@ -70,8 +106,8 @@ if ($seoIsRoot) {
         'keywords' => $photo['category'] . ', 出張演奏, イベント演奏, 演奏家派遣, MUSICIAN',
         'url' => 'https://www.musician.co.jp/works.html#works-photo-' . sprintf('%02d', $index + 1),
         'encodingFormat' => 'image/jpeg',
-        'contentUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-large.jpg?v=20260728c',
-        'thumbnailUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-card.jpg?v=20260728c'
+        'contentUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-large.jpg?v=20260730a',
+        'thumbnailUrl' => 'https://www.musician.co.jp/images/works/gallery/' . $photo['image'] . '-card.jpg?v=20260730a'
       )
     );
   }
@@ -101,9 +137,9 @@ if ($seoIsRoot) {
 <?php endif; ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css?v=20260728c" rel="stylesheet">
+<link href="css/style.css?v=20260730a" rel="stylesheet">
 <link href="css/works_showcase.css?v=20260727p" rel="stylesheet">
-<link rel="preload" as="image" href="images/works/hero-corporate-show-clean.webp?v=20260728c" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="images/works/hero-corporate-show-clean.webp?v=20260730a" type="image/webp" fetchpriority="high">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
@@ -190,33 +226,6 @@ if ($seoIsRoot) {
   <p>MUSICIANが手がけるのは、演奏家の手配だけではありません。演者と音楽を核に、音響・照明はもちろん、空間の佇まい、動線、進行までを一つの表現として設計し、五感に響く音楽芸術の場を制作・演出します。</p>
 </section>
 
-<section class="works-showcase__grid" aria-label="主な仕事例">
-  <article class="works-case" id="work-corporate-event">
-    <div class="works-case__image"><picture><source srcset="images/works/corporate-party-clean.webp?v=20260728c" type="image/webp"><img src="images/works/corporate-party-clean.jpg?v=20260728c" alt="企業パーティーのステージに並ぶ6名編成の女性バンド" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">01</span></div>
-    <div class="works-case__content"><p class="works-case__category">CORPORATE EVENT</p><h3>練り歩くライブショー</h3><p>ディナーパーティーの空間と進行に合わせ、女性バンドを編成。選曲・ステージ構成・出演準備まで一体で整え、祝宴のクライマックスを華やかに演出しました。</p><ul aria-label="対応内容"><li>出演者編成</li><li>選曲・進行</li><li>ステージ連携</li></ul></div>
-  </article>
-  <article class="works-case" id="work-international-reception">
-    <div class="works-case__image"><picture><source srcset="images/works/international-reception-clean.webp?v=20260728c" type="image/webp"><img src="images/works/international-reception-clean.jpg?v=20260728c" alt="国際レセプション会場で演奏するヴァイオリンとチェロのデュオ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">02</span></div>
-    <div class="works-case__content"><p class="works-case__category">INTERNATIONAL RECEPTION</p><h3>ゲストに上質な響きを</h3><p>来場者の会話を妨げず、ブランドの雰囲気を引き立てるヴァイオリンとチェロのデュオ。会場規模や導線に合わせて音量・配置・レパートリーを設計します。</p><ul aria-label="対応内容"><li>弦楽デュオ</li><li>BGM設計</li><li>会場調整</li></ul></div>
-  </article>
-  <article class="works-case" id="work-japanese-culture">
-    <div class="works-case__image"><picture><source srcset="images/works/japanese-hospitality-clean.webp?v=20260728c" type="image/webp"><img src="images/works/japanese-hospitality-clean.jpg?v=20260728c" alt="国際会議の歓迎演出で和楽器を演奏するステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">03</span></div>
-    <div class="works-case__content"><p class="works-case__category">JAPANESE CULTURE</p><h3>和のお出迎え</h3><p>和楽器の音色を、国際会議やレセプションのステージへ。伝統性を大切にしながら、式次第と観客に合わせた見せ方まで組み立てます。</p><ul aria-label="対応内容"><li>和楽器手配</li><li>衣装・編成</li><li>舞台進行</li></ul></div>
-  </article>
-  <article class="works-case" id="work-hotel-party">
-    <div class="works-case__image"><picture><source srcset="images/works/hotel-live-clean.webp?v=20260728c" type="image/webp"><img src="images/works/hotel-live-clean.jpg?v=20260728c" alt="ホテル宴会場で演奏するジャズカルテット" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">04</span></div>
-    <div class="works-case__content"><p class="works-case__category">HOTEL &amp; PARTY</p><h3>宴会場をライブステージへ</h3><p>サックスを中心に、ピアノ・ベース・ドラムを組み合わせたジャズ編成。歓談のBGMからメインショーまで、会場の温度に合わせて演奏を設計します。</p><ul aria-label="対応内容"><li>ジャズカルテット</li><li>BGM〜ショー</li><li>音響調整</li></ul></div>
-  </article>
-  <article class="works-case" id="work-large-venue">
-    <div class="works-case__image"><picture><source srcset="images/works/large-event-clean.webp?v=20260728c" type="image/webp"><img src="images/works/large-event-clean.jpg?v=20260728c" alt="多くの来場者が集まる大規模展示会のステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">05</span></div>
-    <div class="works-case__content"><p class="works-case__category">LARGE VENUE</p><h3>展示会を支える</h3><p>多くの来場者が行き交う会場で、ステージ音響、進行、現場オペレーションを連携。出演者だけでなく、イベント全体が滞りなく進むところまで支えます。</p><ul aria-label="対応内容"><li>音響オペレーション</li><li>進行連携</li><li>会場運営</li></ul></div>
-  </article>
-  <article class="works-case" id="work-live-streaming">
-    <div class="works-case__image"><picture><source srcset="images/works/live-streaming-clean.webp?v=20260728c" type="image/webp"><img src="images/works/live-streaming-clean.jpg?v=20260728c" alt="ライブ配信現場の映像と音声のオペレーション卓" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">06</span></div>
-    <div class="works-case__content"><p class="works-case__category">LIVE STREAMING</p><h3>臨場感を演出</h3><p>複数カメラ、音声、配信画面を同時に管理し、コンサートやコンクールをライブ配信。演奏のニュアンスが伝わる音と映像を、本番進行に合わせて届けます。</p><ul aria-label="対応内容"><li>配信設計</li><li>音声・映像</li><li>本番オペレーション</li></ul></div>
-  </article>
-</section>
-
 <section class="works-performance" aria-labelledby="works-performance-title">
   <div class="works-performance__heading">
     <h2 id="works-performance-title">PERFORMANCE GALLERY</h2>
@@ -224,7 +233,7 @@ if ($seoIsRoot) {
   <div class="works-performance__grid">
     <?php foreach ($worksPerformanceGallery as $index => $photo): ?>
     <a class="works-performance__item" href="#works-photo-<?php echo sprintf('%02d', $index + 1); ?>" aria-label="写真<?php echo sprintf('%02d', $index + 1); ?>：<?php echo htmlspecialchars($photo['title'], ENT_QUOTES, 'UTF-8'); ?>を拡大表示">
-      <img src="images/works/gallery/<?php echo $photo['image']; ?>-card.jpg?v=20260728c" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" decoding="async">
+      <img src="images/works/gallery/<?php echo $photo['image']; ?>-card.jpg?v=20260730a" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" <?php if ($index === 0): ?>fetchpriority="high"<?php else: ?>loading="lazy"<?php endif; ?> decoding="async">
     </a>
     <?php endforeach; ?>
   </div>
@@ -232,11 +241,38 @@ if ($seoIsRoot) {
   <div class="works-performance__lightbox" id="works-photo-<?php echo sprintf('%02d', $index + 1); ?>" role="dialog" aria-modal="true" aria-label="<?php echo htmlspecialchars($photo['title'], ENT_QUOTES, 'UTF-8'); ?>の拡大写真">
     <a class="works-performance__lightbox-backdrop" href="#works-performance-title" aria-label="拡大写真を閉じる"></a>
     <figure>
-      <img src="images/works/gallery/<?php echo $photo['image']; ?>-large.jpg?v=20260728c" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" decoding="async">
+      <img src="images/works/gallery/<?php echo $photo['image']; ?>-large.jpg?v=20260730a" alt="<?php echo htmlspecialchars($photo['alt'], ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" decoding="async">
       <a class="works-performance__lightbox-close" href="#works-performance-title" aria-label="拡大写真を閉じる"><span aria-hidden="true">&times;</span></a>
     </figure>
   </div>
   <?php endforeach; ?>
+</section>
+
+<section class="works-showcase__grid" aria-label="主な仕事例">
+  <article class="works-case" id="work-corporate-event">
+    <div class="works-case__image"><picture><source srcset="images/works/corporate-party-clean.webp?v=20260730a" type="image/webp"><img src="images/works/corporate-party-clean.jpg?v=20260730a" alt="企業パーティーのステージに並ぶ6名編成の女性バンド" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">01</span></div>
+    <div class="works-case__content"><p class="works-case__category">CORPORATE EVENT</p><h3>練り歩くライブショー</h3><p>ディナーパーティーの空間と進行に合わせ、女性バンドを編成。選曲・ステージ構成・出演準備まで一体で整え、祝宴のクライマックスを華やかに演出しました。</p><ul aria-label="対応内容"><li>出演者編成</li><li>選曲・進行</li><li>ステージ連携</li></ul></div>
+  </article>
+  <article class="works-case" id="work-international-reception">
+    <div class="works-case__image"><picture><source srcset="images/works/international-reception-clean.webp?v=20260730a" type="image/webp"><img src="images/works/international-reception-clean.jpg?v=20260730a" alt="国際レセプション会場で演奏するヴァイオリンとチェロのデュオ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">02</span></div>
+    <div class="works-case__content"><p class="works-case__category">INTERNATIONAL RECEPTION</p><h3>ゲストに上質な響きを</h3><p>来場者の会話を妨げず、ブランドの雰囲気を引き立てるヴァイオリンとチェロのデュオ。会場規模や導線に合わせて音量・配置・レパートリーを設計します。</p><ul aria-label="対応内容"><li>弦楽デュオ</li><li>BGM設計</li><li>会場調整</li></ul></div>
+  </article>
+  <article class="works-case" id="work-japanese-culture">
+    <div class="works-case__image"><picture><source srcset="images/works/japanese-hospitality-clean.webp?v=20260730a" type="image/webp"><img src="images/works/japanese-hospitality-clean.jpg?v=20260730a" alt="国際会議の歓迎演出で和楽器を演奏するステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">03</span></div>
+    <div class="works-case__content"><p class="works-case__category">JAPANESE CULTURE</p><h3>和のお出迎え</h3><p>和楽器の音色を、国際会議やレセプションのステージへ。伝統性を大切にしながら、式次第と観客に合わせた見せ方まで組み立てます。</p><ul aria-label="対応内容"><li>和楽器手配</li><li>衣装・編成</li><li>舞台進行</li></ul></div>
+  </article>
+  <article class="works-case" id="work-hotel-party">
+    <div class="works-case__image"><picture><source srcset="images/works/hotel-live-clean.webp?v=20260730a" type="image/webp"><img src="images/works/hotel-live-clean.jpg?v=20260730a" alt="ホテル宴会場で演奏するジャズカルテット" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">04</span></div>
+    <div class="works-case__content"><p class="works-case__category">HOTEL &amp; PARTY</p><h3>宴会場をライブステージへ</h3><p>サックスを中心に、ピアノ・ベース・ドラムを組み合わせたジャズ編成。歓談のBGMからメインショーまで、会場の温度に合わせて演奏を設計します。</p><ul aria-label="対応内容"><li>ジャズカルテット</li><li>BGM〜ショー</li><li>音響調整</li></ul></div>
+  </article>
+  <article class="works-case" id="work-large-venue">
+    <div class="works-case__image"><picture><source srcset="images/works/large-event-clean.webp?v=20260730a" type="image/webp"><img src="images/works/large-event-clean.jpg?v=20260730a" alt="多くの来場者が集まる大規模展示会のステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">05</span></div>
+    <div class="works-case__content"><p class="works-case__category">LARGE VENUE</p><h3>展示会を支える</h3><p>多くの来場者が行き交う会場で、ステージ音響、進行、現場オペレーションを連携。出演者だけでなく、イベント全体が滞りなく進むところまで支えます。</p><ul aria-label="対応内容"><li>音響オペレーション</li><li>進行連携</li><li>会場運営</li></ul></div>
+  </article>
+  <article class="works-case" id="work-live-streaming">
+    <div class="works-case__image"><picture><source srcset="images/works/live-streaming-clean.webp?v=20260730a" type="image/webp"><img src="images/works/live-streaming-clean.jpg?v=20260730a" alt="ライブ配信現場の映像と音声のオペレーション卓" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">06</span></div>
+    <div class="works-case__content"><p class="works-case__category">LIVE STREAMING</p><h3>臨場感を演出</h3><p>複数カメラ、音声、配信画面を同時に管理し、コンサートやコンクールをライブ配信。演奏のニュアンスが伝わる音と映像を、本番進行に合わせて届けます。</p><ul aria-label="対応内容"><li>配信設計</li><li>音声・映像</li><li>本番オペレーション</li></ul></div>
+  </article>
 </section>
 
 <section class="works-showcase__scope" aria-labelledby="works-scope-title">
