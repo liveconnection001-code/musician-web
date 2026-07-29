@@ -78,25 +78,52 @@ def validate_templates() -> None:
         check(token in element, f"SEO element missing: {token}")
 
     home = text("app/View/Homes/index.html")
-    case_ids = (
-        "work-corporate-event",
-        "work-international-reception",
-        "work-japanese-culture",
-        "work-hotel-party",
-        "work-large-venue",
-        "work-live-streaming",
-    )
     check('class="pd_yohaku_r home-works"' in home, "home: curated Works section missing")
     check("requestAction(array('controller'=>'works'" not in home, "home: legacy Works CMS request returned")
-    for key in (
-        "recent-anniversary-big-band",
-        "recent-orchestra-soprano-gala",
-        "recent-roaming-jazz-band",
-        "recent-orchestra-banquet",
+    check('style.css?v=20260730b' in home, "home: compact About stylesheet cache key missing")
+    site_css = text("app/webroot/css/style.css")
+    for token in (
+        ".home-works__genres",
+        "width: 38%;",
+        "height: min(420px, calc(100% - 48px));",
+        "#top01 .photo{height: 170px;}",
     ):
-        check(key in home, f"home: prioritized Works photo missing: {key}")
-    for case_id in case_ids:
-        check(f'href="works.html#{case_id}"' in home, f"home: link to {case_id} missing")
+        check(token in site_css, f"home: compact About/Works CSS missing: {token}")
+    home_works = re.search(
+        r'<div class="top_works clearfix".*?</div>\s*<p class="tar_sptac">',
+        home,
+        re.DOTALL,
+    )
+    check(home_works is not None, "home: Works genre block missing")
+    if home_works:
+        works_block = home_works.group(0)
+        expected_images = (
+            "recent-anniversary-big-band",
+            "recent-orchestra-soprano-gala",
+            "japanese-hospitality-clean",
+            "recent-roaming-jazz-band",
+            "recent-fusion-stage",
+            "recent-corporate-jazz-band",
+        )
+        expected_labels = (
+            "ラテン音楽（ソン・サルサ）",
+            "クラシック（オーケストラ）",
+            "和楽器",
+            "デキシーランドジャズ",
+            "中国楽器",
+            "ポップス（外国人ヴォーカル）",
+        )
+        for key in expected_images:
+            check(key in works_block, f"home: Works genre photo missing: {key}")
+        labels = tuple(re.findall(r'<div class="text">([^<]+)</div>', works_block))
+        check(labels == expected_labels, f"home: Works genre labels/order changed: {labels}")
+        check(
+            "フラメンコ、ケルト音楽、ブルーグラス、タンゴ、フレンチジャズ／ミュゼット、"
+            "カンツォーネ、カントリー、ボサノバ、マリアッチ、サンバ" in home,
+            "home: additional genre guidance missing",
+        )
+        check("recent-orchestra-banquet" not in works_block, "home: duplicate orchestra photo returned")
+        check("live-streaming-clean" not in works_block, "home: streaming photo returned")
     first_image = re.search(r'<img[^>]+fetchpriority="high"[^>]*>', home)
     check(first_image is not None, "home LCP image missing")
     if first_image:

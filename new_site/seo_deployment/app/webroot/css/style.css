@@ -1603,14 +1603,32 @@ div.paging span.paging-text a:hover{
 	#top01 .photo{
 		position: absolute;
 		left: 0;
-		top: 0;
-		width: 50%;
-		height: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 38%;
+		height: min(420px, calc(100% - 48px));
 	}
 	#top01 .photo img{
 		width: 100%;
 		height: 100%;
 	}
+	#top01 .content_pd2{padding-top: 32px; padding-bottom: 32px;}
+	#top01 .col-md-6{flex: 0 0 58.333333%; max-width: 58.333333%;}
+	#top01 .offset-md-6{margin-left: 41.666667%;}
+	#top01 .pd_yohaku{padding: 0 24px;}
+	#top01 .midashi1{margin-bottom: 24px !important;}
+	#top01 .pd_yohaku > p.mb20{line-height: 1.65; margin-bottom: 12px;}
+}
+@media print, screen and (min-width: 1600px){
+	#top01 .pd_yohaku{padding: 0 70px;}
+}
+@media only screen and (max-width: 767px){
+	#top01 .content_pd2{padding-top: 24px; padding-bottom: 24px;}
+	#top01 .midashi1{margin-bottom: 24px !important;}
+	#top01 .pd_yohaku > p.mb20{line-height: 1.7; margin-bottom: 12px;}
+	#top01 .photo{height: 170px;}
+	#top01 .photo .object-fit,
+	#top01 .photo img{display: block; height: 100%; width: 100%;}
 
 }
 
@@ -2532,7 +2550,8 @@ footer .contact_sen .en2 {font-size: 110%;}
 .sub_caption a:hover, .sub_caption a:focus { text-decoration-thickness: 2px; }
 
 /* Curated homepage Works: same approved clean assets and themes as /works.html */
-.home-works__lead { line-height: 1.9; margin: -10px 0 32px; }
+.home-works__lead { line-height: 1.9; margin: -10px 0 10px; }
+.home-works__genres { font-size: 90%; line-height: 1.9; margin: 0 0 32px; }
 .home-works .box a { display: block; }
 .home-works .box .image { background: #041e42; overflow: hidden; }
 .home-works .box img { transition: transform .45s ease; width: 100%; }
