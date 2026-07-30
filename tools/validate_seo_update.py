@@ -106,19 +106,19 @@ def validate_templates() -> None:
             "recent-corporate-jazz-band",
         )
         expected_labels = (
-            "ラテン音楽（ソン・サルサ）",
-            "クラシック（オーケストラ）",
-            "和楽器",
-            "デキシーランドジャズ",
-            "中国楽器",
-            "ポップス（外国人ヴォーカル）",
+            "情熱が踊る、ラテンの響き",
+            "格式を彩る、オーケストラ",
+            "凛と華やぐ、和の響き",
+            "笑顔を運ぶ、デキシージャズ",
+            "悠久を奏でる、中国の音色",
+            "心躍る、華やかなポップス",
         )
         for key in expected_images:
             check(key in works_block, f"home: Works genre photo missing: {key}")
         labels = tuple(re.findall(r'<div class="text">([^<]+)</div>', works_block))
         check(labels == expected_labels, f"home: Works genre labels/order changed: {labels}")
         check(
-            "フラメンコ、ケルト音楽、ブルーグラス、タンゴ、フレンチジャズ／ミュゼット、"
+            "フラメンコ、ケルト音楽、ブルーグラス、タンゴ、フレンチジャズ、ミュゼット、"
             "カンツォーネ、カントリー、ボサノバ、マリアッチ、サンバ" in home,
             "home: additional genre guidance missing",
         )
