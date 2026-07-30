@@ -174,11 +174,15 @@ def validate_templates() -> None:
         "機材費で利益を取らない。",
         "プロのオペレーターにも手配料を上乗せせず、原価でご提供します。",
         "スピーカー 24台",
+        "<strong>48ch</strong><span>最大同時入力数</span>",
         "業務用4Kカメラ 4台、2Kカメラ 8台",
         "ステージボックス 4台、イヤーモニター 8台",
         "配信用パソコン 4台、スイッチャー 3台",
     ):
         check(token in equipment, f"equipment: required content missing: {token}")
+    check("音響だけ、映像だけでも。" not in equipment, "equipment: standalone audio/video offer remains")
+    check("音楽芸術をつくるための、" in equipment, "equipment: artistic-production positioning missing")
+    check("音楽・演出・機材を相談する" in equipment, "equipment: integrated consultation label missing")
     check("equipment.html" in text("app/webroot/business.html"), "business: Equipment page link missing")
     check(".equipment-hero" in site_css, "equipment: page styles missing")
 

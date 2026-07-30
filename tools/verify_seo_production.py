@@ -118,7 +118,10 @@ def main() -> int:
     check("機材費で利益を取らない。" in equipment, "equipment: value proposition")
     check("プロのオペレーターにも手配料を上乗せせず、原価でご提供します。" in equipment, "equipment: operator pricing")
     check("スピーカー 24台" in equipment, "equipment: speaker count")
+    check("<strong>48ch</strong><span>最大同時入力数</span>" in equipment, "equipment: mixer capacity label")
     check("業務用4Kカメラ 4台、2Kカメラ 8台" in equipment, "equipment: camera counts")
+    check("音響だけ、映像だけでも。" not in equipment, "equipment: no standalone audio/video offer")
+    check("音楽芸術をつくるための、" in equipment, "equipment: artistic-production positioning")
     check(
         achievements.count('class="achievement-category-group__item"') == 85,
         "achievements: 85 recent achievements",

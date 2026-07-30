@@ -102,8 +102,8 @@
     },
     {
       "path": "app/webroot/equipment.html",
-      "bytes": 15007,
-      "sha256": "c64f8dd51a0758e434db386d1af73130cdc9a63255d5808670a8267580de3873"
+      "bytes": 15162,
+      "sha256": "9aa6b4cb0d7bb7a777c4b609e2116395dee53ae683c2880cbe204838565c248f"
     },
     {
       "path": "app/webroot/js/bootstrap.js",
