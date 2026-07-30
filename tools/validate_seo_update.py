@@ -142,6 +142,10 @@ def validate_templates() -> None:
         check(tag.count('decoding="async"') == 1, "home LCP image has duplicate decoding attributes")
 
     artist_index = text("app/View/catalog/cl02_4/default/index.html")
+    check(
+        'artist_megumi.css?v=20260730b' in artist_index,
+        "artist: alignment stylesheet cache key missing",
+    )
     for artist_id, artist_name in (
         ("63", "Black Venus"),
         ("56", "Mary Quartet"),
