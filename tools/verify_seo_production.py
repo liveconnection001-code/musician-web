@@ -8,6 +8,7 @@ import os
 import re
 import ssl
 import sys
+import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -36,13 +37,23 @@ OPENER = urllib.request.build_opener(
 def fetch(path: str) -> tuple[int, dict[str, str], bytes]:
     request = urllib.request.Request(
         BASE + path,
-        headers={"User-Agent": "MUSICIAN-SEO-PostDeploy-Check/1.0"},
+        headers={
+            "User-Agent": "MUSICIAN-SEO-PostDeploy-Check/1.0",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+        },
     )
-    try:
-        response = OPENER.open(request, timeout=25)
-        return response.status, {key.lower(): value for key, value in response.headers.items()}, response.read()
-    except urllib.error.HTTPError as exc:
-        return exc.code, {key.lower(): value for key, value in exc.headers.items()}, exc.read()
+    for attempt in range(3):
+        try:
+            response = OPENER.open(request, timeout=20)
+            return response.status, {key.lower(): value for key, value in response.headers.items()}, response.read()
+        except urllib.error.HTTPError as exc:
+            return exc.code, {key.lower(): value for key, value in exc.headers.items()}, exc.read()
+        except urllib.error.URLError as exc:
+            if attempt == 2:
+                return 0, {}, f"request failed after retries: {exc}".encode("utf-8")
+            time.sleep(2 ** attempt)
+    return 0, {}, b"request failed"
 
 
 def check(condition: bool, message: str) -> None:
