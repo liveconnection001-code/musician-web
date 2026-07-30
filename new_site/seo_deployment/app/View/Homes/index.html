@@ -21,7 +21,7 @@
 )); ?>
 <meta name="format-detection" content="telephone=no">
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
-<link href="css/style.css?v=20260730c" rel="stylesheet">
+<link href="css/style.css?v=20260730d" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
@@ -220,6 +220,14 @@
 							  $tbl_id = 62;
 							  $tbl_has_page = 'Y';
 							  $tbl_title = '大町 めぐみ';
+							}
+							$topArtistDisplayTitles = array(
+							  63 => 'Black Venus',
+							  56 => 'Mary Quartet',
+							  55 => '「和花」～waka～'
+							);
+							if (isset($topArtistDisplayTitles[(int)$tbl_id])) {
+							  $tbl_title = $topArtistDisplayTitles[(int)$tbl_id];
 							}
 							?>
 							<div class="box">

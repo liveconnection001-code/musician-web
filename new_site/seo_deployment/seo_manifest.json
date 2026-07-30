@@ -62,8 +62,8 @@
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 26290,
-      "sha256": "c0612d5afc96a46f42781b461a8dceaa33bd0b0b4ec4060bb2e8af6725fd64d9"
+      "bytes": 26570,
+      "sha256": "a80d292ede207a302b937a538669402bf758ed8c588a91b2cc8fc939939b69f5"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -97,8 +97,8 @@
     },
     {
       "path": "app/webroot/css/style.css",
-      "bytes": 57634,
-      "sha256": "81f5781eefda5e1c8e8187d8335358fadcae9d045926a2bdcf42c0423f5ab183"
+      "bytes": 57655,
+      "sha256": "67dedcc63a34fefc2009cba5021babf80fc34ac5264b1eb7ea14920deaad52df"
     },
     {
       "path": "app/webroot/js/bootstrap.js",

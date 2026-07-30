@@ -80,11 +80,12 @@ def validate_templates() -> None:
     home = text("app/View/Homes/index.html")
     check('class="pd_yohaku_r home-works"' in home, "home: curated Works section missing")
     check("requestAction(array('controller'=>'works'" not in home, "home: legacy Works CMS request returned")
-    check('style.css?v=20260730c' in home, "home: Works alignment stylesheet cache key missing")
+    check('style.css?v=20260730d' in home, "home: card alignment stylesheet cache key missing")
     site_css = text("app/webroot/css/style.css")
     for token in (
         ".home-works__genres",
         ".top_works .box .text",
+        ".top_artist .box .text",
         "text-align: center;",
         "width: 38%;",
         "height: min(420px, calc(100% - 48px));",
@@ -140,6 +141,16 @@ def validate_templates() -> None:
         check('fetchpriority="high"' in tag, "home LCP image must have high fetch priority")
         check('loading="lazy"' not in tag, "home LCP image must not be lazy-loaded")
         check(tag.count('decoding="async"') == 1, "home LCP image has duplicate decoding attributes")
+
+    for artist_id, artist_name in (
+        ("63", "Black Venus"),
+        ("56", "Mary Quartet"),
+        ("55", "「和花」～waka～"),
+    ):
+        check(
+            f"{artist_id} => '{artist_name}'" in home,
+            f"home: concise Artist display name missing for ID {artist_id}",
+        )
 
     artist_index = text("app/View/catalog/cl02_4/default/index.html")
     check(
