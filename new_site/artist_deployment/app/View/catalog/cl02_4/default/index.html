@@ -127,6 +127,15 @@ $seoBreadcrumbItems = array(
             foreach ($boxes as $artistBox) {
               $artistId = isset($artistBox['CatalogBox']['id']) ? (int)$artistBox['CatalogBox']['id'] : 0;
               $artistCategoryTitle = isset($artistBox['CatalogCategory']['title']) ? trim($artistBox['CatalogCategory']['title']) : '';
+              // 一覧では説明的な接頭語や重複する読みを省き、正式なユニット名を簡潔に表示する。
+              $artistDisplayTitles = array(
+                63 => 'Black Venus',
+                56 => 'Mary Quartet',
+                55 => '「和花」～waka～'
+              );
+              if (isset($artistDisplayTitles[$artistId])) {
+                $artistBox['CatalogBox']['title'] = $artistDisplayTitles[$artistId];
+              }
               if ($artistCategoryTitle === '所属アーティスト' || $artistId === 62) {
                 $artistBox['CatalogCategory']['id'] = $affiliationCategoryId;
                 $artistBox['CatalogCategory']['title'] = '所属アーティスト';

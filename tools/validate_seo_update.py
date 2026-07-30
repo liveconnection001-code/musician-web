@@ -80,17 +80,21 @@ def validate_templates() -> None:
     home = text("app/View/Homes/index.html")
     check('class="pd_yohaku_r home-works"' in home, "home: curated Works section missing")
     check("requestAction(array('controller'=>'works'" not in home, "home: legacy Works CMS request returned")
-    check('style.css?v=20260730b' in home, "home: compact About stylesheet cache key missing")
+    check('style.css?v=20260730c' in home, "home: Works alignment stylesheet cache key missing")
     site_css = text("app/webroot/css/style.css")
     for token in (
         ".home-works__genres",
+        ".top_works .box .text",
+        "text-align: center;",
         "width: 38%;",
         "height: min(420px, calc(100% - 48px));",
         "#top01 .photo{height: 170px;}",
     ):
         check(token in site_css, f"home: compact About/Works CSS missing: {token}")
     home_works = re.search(
-        r'<div class="top_works clearfix".*?</div>\s*<p class="tar_sptac">',
+        r'<div class="top_works clearfix".*?</div>\s*'
+        r'<p class="home-works__genres">.*?</p>\s*'
+        r'<p class="tar_sptac">',
         home,
         re.DOTALL,
     )
@@ -119,8 +123,13 @@ def validate_templates() -> None:
         check(labels == expected_labels, f"home: Works genre labels/order changed: {labels}")
         check(
             "フラメンコ、ケルト音楽、ブルーグラス、タンゴ、フレンチジャズ、ミュゼット、"
-            "カンツォーネ、カントリー、ボサノバ、マリアッチ、サンバ" in home,
+            "カンツォーネ、カントリー、ボサノバ、マリアッチ、サンバなど、"
+            "さまざまなジャンルの実施例もご覧いただけます。" in works_block,
             "home: additional genre guidance missing",
+        )
+        check(
+            home.index('class="top_works clearfix"') < home.index('class="home-works__genres"'),
+            "home: additional genre guidance must follow the six genre cards",
         )
         check("recent-orchestra-banquet" not in works_block, "home: duplicate orchestra photo returned")
         check("live-streaming-clean" not in works_block, "home: streaming photo returned")
@@ -131,6 +140,17 @@ def validate_templates() -> None:
         check('fetchpriority="high"' in tag, "home LCP image must have high fetch priority")
         check('loading="lazy"' not in tag, "home LCP image must not be lazy-loaded")
         check(tag.count('decoding="async"') == 1, "home LCP image has duplicate decoding attributes")
+
+    artist_index = text("app/View/catalog/cl02_4/default/index.html")
+    for artist_id, artist_name in (
+        ("63", "Black Venus"),
+        ("56", "Mary Quartet"),
+        ("55", "「和花」～waka～"),
+    ):
+        check(
+            f"{artist_id} => '{artist_name}'" in artist_index,
+            f"artist: concise display name missing for ID {artist_id}",
+        )
 
     company = text("app/View/catalog/cl01_3/default/index.html")
     check("$seoIsRoot ? 'AboutPage' : 'CollectionPage'" in company, "company page schema type not specialized")

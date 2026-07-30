@@ -439,7 +439,6 @@ ARTIST_VIEW_META = r'''<?php echo $this->element('seo_meta', array(
 HOME_WORKS_SECTION = r'''<section class="pd_yohaku_r home-works" aria-labelledby="home-works-title">
   <h2 id="home-works-title" class="midashi1 mb30_md50 tal_sptac"><span class="en">Works</span>実施例</h2>
   <p class="home-works__lead">企画から本番まで、MUSICIANが音楽と演出で創り上げたステージを、6つのジャンルでご紹介します。</p>
-  <p class="home-works__genres">音楽で、世界を旅するひとときを。フラメンコ、ケルト音楽、ブルーグラス、タンゴ、フレンチジャズ、ミュゼット、カンツォーネ、カントリー、ボサノバ、マリアッチ、サンバなど、各地に息づく多彩な音楽をシーンに合わせてお届けします。</p>
   <div class="top_works clearfix" role="list" aria-label="主な演奏ジャンル">
     <div class="box" role="listitem"><a href="works.html#work-corporate-event"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/gallery/recent-anniversary-big-band-card.webp?v=20260730a" type="image/webp"><img src="images/works/gallery/recent-anniversary-big-band-card.jpg?v=20260730a" alt="パーティー会場でソンやサルサを演奏するラテンバンド" class="img-fluid" width="960" height="720" loading="lazy" decoding="async"></picture></span></div><div class="text">情熱が踊る、ラテンの響き</div></a></div>
     <div class="box" role="listitem"><a href="works.html#work-international-reception"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/gallery/recent-orchestra-soprano-gala-card.webp?v=20260730a" type="image/webp"><img src="images/works/gallery/recent-orchestra-soprano-gala-card.jpg?v=20260730a" alt="花々に囲まれた華やかなクラシック・オーケストラ" class="img-fluid" width="960" height="720" loading="lazy" decoding="async"></picture></span></div><div class="text">格式を彩る、オーケストラ</div></a></div>
@@ -448,6 +447,7 @@ HOME_WORKS_SECTION = r'''<section class="pd_yohaku_r home-works" aria-labelledby
     <div class="box" role="listitem"><a href="works.html#work-large-venue"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/gallery/recent-fusion-stage-card.webp?v=20260730a" type="image/webp"><img src="images/works/gallery/recent-fusion-stage-card.jpg?v=20260730a" alt="舞台で二胡などの中国楽器を交えて演奏するアンサンブル" class="img-fluid" width="960" height="720" loading="lazy" decoding="async"></picture></span></div><div class="text">悠久を奏でる、中国の音色</div></a></div>
     <div class="box" role="listitem"><a href="works.html#work-corporate-event"><div class="image"><span class="photo-ofi"><picture><source srcset="images/works/gallery/recent-corporate-jazz-band-card.webp?v=20260730a" type="image/webp"><img src="images/works/gallery/recent-corporate-jazz-band-card.jpg?v=20260730a" alt="ホテル宴会場で外国人歌手を中心に演奏するポップスバンド" class="img-fluid" width="960" height="720" loading="lazy" decoding="async"></picture></span></div><div class="text">心躍る、華やかなポップス</div></a></div>
   </div>
+  <p class="home-works__genres">フラメンコ、ケルト音楽、ブルーグラス、タンゴ、フレンチジャズ、ミュゼット、カンツォーネ、カントリー、ボサノバ、マリアッチ、サンバなど、さまざまなジャンルの実施例もご覧いただけます。</p>
   <p class="tar_sptac"><a href="works.html" class="btn btn-1">実施例を見る</a></p>
 </section>'''
 
