@@ -1,9 +1,9 @@
 {
-  "generated_at_jst": "2026-07-30",
+  "generated_at_jst": "2026-07-26",
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
-  "file_count": 23,
+  "file_count": 24,
   "files": [
     {
       "path": ".htaccess",
@@ -82,8 +82,8 @@
     },
     {
       "path": "app/webroot/business.html",
-      "bytes": 18049,
-      "sha256": "2781687b979a2ea804ec4de77e48cbf35dfd56136d1fee9f99af179381857896"
+      "bytes": 18199,
+      "sha256": "7b1fe57e23317ed2f235416c7e5a46000a5a0121bf98e65a295fe6ad4e71a5b6"
     },
     {
       "path": "app/webroot/contact.html",
@@ -97,8 +97,13 @@
     },
     {
       "path": "app/webroot/css/style.css",
-      "bytes": 57655,
-      "sha256": "67dedcc63a34fefc2009cba5021babf80fc34ac5264b1eb7ea14920deaad52df"
+      "bytes": 61949,
+      "sha256": "a2be81635a276692fb119dbbcbd912cf017ef2f9fa85abb42319a7c79eafdfbe"
+    },
+    {
+      "path": "app/webroot/equipment.html",
+      "bytes": 15007,
+      "sha256": "c64f8dd51a0758e434db386d1af73130cdc9a63255d5808670a8267580de3873"
     },
     {
       "path": "app/webroot/js/bootstrap.js",
@@ -112,8 +117,8 @@
     },
     {
       "path": "app/webroot/sitemap.xml",
-      "bytes": 14800,
-      "sha256": "9bd3128ffd409ce40a12596c65d4804dce23c5880ef5a4f34a26f23b363db312"
+      "bytes": 14974,
+      "sha256": "524ec0b345bc65708f54e8cdb69b85a769955cbd55ab5e791d1ede4345e94f94"
     },
     {
       "path": "README.md",

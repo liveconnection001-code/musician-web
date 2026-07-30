@@ -25,7 +25,7 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 23, "deployment must contain 23 staged files")
+    check(manifest.get("file_count") == 24, "deployment must contain 24 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
@@ -37,6 +37,7 @@ def validate_templates() -> None:
     indexed_templates = [
         "app/View/Homes/index.html",
         "app/webroot/business.html",
+        "app/webroot/equipment.html",
         "app/webroot/contact.html",
         "app/View/catalog/cl01_2/default/index.html",
         "app/View/catalog/cl01_3/default/index.html",
@@ -167,6 +168,20 @@ def validate_templates() -> None:
             f"artist: concise display name missing for ID {artist_id}",
         )
 
+    equipment = text("app/webroot/equipment.html")
+    for token in (
+        "音と映像の仕上がりを、",
+        "機材費で利益を取らない。",
+        "プロのオペレーターにも手配料を上乗せせず、原価でご提供します。",
+        "スピーカー 24台",
+        "業務用4Kカメラ 4台、2Kカメラ 8台",
+        "ステージボックス 4台、イヤーモニター 8台",
+        "配信用パソコン 4台、スイッチャー 3台",
+    ):
+        check(token in equipment, f"equipment: required content missing: {token}")
+    check("equipment.html" in text("app/webroot/business.html"), "business: Equipment page link missing")
+    check(".equipment-hero" in site_css, "equipment: page styles missing")
+
     company = text("app/View/catalog/cl01_3/default/index.html")
     check("$seoIsRoot ? 'AboutPage' : 'CollectionPage'" in company, "company page schema type not specialized")
     check("/achievements.html" in company, "independent achievements URL missing")
@@ -208,7 +223,8 @@ def validate_sitemap_and_robots() -> None:
     root = ET.parse(sitemap_path).getroot()
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     urls = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
-    check(len(urls) == 37, f"sitemap must contain 37 page URLs, found {len(urls)}")
+    check(len(urls) == 38, f"sitemap must contain 38 page URLs, found {len(urls)}")
+    check("https://www.musician.co.jp/equipment.html" in urls, "Equipment URL missing from sitemap")
     check("https://www.musician.co.jp/achievements.html" in urls, "independent achievements URL missing from sitemap")
     check("https://www.musician.co.jp/artist-asakusa-taikoban.html" in urls, "Asakusa Taikoban URL missing from sitemap")
     check(len(urls) == len(set(urls)), "sitemap contains duplicate URLs")
@@ -282,7 +298,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 23 files, 37 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 24 files, 38 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

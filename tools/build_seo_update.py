@@ -511,6 +511,11 @@ def build_static_pages() -> None:
     business = read(BACKUP / "app" / "webroot" / "business.html")
     business = replace_legacy_meta(business, BUSINESS_META, "business metadata")
     business = improve_shared_markup(business, banner_label="<span>Business</span>事業内容")
+    business = business.replace(
+        'href="css/style.css"',
+        'href="css/style.css?v=20260730b"',
+        1,
+    )
     business = replace_heading_level(business, 3, 2, "midashi2", 6, "business section headings")
     for image_number in ("01", "02", "04", "05"):
         business = business.replace(
@@ -518,6 +523,13 @@ def build_static_pages() -> None:
             f'src="images/business_photo{image_number}.jpg" loading="lazy" decoding="async"',
         )
     business = normalize_achievements_links(business)
+    business = replace_once(
+        business,
+        "海外とオンラインで繋いでの表彰式なども行えます。</div>",
+        "海外とオンラインで繋いでの表彰式なども行えます。\n"
+        "                        <p class=\"business-equipment-link\"><a href=\"equipment.html\" class=\"btn btn-1\">音響・撮影・配信機材を見る</a></p></div>",
+        "business equipment link",
+    )
     write("app/webroot/business.html", business)
 
     contact = read(BACKUP / "app" / "webroot" / "contact.html")
@@ -705,6 +717,15 @@ def build_achievements_page() -> None:
 
 
 def build_css() -> None:
+    current_css_path = OUTPUT / "app" / "webroot" / "css" / "style.css"
+    current_css = read(current_css_path)
+    equipment_css_match = re.search(
+        r"/\* Equipment: sound, filming and streaming capabilities \*/.*?(?=\n\.table-striped)",
+        current_css,
+        re.DOTALL,
+    )
+    if not equipment_css_match:
+        raise RuntimeError("equipment CSS source block is missing")
     css = read(BACKUP / "app" / "webroot" / "css" / "style.css")
     css = replace_once(css, "h1 {float: left;}", ".site-logo {float: left;}", "site logo float")
     css = css.replace("h1 img{", ".site-logo img{")
@@ -725,6 +746,7 @@ def build_css() -> None:
 .home-works .box a:focus-visible { outline: 3px solid #e36927; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { .home-works .box img { transition: none; } }
 """
+    css += "\n\n" + equipment_css_match.group(0).strip() + "\n"
     write("app/webroot/css/style.css", css)
 
 
@@ -936,6 +958,7 @@ Sitemap: https://www.musician.co.jp/sitemap.xml
     urls = [
         ("/", "1.0"),
         ("/business.html", "0.9"),
+        ("/equipment.html", "0.8"),
         ("/works.html", "0.9"),
         ("/artist.html", "0.9"),
         ("/company.html", "0.9"),

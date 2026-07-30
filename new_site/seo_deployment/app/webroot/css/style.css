@@ -12,6 +12,59 @@ p{ margin:0px; padding:0px}
   margin-bottom:0px;
   border:none;
 }
+
+/* Equipment: sound, filming and streaming capabilities */
+.business-equipment-link { margin: 28px 0 0; }
+.equipment-page { color: #041e42; }
+.equipment-page h2, .equipment-page h3 { font-family: "Shippori Mincho", serif; font-weight: 600; }
+.equipment-eyebrow { color: #e36927; font-size: 14px; letter-spacing: .18em; margin-bottom: 12px; }
+.equipment-hero { padding-top: 18px; }
+.equipment-hero__image picture, .equipment-hero__image img { display: block; width: 100%; }
+.equipment-hero__image img { aspect-ratio: 8 / 5; object-fit: cover; }
+.equipment-hero__copy { padding-left: clamp(36px, 5vw, 90px); }
+.equipment-hero__copy h2 { font-size: clamp(30px, 3vw, 46px); line-height: 1.5; margin-bottom: 30px; }
+.equipment-hero__copy p:not(.equipment-eyebrow) { font-size: 17px; line-height: 2.05; margin-bottom: 18px; }
+.equipment-value { color: #fff; }
+.equipment-value__intro { margin: 0 auto 45px; max-width: 940px; text-align: center; }
+.equipment-value__intro h2 { color: #fff; font-size: clamp(28px, 3vw, 46px); line-height: 1.5; margin-bottom: 24px; }
+.equipment-value__intro > p:last-child { font-size: 17px; line-height: 2; text-align: left; }
+.equipment-value__grid > div { display: flex; margin-bottom: 24px; }
+.equipment-value__card { border: 1px solid rgba(255,255,255,.32); padding: 32px; width: 100%; }
+.equipment-value__card > span { color: #e9bd7f; display: block; font-family: "Urbanist", sans-serif; font-size: 15px; letter-spacing: .12em; margin-bottom: 14px; }
+.equipment-value__card h3 { color: #fff; font-size: 24px; margin-bottom: 15px; }
+.equipment-value__card p { line-height: 1.9; margin: 0; }
+.equipment-note { font-size: 13px; margin: 0; text-align: center; }
+.equipment-section-heading { margin: 0 auto 48px; max-width: 900px; text-align: center; }
+.equipment-section-heading h2 { font-size: clamp(28px, 3vw, 44px); line-height: 1.55; margin-bottom: 20px; }
+.equipment-section-heading > p:last-child { line-height: 1.9; }
+.equipment-stats { border-bottom: 1px solid rgba(4,30,66,.2); border-top: 1px solid rgba(4,30,66,.2); display: grid; grid-template-columns: repeat(4,1fr); margin-bottom: 55px; }
+.equipment-stat { padding: 30px 18px; text-align: center; }
+.equipment-stat + .equipment-stat { border-left: 1px solid rgba(4,30,66,.2); }
+.equipment-stat strong { display: block; font-family: "Urbanist", sans-serif; font-size: clamp(38px, 4vw, 62px); font-weight: 600; line-height: 1; margin-bottom: 13px; }
+.equipment-stat span { font-size: 15px; }
+.equipment-list > div { display: flex; margin-bottom: 28px; }
+.equipment-list article { background: #fff; border-top: 4px solid #041e42; box-shadow: 0 12px 30px rgba(4,30,66,.08); padding: 28px 30px; width: 100%; }
+.equipment-list h3 { font-size: 22px; margin-bottom: 20px; }
+.equipment-list p { line-height: 1.85; margin-bottom: 7px; }
+.equipment-scenes { background: #e9e9e9; padding: 75px 0; }
+.equipment-scenes__items { display: grid; gap: 16px; grid-template-columns: repeat(3,1fr); }
+.equipment-scenes__items p { background: #fff; border-left: 4px solid #e36927; margin: 0; padding: 24px 28px; }
+.equipment-cta__box { border: 1px solid rgba(4,30,66,.25); margin: 0 auto; max-width: 1000px; padding: clamp(40px, 6vw, 80px); text-align: center; }
+.equipment-cta__box h2 { font-size: clamp(27px, 3vw, 42px); line-height: 1.5; margin-bottom: 24px; }
+.equipment-cta__box > p:not(.equipment-eyebrow) { line-height: 2; margin: 0 auto 32px; max-width: 760px; text-align: left; }
+@media screen and (max-width: 991px) { .equipment-hero__copy { padding: 38px 15px 0; } }
+@media screen and (max-width: 767px) {
+  .business-equipment-link { margin-top: 22px; text-align: center; }
+  .equipment-hero__copy h2 { font-size: 29px; margin-bottom: 22px; }
+  .equipment-hero__copy p:not(.equipment-eyebrow), .equipment-value__intro > p:last-child { font-size: 16px; line-height: 1.9; }
+  .equipment-value__card { padding: 26px; }
+  .equipment-stats { grid-template-columns: repeat(2,1fr); }
+  .equipment-stat:nth-child(3) { border-left: 0; border-top: 1px solid rgba(4,30,66,.2); }
+  .equipment-stat:nth-child(4) { border-top: 1px solid rgba(4,30,66,.2); }
+  .equipment-scenes { padding: 55px 0; }
+  .equipment-scenes__items { grid-template-columns: 1fr; }
+  .equipment-cta__box { padding-left: 24px; padding-right: 24px; }
+}
 .table-striped > tbody > tr:nth-of-type(odd) { background-color: #efefef;}
 .table{ margin-bottom:30px}
 .table th{ width:30%}

@@ -98,6 +98,7 @@ def main() -> int:
     pages = {
         "/": "/",
         "/business.html": "/business.html",
+        "/equipment.html": "/equipment.html",
         "/works.html": "/works.html",
         "/artist.html": "/artist.html",
         "/company.html": "/company.html",
@@ -113,6 +114,11 @@ def main() -> int:
     artist = rendered["/artist.html"]
     megumi = rendered["/artist/view/62"]
     taikoban = rendered["/artist-asakusa-taikoban.html"]
+    equipment = rendered["/equipment.html"]
+    check("機材費で利益を取らない。" in equipment, "equipment: value proposition")
+    check("プロのオペレーターにも手配料を上乗せせず、原価でご提供します。" in equipment, "equipment: operator pricing")
+    check("スピーカー 24台" in equipment, "equipment: speaker count")
+    check("業務用4Kカメラ 4台、2Kカメラ 8台" in equipment, "equipment: camera counts")
     check(
         achievements.count('class="achievement-category-group__item"') == 85,
         "achievements: 85 recent achievements",
@@ -209,7 +215,7 @@ def main() -> int:
         }
         locations = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
         image_locations = [node.text or "" for node in root.findall("sm:url/image:image/image:loc", namespace)]
-        check(len(locations) == 37, f"sitemap.xml: 37 URLs, found {len(locations)}")
+        check(len(locations) == 38, f"sitemap.xml: 38 URLs, found {len(locations)}")
         check(len(image_locations) == 54, f"sitemap.xml: 54 images, found {len(image_locations)}")
         for gallery_image in (
             "traditional-taiko-ceremony-large.jpg",
@@ -222,6 +228,7 @@ def main() -> int:
                 f"sitemap.xml: missing Works gallery image {gallery_image}",
             )
         check(f"{BASE}/achievements.html" in locations, "sitemap.xml: independent achievements URL")
+        check(f"{BASE}/equipment.html" in locations, "sitemap.xml: Equipment URL")
         check(f"{BASE}/artist-asakusa-taikoban.html" in locations, "sitemap.xml: Asakusa Taikoban URL")
         check(
             f"{BASE}/images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg" in image_locations,
