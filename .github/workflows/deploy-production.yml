@@ -74,7 +74,7 @@ jobs:
               "app/webroot/css/artist_megumi.css",
               "app/webroot/images/company_photo_megumi.jpg",
               "app/webroot/images/company_photo_miyazaki_illustration.jpg",
-              "app/webroot/images/works/gallery/traditional-taiko-card.jpg",
+              "app/webroot/images/works/gallery/traditional-taiko-v2-card.jpg",
           }
           missing = sorted(required - targets.keys())
           if missing:

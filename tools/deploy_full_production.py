@@ -27,6 +27,16 @@ WORKS_GALLERY_MANIFEST = WORKS_ROOT / "performance_gallery_manifest.json"
 ARTIST_ROOT = WORKSPACE / "new_site" / "artist_deployment"
 ACHIEVEMENTS_CSS = WORKSPACE / "new_site" / "deployment" / "app" / "webroot" / "css" / "recent_achievements.css"
 ROLLBACK_ROOT = WORKSPACE / "new_site" / "production_backups"
+LEGACY_GALLERY_ASSETS = {
+    f"app/webroot/images/works/gallery/{key}-{variant}.{extension}"
+    for key in ("traditional-taiko", "unit-big-band", "unit-live-band")
+    for variant, extension in (
+        ("small", "webp"),
+        ("card", "webp"),
+        ("card", "jpg"),
+        ("large", "jpg"),
+    )
+}
 
 
 def resolve_rollback_root() -> Path:
@@ -70,6 +80,18 @@ OBSOLETE_PATHS = (
     "/app/webroot/securimage/README.FONT.txt",
     "/app/webroot/securimage/README.md",
     "/app/webroot/securimage/README.txt",
+    "/app/webroot/images/works/gallery/traditional-taiko-small.webp",
+    "/app/webroot/images/works/gallery/traditional-taiko-card.webp",
+    "/app/webroot/images/works/gallery/traditional-taiko-card.jpg",
+    "/app/webroot/images/works/gallery/traditional-taiko-large.jpg",
+    "/app/webroot/images/works/gallery/unit-big-band-small.webp",
+    "/app/webroot/images/works/gallery/unit-big-band-card.webp",
+    "/app/webroot/images/works/gallery/unit-big-band-card.jpg",
+    "/app/webroot/images/works/gallery/unit-big-band-large.jpg",
+    "/app/webroot/images/works/gallery/unit-live-band-small.webp",
+    "/app/webroot/images/works/gallery/unit-live-band-card.webp",
+    "/app/webroot/images/works/gallery/unit-live-band-card.jpg",
+    "/app/webroot/images/works/gallery/unit-live-band-large.jpg",
 )
 
 
@@ -205,8 +227,8 @@ def remove_tree(ftp: ftplib.FTP, remote: PurePosixPath) -> int:
 
 def read_local_targets() -> tuple[dict[str, bytes], dict]:
     manifest = json.loads(SEO_MANIFEST.read_text(encoding="utf-8"))
-    if manifest.get("file_count") != 24:
-        warn(f"SEO manifest file_count is {manifest.get('file_count')}, expected 24.")
+    if manifest.get("file_count") != 27:
+        warn(f"SEO manifest file_count is {manifest.get('file_count')}, expected 27.")
     manifest_files = {entry["path"]: entry for entry in manifest["files"]}
     manifest_mismatches: list[str] = []
 
@@ -241,6 +263,8 @@ def read_local_targets() -> tuple[dict[str, bytes], dict]:
         if not path.is_file():
             continue
         relative = path.relative_to(WORKS_ROOT).as_posix()
+        if relative in LEGACY_GALLERY_ASSETS:
+            continue
         targets[safe_relative(relative)] = path.read_bytes()
 
     targets["app/webroot/css/recent_achievements.css"] = ACHIEVEMENTS_CSS.read_bytes()

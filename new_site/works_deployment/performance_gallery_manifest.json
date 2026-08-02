@@ -24,9 +24,9 @@
       "metadata": "stripped during re-encode"
     },
     {
-      "key": "unit-live-band",
-      "sourceFolder": "new_site\\works_deployment\\source_overrides",
-      "sourceFile": "unit-live-band-4x3-clean.png",
+      "key": "unit-live-band-v2",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides\\approved_gallery_v2",
+      "sourceFile": "unit-live-band-v2-large.jpg",
       "sourcePixels": [
         1448,
         1086
@@ -70,9 +70,9 @@
       "metadata": "stripped during re-encode"
     },
     {
-      "key": "unit-big-band",
-      "sourceFolder": "new_site\\works_deployment\\source_overrides",
-      "sourceFile": "unit-big-band-identifiers-removed.png",
+      "key": "unit-big-band-v2",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides\\approved_gallery_v2",
+      "sourceFile": "unit-big-band-v2-large.jpg",
       "sourcePixels": [
         1448,
         1086
@@ -392,12 +392,12 @@
       "metadata": "stripped during re-encode"
     },
     {
-      "key": "traditional-taiko",
-      "sourceFolder": "new_site\\works_deployment\\source_overrides",
-      "sourceFile": "traditional-taiko-logo-removed.png",
+      "key": "traditional-taiko-v2",
+      "sourceFolder": "new_site\\works_deployment\\source_overrides\\approved_gallery_v2",
+      "sourceFile": "traditional-taiko-v2-large.jpg",
       "sourcePixels": [
-        1672,
-        941
+        1448,
+        1086
       ],
       "redactions": 0,
       "smallPixels": [
@@ -409,8 +409,8 @@
         720
       ],
       "largePixels": [
-        1672,
-        941
+        1448,
+        1086
       ],
       "metadata": "stripped during re-encode"
     },

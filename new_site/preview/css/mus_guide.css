@@ -1,0 +1,377 @@
+.mus-guide {
+  background: #eee;
+  color: #041e42;
+  font-family: "Shippori Mincho", serif;
+  font-weight: 600;
+  letter-spacing: .025em;
+}
+
+.mus-guide__section {
+  padding: 92px 0;
+}
+
+.mus-guide__section--navy {
+  background: #041e42;
+  color: #fbe1bd;
+}
+
+.mus-guide__inner {
+  margin: 0 auto;
+  max-width: 1460px;
+  padding: 0 6%;
+}
+
+.mus-guide__heading {
+  color: #041e42;
+  font-size: 24px;
+  line-height: 1.55;
+  margin: 0 0 54px;
+  text-align: center;
+}
+
+.mus-guide__section--navy .mus-guide__heading {
+  color: #fbe1bd;
+}
+
+.mus-guide__heading-en {
+  display: block;
+  font-family: "Urbanist", sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+
+.mus-guide__lead {
+  font-size: 20px;
+  line-height: 2;
+  margin: -22px auto 48px;
+  max-width: 880px;
+  text-align: center;
+}
+
+.mus-guide__steps {
+  counter-reset: mus-guide-step;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mus-guide__step {
+  border-top: 1px solid rgba(4, 30, 66, .16);
+  counter-increment: mus-guide-step;
+  padding: 28px 30px 30px;
+}
+
+.mus-guide__step-title {
+  align-items: baseline;
+  color: #041e42;
+  display: flex;
+  font-size: 21px;
+  gap: 18px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.mus-guide__step-title::before {
+  color: #e36927;
+  content: counter(mus-guide-step, decimal-leading-zero);
+  font-family: "Urbanist", sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: .05em;
+}
+
+.mus-guide__step-text {
+  font-size: 16px;
+  line-height: 1.9;
+  margin: 0 0 12px;
+}
+
+.mus-guide__step-client {
+  border-left: 1px solid rgba(4, 30, 66, .16);
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+  padding-left: 14px;
+}
+
+.mus-guide__scales {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 46px;
+}
+
+.mus-guide__scale {
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  padding: 34px 30px 32px;
+}
+
+.mus-guide__scale-mark {
+  align-items: flex-end;
+  display: flex;
+  gap: 6px;
+  height: 42px;
+  margin-bottom: 24px;
+}
+
+.mus-guide__scale-mark-line {
+  background: #e36927;
+  display: block;
+  height: 4px;
+  width: 24px;
+}
+
+.mus-guide__scale--band .mus-guide__scale-mark-line:nth-child(2),
+.mus-guide__scale--large .mus-guide__scale-mark-line:nth-child(2) {
+  height: 16px;
+}
+
+.mus-guide__scale--large .mus-guide__scale-mark-line:nth-child(3) {
+  height: 30px;
+}
+
+.mus-guide__scale-title {
+  color: #fbe1bd;
+  font-size: 22px;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.mus-guide__scale-text {
+  color: #eee;
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 0;
+}
+
+.mus-guide__budget-copy {
+  border-left: 1px solid #e36927;
+  color: #eee;
+  font-size: 16px;
+  line-height: 2;
+  margin: 0 auto;
+  max-width: 980px;
+  padding-left: 24px;
+}
+
+.mus-guide__budget-copy + .mus-guide__budget-copy {
+  margin-top: 18px;
+}
+
+.mus-guide__faq-list {
+  margin: 0;
+}
+
+.mus-guide__faq-item {
+  border-top: 1px solid rgba(4, 30, 66, .16);
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(250px, .75fr) minmax(0, 1.55fr);
+  padding: 34px 0 38px;
+}
+
+.mus-guide__faq-item:last-child {
+  border-bottom: 1px solid rgba(4, 30, 66, .16);
+}
+
+.mus-guide__question {
+  color: #041e42;
+  font-size: 19px;
+  line-height: 1.75;
+  margin: 0;
+  padding-left: 42px;
+  position: relative;
+}
+
+.mus-guide__question::before {
+  color: #e36927;
+  content: "Q";
+  font-family: "Urbanist", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: 2px;
+}
+
+.mus-guide__answer {
+  font-size: 15px;
+  line-height: 2;
+  margin: 0;
+}
+
+.mus-guide__answer-paragraph {
+  margin: 0 0 16px;
+}
+
+.mus-guide__answer-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.mus-guide__duration {
+  list-style: none;
+  margin: 18px 0 24px;
+  padding: 0;
+}
+
+.mus-guide__duration-item {
+  align-items: baseline;
+  border-bottom: 1px solid rgba(4, 30, 66, .16);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  padding: 9px 0;
+}
+
+.mus-guide__duration-value {
+  color: #041e42;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mus-guide__duration-note {
+  display: block;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.mus-guide__note {
+  border-left: 1px solid #e36927;
+  margin-top: 24px;
+  padding: 0 0 0 24px;
+}
+
+.mus-guide__note-label {
+  color: #e36927;
+  display: block;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.mus-guide__cta {
+  padding: 0 0 100px;
+  text-align: center;
+}
+
+.mus-guide__cta-link {
+  background: #041e42;
+  border: 1px solid #041e42;
+  color: #fbe1bd !important;
+  display: inline-block;
+  font-size: 18px;
+  padding: 18px 44px;
+  text-decoration: none !important;
+}
+
+.mus-guide__cta-link:hover,
+.mus-guide__cta-link:focus-visible {
+  background: #e36927;
+  border-color: #041e42;
+  color: #041e42 !important;
+}
+
+@media (max-width: 991px) {
+  .mus-guide__section {
+    padding: 74px 0;
+  }
+
+  .mus-guide__inner {
+    padding: 0 5%;
+  }
+
+  .mus-guide__faq-item {
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .mus-guide__section {
+    padding: 58px 0;
+  }
+
+  .mus-guide__inner {
+    padding: 0 24px;
+  }
+
+  .mus-guide__heading {
+    font-size: 19px;
+    margin-bottom: 38px;
+  }
+
+  .mus-guide__heading-en {
+    font-size: 38px;
+  }
+
+  .mus-guide__lead {
+    font-size: 17px;
+    margin: -10px auto 34px;
+  }
+
+  .mus-guide__steps,
+  .mus-guide__scales {
+    grid-template-columns: 1fr;
+  }
+
+  .mus-guide__step {
+    padding: 24px 4px 26px;
+  }
+
+  .mus-guide__step-title {
+    font-size: 18px;
+  }
+
+  .mus-guide__step-title::before {
+    font-size: 28px;
+  }
+
+  .mus-guide__scales {
+    gap: 16px;
+  }
+
+  .mus-guide__scale {
+    padding: 28px 24px;
+  }
+
+  .mus-guide__budget-copy {
+    font-size: 15px;
+    padding-left: 18px;
+  }
+
+  .mus-guide__faq-item {
+    padding: 28px 0 30px;
+  }
+
+  .mus-guide__question {
+    font-size: 17px;
+  }
+
+  .mus-guide__duration-item {
+    align-items: start;
+    gap: 3px;
+    grid-template-columns: 1fr;
+  }
+
+  .mus-guide__duration-value {
+    color: #e36927;
+    letter-spacing: .05em;
+    white-space: normal;
+  }
+
+  .mus-guide__cta {
+    padding-bottom: 70px;
+  }
+
+  .mus-guide__cta-link {
+    display: block;
+    margin: 0 24px;
+    padding: 16px 22px;
+  }
+}

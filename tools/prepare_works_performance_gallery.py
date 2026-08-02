@@ -17,9 +17,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 PHOTOS = (
-    {"key": "unit-live-band", "folder": "unit", "file": "IMG_7570.JPG", "center": (0.50, 0.54), "override": "new_site/works_deployment/source_overrides/unit-live-band-4x3-clean.png"},
+    {"key": "unit-live-band-v2", "folder": "unit", "file": "IMG_7570.JPG", "center": (0.50, 0.50), "override": "new_site/works_deployment/source_overrides/approved_gallery_v2/unit-live-band-v2-large.jpg"},
     {"key": "unit-modern-trio", "folder": "unit", "file": "879.jpg", "center": (0.50, 0.54), "override": "new_site/works_deployment/source_overrides/unit-modern-trio-centered-clean.png"},
-    {"key": "unit-big-band", "folder": "unit", "file": "DSC02749.JPG", "center": (0.52, 0.52), "override": "new_site/works_deployment/source_overrides/unit-big-band-identifiers-removed.png"},
+    {"key": "unit-big-band-v2", "folder": "unit", "file": "DSC02749.JPG", "center": (0.50, 0.50), "override": "new_site/works_deployment/source_overrides/approved_gallery_v2/unit-big-band-v2-large.jpg"},
     {"key": "unit-brass-quintet", "folder": "unit", "file": "IMG_8699.JPG", "center": (0.55, 0.54)},
     {"key": "unit-christmas", "folder": "unit", "file": "DSC02211.JPG", "center": (0.50, 0.54), "override": "new_site/works_deployment/source_overrides/unit-christmas-4x3.png"},
     {"key": "unit-electric-strings", "folder": "unit", "file": "20100602_06.jpg", "center": (0.54, 0.50)},
@@ -28,7 +28,7 @@ PHOTOS = (
     {"key": "unit-kimono", "folder": "unit", "file": "S__3727427.jpg", "center": (0.42, 0.51), "trim": (0, 0, 380, 0)},
     {"key": "unit-outdoor-night", "folder": "unit", "file": "S__2547734.jpg", "center": (0.50, 0.54), "override": "new_site/works_deployment/source_overrides/unit-outdoor-night-clean.png"},
     {"key": "unit-vocal-balcony", "folder": "unit", "file": "Photo002.jpg", "center": (0.54, 0.47)},
-    {"key": "traditional-taiko", "folder": "traditional", "file": "DSC_0945.JPG", "center": (0.53, 0.52), "override": "new_site/works_deployment/source_overrides/traditional-taiko-logo-removed.png"},
+    {"key": "traditional-taiko-v2", "folder": "traditional", "file": "DSC_0945.JPG", "center": (0.50, 0.50), "override": "new_site/works_deployment/source_overrides/approved_gallery_v2/traditional-taiko-v2-large.jpg"},
     {"key": "traditional-japanese-fusion", "folder": "traditional", "file": "DSC00319.JPG", "center": (0.54, 0.54), "trim": (250, 100, 0, 87), "override": "new_site/works_deployment/source_overrides/traditional-japanese-fusion-clean.png"},
     {"key": "traditional-koto-quartet", "folder": "traditional", "file": "DSC01855.JPG", "center": (0.54, 0.53)},
     {"key": "traditional-koto-duo", "folder": "traditional", "file": "DSC01838.JPG", "center": (0.54, 0.54)},

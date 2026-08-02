@@ -62,6 +62,10 @@ def main() -> None:
     require("-large.jpg" in template and "-large.jpg" in preview, "Full gallery images are missing")
     require("IndexIgnore *" in (DEPLOY / "app/webroot/images/works/.htaccess").read_text(encoding="utf-8"), "Safe directory listing protection is missing")
     require("traditional-koto-gala" in PROCESSOR.read_text(encoding="utf-8"), "The event-banner crop configuration is missing")
+    for approved_key in ("traditional-taiko-v2", "unit-big-band-v2", "unit-live-band-v2"):
+        require(approved_key in keys, f"Approved v2 gallery key is missing: {approved_key}")
+    for legacy_key in ("traditional-taiko", "unit-big-band", "unit-live-band"):
+        require(legacy_key not in keys, f"Legacy gallery key remains active: {legacy_key}")
     require("Refusing to overwrite the curated" in BUILDER.read_text(encoding="utf-8"), "Legacy Works builder can overwrite the gallery")
 
     expected_files = []

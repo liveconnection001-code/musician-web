@@ -115,6 +115,7 @@ def main() -> int:
         "/company.html": "/company.html",
         "/achievements.html": "/achievements.html",
         "/contact.html": "/contact.html",
+        "/guide.html": "/guide.html",
         "/artist/view/62": "/artist/view/62",
         "/artist-asakusa-taikoban.html": "/artist-asakusa-taikoban.html",
         "/works/index/4": "/works/index/4",
@@ -167,7 +168,7 @@ def main() -> int:
     )
     check("私の音楽の原点は、小学生の頃にあります。" in company, "company: Miyazaki origin story")
     check("舞台監督として全体を見渡し" in company, "company: Miyazaki production leadership")
-    check("約8,000曲分になりました。" in company, "company: Miyazaki arrangement archive count")
+    check("約8,000曲になりました。" in company, "company: Miyazaki arrangement archive count")
     check("その場にふさわしい音楽芸術をつくりましょう。" in company, "company: Miyazaki closing invitation")
     check("/artist/view/62" in artist and "大町 めぐみ" in artist, "artist: Megumi listing")
     check("/artist-asakusa-taikoban.html" in artist and "浅草たいこばん" in artist, "artist: Asakusa Taikoban listing")
@@ -229,7 +230,7 @@ def main() -> int:
         }
         locations = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
         image_locations = [node.text or "" for node in root.findall("sm:url/image:image/image:loc", namespace)]
-        check(len(locations) == 38, f"sitemap.xml: 38 URLs, found {len(locations)}")
+        check(len(locations) == 39, f"sitemap.xml: 39 URLs, found {len(locations)}")
         check(len(image_locations) == 54, f"sitemap.xml: 54 images, found {len(image_locations)}")
         for gallery_image in (
             "traditional-taiko-ceremony-large.jpg",
@@ -244,6 +245,7 @@ def main() -> int:
         check(f"{BASE}/achievements.html" in locations, "sitemap.xml: independent achievements URL")
         check(f"{BASE}/equipment.html" in locations, "sitemap.xml: Equipment URL")
         check(f"{BASE}/artist-asakusa-taikoban.html" in locations, "sitemap.xml: Asakusa Taikoban URL")
+        check(f"{BASE}/guide.html" in locations, "sitemap.xml: Guide / FAQ URL")
         check(
             f"{BASE}/images/artists/asakusa-taikoban/asakusa-taikoban-group.jpg" in image_locations,
             "sitemap.xml: Asakusa Taikoban group image",

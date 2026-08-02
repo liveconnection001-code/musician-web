@@ -25,12 +25,15 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 24, "deployment must contain 24 staged files")
+    check(manifest.get("file_count") == 27, "deployment must contain 27 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
     check("app/webroot/js/bootstrap.js" in expected, "guarded Bootstrap script missing from manifest")
     check("app/webroot/js/title.js" in expected, "guarded title animation script missing from manifest")
+    check("app/webroot/guide.html" in expected, "Guide / FAQ page missing from manifest")
+    check("app/webroot/css/mus_guide.css" in expected, "Guide / FAQ CSS missing from manifest")
+    check("app/webroot/css/mus_reasons.css" in expected, "Top reasons CSS missing from manifest")
 
 
 def validate_templates() -> None:
@@ -39,6 +42,7 @@ def validate_templates() -> None:
         "app/webroot/business.html",
         "app/webroot/equipment.html",
         "app/webroot/contact.html",
+        "app/webroot/guide.html",
         "app/View/catalog/cl01_2/default/index.html",
         "app/View/catalog/cl01_3/default/index.html",
         "app/View/catalog/cl02_4/default/index.html",
@@ -82,6 +86,17 @@ def validate_templates() -> None:
     check('class="pd_yohaku_r home-works"' in home, "home: curated Works section missing")
     check("requestAction(array('controller'=>'works'" not in home, "home: legacy Works CMS request returned")
     check('style.css?v=20260730d' in home, "home: card alignment stylesheet cache key missing")
+    check('mus_reasons.css?v=20260802c' in home, "home: reasons stylesheet missing")
+    check(home.count('class="mus-reasons__item"') == 3, "home: expected three reasons")
+    check("MUSICIANは、演奏の現場を知る音楽家が中心となって運営しています。" in home, "home: approved About copy missing")
+
+    guide = text("app/webroot/guide.html")
+    check(guide.count("'@type' => 'Question'") == 8, "guide: FAQPage schema must contain eight questions")
+    check(guide.count('class="mus-guide__faq-item"') == 8, "guide: page must display eight questions")
+    check(guide.count("'@type' => 'FAQPage'") == 1, "guide: FAQPage schema must be output once")
+    check("ご予算に合わせて編成をご提案します" in guide, "guide: budget-planning heading missing")
+    check("まずはご相談ください" in guide and 'href="contact.html"' in guide, "guide: contact CTA missing")
+    check(re.search(r"(?:¥|￥|\d[\d,]*(?:円|万円))", guide) is None, "guide: prohibited price amount found")
     site_css = text("app/webroot/css/style.css")
     for token in (
         ".home-works__genres",
@@ -227,10 +242,11 @@ def validate_sitemap_and_robots() -> None:
     root = ET.parse(sitemap_path).getroot()
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     urls = [node.text or "" for node in root.findall("sm:url/sm:loc", namespace)]
-    check(len(urls) == 38, f"sitemap must contain 38 page URLs, found {len(urls)}")
+    check(len(urls) == 39, f"sitemap must contain 39 page URLs, found {len(urls)}")
     check("https://www.musician.co.jp/equipment.html" in urls, "Equipment URL missing from sitemap")
     check("https://www.musician.co.jp/achievements.html" in urls, "independent achievements URL missing from sitemap")
     check("https://www.musician.co.jp/artist-asakusa-taikoban.html" in urls, "Asakusa Taikoban URL missing from sitemap")
+    check("https://www.musician.co.jp/guide.html" in urls, "Guide / FAQ URL missing from sitemap")
     check(len(urls) == len(set(urls)), "sitemap contains duplicate URLs")
     check(all(url.startswith("https://www.musician.co.jp/") for url in urls), "sitemap contains a non-canonical host")
     check(all("?" not in url and "#" not in url and "/page:1" not in url for url in urls), "sitemap contains non-canonical variants")
@@ -302,7 +318,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 24 files, 38 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 27 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

@@ -64,7 +64,7 @@ def validate_about() -> None:
     require("Career" not in text, "Removed Career section remains")
     require("私の音楽の原点は、小学生の頃にあります。" in text, "Miyazaki origin story is missing")
     require("舞台監督として全体を見渡し" in text, "Miyazaki production leadership is missing")
-    require("約8,000曲分になりました。" in text, "Miyazaki arrangement archive count is missing")
+    require("約8,000曲になりました。" in text, "Miyazaki arrangement archive count is missing")
     require("その場にふさわしい音楽芸術をつくりましょう。" in text, "Miyazaki closing invitation is missing")
     require(text.count("<span>About us</span>私たちについて") == 1, "About us title is duplicated")
     preview_company = ROOT / "temporary_preview_site/public/company.html"
@@ -221,7 +221,7 @@ def validate_works() -> None:
     ):
         require(f"'image' => '{key}'" in template, f"Opera image missing: {key}")
     require("グループ全体" in template, "Taiko alt text does not preserve full group")
-    taiko = WORKS / "app/webroot/images/works/gallery/traditional-taiko-card.jpg"
+    taiko = WORKS / "app/webroot/images/works/gallery/traditional-taiko-v2-card.jpg"
     with Image.open(taiko) as image:
         require(image.size == (960, 720), f"Taiko card is not 4:3: {image.size}")
         require(not image.getexif(), "Taiko EXIF remains")
@@ -293,7 +293,7 @@ def validate_manifest_and_targets() -> None:
         "app/webroot/images/company_photo_megumi.jpg",
         "app/webroot/images/company_photo_miyazaki_illustration.jpg",
         "app/webroot/images/megumi-portrait-card.jpg",
-        "app/webroot/images/works/gallery/traditional-taiko-card.jpg",
+        "app/webroot/images/works/gallery/traditional-taiko-v2-card.jpg",
     ):
         require(path in targets, f"Deployment target missing: {path}")
 
