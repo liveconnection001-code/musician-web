@@ -222,7 +222,24 @@ h1 img{width: 150px; padding-top: 0; padding-bottom: 2px;}
 .menu > ul > li > ul > li a {text-align: left!important;}
 .menu-container { margin-top: -35px!important;}
 
-.menu-mobile::after{font-size: 160%!important;}
+.menu-container .menu-mobile::after{
+	content: "";
+	display: block;
+	width: 26px;
+	height: 2px;
+	margin-top: 8px;
+	padding: 0;
+	float: right;
+	position: relative;
+	top: auto;
+	background-color: #041e42;
+	box-shadow: 0 -8px 0 #041e42, 0 8px 0 #041e42;
+	font-family: inherit;
+	font-size: 0!important;
+	-webkit-transform: none;
+	-ms-transform: none;
+	transform: none;
+}
 @media only screen and (max-width: 767px) {
 	.menu-dropdown-icon > a {margin-left: 30px;}
 }

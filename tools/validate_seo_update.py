@@ -85,7 +85,7 @@ def validate_templates() -> None:
     home = text("app/View/Homes/index.html")
     check('class="pd_yohaku_r home-works"' in home, "home: curated Works section missing")
     check("requestAction(array('controller'=>'works'" not in home, "home: legacy Works CMS request returned")
-    check('style.css?v=20260730d' in home, "home: card alignment stylesheet cache key missing")
+    check('style.css?v=20260802e' in home, "home: shared stylesheet cache key missing")
     check('mus_reasons.css?v=20260802c' in home, "home: reasons stylesheet missing")
     check(home.count('class="mus-reasons__item"') == 3, "home: expected three reasons")
     check("MUSICIANは、演奏の現場を知る音楽家が中心となって運営しています。" in home, "home: approved About copy missing")

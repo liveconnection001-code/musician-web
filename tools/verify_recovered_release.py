@@ -46,7 +46,7 @@ def validate_shared_headers() -> None:
         require(text.count("<header>") == 1, f"{label}: header count")
         require(text.count("<footer>") == 1, f"{label}: footer count")
         require(text.count('id="midashi_h2"') == 1, f"{label}: shared heading missing")
-        require("style.css?v=20260730a" in text, f"{label}: CSS cache key missing")
+        require("style.css?v=20260802e" in text, f"{label}: CSS cache key missing")
     css = STYLE.read_text(encoding="utf-8")
     require("approved shared page heading" in css, "Approved heading CSS missing")
     require(re.search(r"#midashi_h2\s*\{[^}]*height:\s*40px", css, re.S), "Navy band is not 40px")
@@ -208,7 +208,7 @@ def validate_artist() -> None:
 def validate_works() -> None:
     template = (WORKS / "app/View/catalog/cl01_2/default/index.html").read_text(encoding="utf-8")
     css = (WORKS / "app/webroot/css/works_showcase.css").read_text(encoding="utf-8")
-    require("style.css?v=20260730a" in template, "Works CSS cache key missing")
+    require("style.css?v=20260802e" in template, "Works CSS cache key missing")
     require("hero-corporate-show-clean.webp?v=20260730a" in template, "Works showcase image cache key missing")
     require("-card.jpg?v=20260730a" in template, "Works gallery card cache key missing")
     require("-large.jpg?v=20260730a" in template, "Works gallery large-image cache key missing")

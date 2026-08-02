@@ -513,7 +513,7 @@ def build_static_pages() -> None:
     business = improve_shared_markup(business, banner_label="<span>Business</span>事業内容")
     business = business.replace(
         'href="css/style.css"',
-        'href="css/style.css?v=20260730b"',
+        'href="css/style.css?v=20260802e"',
         1,
     )
     business = replace_heading_level(business, 3, 2, "midashi2", 6, "business section headings")
