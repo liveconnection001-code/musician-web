@@ -268,11 +268,11 @@ def prepare_company() -> None:
     text = text.replace('\t<link href="css/sidemenu2.css" rel="stylesheet"><!--サイドメニュー-->\n', '')
     text = text.replace('<link href="css/recent_achievements.css" rel="stylesheet"><!--近年の実績-->\n', '')
     text = text.replace(
-        "MUSICIANについて・演奏実績｜出張演奏・演奏家派遣",
+        "MUSICIANについて・演奏実績｜出張演奏・演奏家手配",
         "MUSICIANについて｜株式会社東京アーティスト協会",
     )
     text = text.replace(
-        "出張演奏・演奏家派遣のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。",
+        "出張演奏・演奏家手配のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。",
         "株式会社東京アーティスト協会が運営するMUSICIANの会社情報と、音楽・芸術制作に携わる大町めぐみ、宮﨑隆のプロフィールをご紹介します。",
     )
     text = text.replace(

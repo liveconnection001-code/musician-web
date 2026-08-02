@@ -74,6 +74,7 @@ def verify_html(path: str, canonical: str) -> str:
     html = payload.decode("utf-8", errors="replace")
     check(status == 200, f"{path}: expected 200, got {status}")
     check("<?php" not in html, f"{path}: raw PHP leaked")
+    check("\u6d3e\u9063" not in html, f"{path}: prohibited service wording remains")
     check(html.count("<h1") == 1, f"{path}: expected one H1")
     check('rel="canonical"' in html, f"{path}: canonical tag missing")
     check(f'href="{BASE}{canonical}"' in html, f"{path}: canonical URL mismatch")

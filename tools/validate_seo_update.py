@@ -285,6 +285,19 @@ def validate_routing() -> None:
     check('name="robots" content="noindex, follow"' in error_page, "404 page noindex missing")
 
 
+def validate_service_wording() -> None:
+    prohibited = "\u6d3e\u9063"
+    checked_suffixes = {".html", ".php", ".xml", ".json", ".txt"}
+    for path in DEPLOYMENT.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in checked_suffixes:
+            continue
+        page = path.read_text(encoding="utf-8", errors="replace")
+        check(
+            prohibited not in page,
+            f"{path.relative_to(DEPLOYMENT).as_posix()}: prohibited service wording remains",
+        )
+
+
 def validate_preview() -> None:
     # The browser preview is intentionally local-only and excluded from Git.
     # CI validates the deployable package; local runs additionally validate the
@@ -312,6 +325,7 @@ def main() -> None:
     validate_javascript()
     validate_sitemap_and_robots()
     validate_routing()
+    validate_service_wording()
     validate_preview()
     if ERRORS:
         print("SEO validation failed:")

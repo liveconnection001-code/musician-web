@@ -69,14 +69,14 @@ def finalize_preview() -> None:
     )
     new_meta = (
         '<title>MUSICIANについて・演奏実績｜公開前確認</title>\n'
-        '<meta name="description" content="出張演奏・演奏家派遣のMUSICIANについて、2019年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご確認いただけます。">\n'
+        '<meta name="description" content="出張演奏・演奏家手配のMUSICIANについて、2019年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご確認いただけます。">\n'
         '<meta name="robots" content="noindex, nofollow">'
     )
     company = replace_once_idempotent(company, old_meta, new_meta, "preview metadata")
     company = replace_once_idempotent(
         company,
         '<h1 class="osu3"><a href="https://www.musician.co.jp/index.html"><img src="images/head_logo_1.png" alt="プロ演奏家の出張演奏サービスはMUSICIAN。" class="img-fluid"></a></h1>',
-        '<div class="site-logo osu3"><a href="https://www.musician.co.jp/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家派遣のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>',
+        '<div class="site-logo osu3"><a href="https://www.musician.co.jp/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>',
         "preview header logo",
     )
     company = replace_once_idempotent(

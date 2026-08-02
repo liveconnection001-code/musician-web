@@ -2,12 +2,12 @@
 $seoIsRoot = ((int)$target_id === 21);
 $seoCategoryTitle = !empty($target['title']) ? trim(strip_tags($target['title'])) : 'MUSICIANについて';
 $seoTitle = $seoIsRoot
-  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家派遣'
+  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家手配'
   : $seoCategoryTitle . 'の演奏・イベント実績｜MUSICIAN';
 $seoDescription = !empty($target['description'])
   ? trim(strip_tags($target['description']))
   : ($seoIsRoot
-    ? '出張演奏・演奏家派遣のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
+    ? '出張演奏・演奏家手配のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
     : $seoCategoryTitle . 'にMUSICIANが担当した主な出張演奏、企業イベント、式典、ホテル・商業施設などの実績をご紹介します。');
 $seoCanonicalPath = $seoIsRoot ? '/company.html' : '/company/index/' . (int)$target_id;
 $seoBreadcrumbItems = array(
@@ -55,7 +55,7 @@ if (!$seoIsRoot) {
     <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-sm-11 col-md-3">
-                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家派遣のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
+                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
 					<ul class="btn_tel2 osu2 d-block d-md-none">
 						<li><span data-action="call"><img src="images/phone.png" alt="03-6261-4348" class="img-fluid" loading="lazy" decoding="async"></span></li>
 						<li><a href="/contact.html"><img src="images/mail.png" alt="mail" class="img-fluid"></a></li>

@@ -130,7 +130,7 @@ HEADER_LOGO_OLD = (
 )
 HEADER_LOGO_NEW = (
     '<div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" '
-    'alt="出張演奏・演奏家派遣のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>'
+    'alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>'
 )
 
 
@@ -289,7 +289,7 @@ $seoJson = json_encode(
 
 
 HOME_META = r'''<?php echo $this->element('seo_meta', array(
-  'seoTitle' => '出張演奏・演奏家派遣ならMUSICIAN｜企業・式典・ホテル・学校公演',
+  'seoTitle' => '出張演奏・演奏家手配のMUSICIAN｜企業・式典・ホテル・学校公演',
   'seoDescription' => '企業パーティー、表彰式、周年記念、ホテル・商業施設、学校・公共施設などへ、プロ演奏家を全国手配。クラシック、ジャズ、和楽器ほか、企画から演奏・音響・収録までご相談いただけます。',
   'seoCanonicalPath' => '/',
   'seoPageType' => 'WebPage',
@@ -297,8 +297,8 @@ HOME_META = r'''<?php echo $this->element('seo_meta', array(
     array(
       '@type' => 'Service',
       '@id' => 'https://www.musician.co.jp/#performance-service',
-      'name' => '出張演奏・演奏家派遣サービス',
-      'serviceType' => array('出張演奏', '演奏家派遣', 'イベント音楽制作'),
+      'name' => '出張演奏・演奏家手配サービス',
+      'serviceType' => array('出張演奏', '演奏家手配', '出演者編成', 'イベント音楽制作'),
       'areaServed' => array('@type' => 'Country', 'name' => '日本'),
       'provider' => array('@id' => 'https://www.musician.co.jp/#organization')
     )
@@ -363,12 +363,12 @@ COMPANY_PREAMBLE = r'''<?php
 $seoIsRoot = ((int)$target_id === 21);
 $seoCategoryTitle = !empty($target['title']) ? trim(strip_tags($target['title'])) : 'MUSICIANについて';
 $seoTitle = $seoIsRoot
-  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家派遣'
+  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家手配'
   : $seoCategoryTitle . 'の演奏・イベント実績｜MUSICIAN';
 $seoDescription = !empty($target['description'])
   ? trim(strip_tags($target['description']))
   : ($seoIsRoot
-    ? '出張演奏・演奏家派遣のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
+    ? '出張演奏・演奏家手配のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
     : $seoCategoryTitle . 'にMUSICIANが担当した主な出張演奏、企業イベント、式典、ホテル・商業施設などの実績をご紹介します。');
 $seoCanonicalPath = $seoIsRoot ? '/company.html' : '/company/index/' . (int)$target_id;
 $seoBreadcrumbItems = array(
@@ -862,7 +862,7 @@ def build_routing_and_errors() -> None:
 </head>
 <body>
   <main>
-    <a href="/"><img src="/images/head_logo_1.png" width="478" height="138" alt="出張演奏・演奏家派遣のMUSICIAN"></a>
+    <a href="/"><img src="/images/head_logo_1.png" width="478" height="138" alt="出張演奏・演奏家手配のMUSICIAN"></a>
     <h1>ページが見つかりません</h1>
     <p>URLをご確認いただくか、下記のメニューからお探しください。</p>
     <nav aria-label="主要ページ">
