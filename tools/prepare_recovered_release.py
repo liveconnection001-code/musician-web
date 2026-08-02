@@ -28,7 +28,7 @@ ROUTES = SEO / "app" / "Config" / "routes.php"
 SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
 ASSET_VERSION = "20260730a"
-STYLE_VERSION = "20260802e"
+STYLE_VERSION = "20260802f"
 
 
 ARCHIVE_DATE_RE = re.compile(
@@ -493,8 +493,8 @@ def prepare_achievements() -> None:
     )
     prefix = cache_bust(prefix)
     prefix = prefix.replace(
-        '<link href="css/style.css?v=20260802e" rel="stylesheet">',
-        '<link href="css/style.css?v=20260802e" rel="stylesheet">\n'
+        '<link href="css/style.css?v=20260802f" rel="stylesheet">',
+        '<link href="css/style.css?v=20260802f" rel="stylesheet">\n'
         '<link href="css/recent_achievements.css?v=20260730a" rel="stylesheet">',
         1,
     )

@@ -28,27 +28,27 @@
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
       "bytes": 21417,
-      "sha256": "ff538ce0be11192df02dfceb485c2787653e76ef0c36d169c75e3f35a8d054d2"
+      "sha256": "c46c1b2f5460459f5eddb4ba50f2361b8e767e65aefaa0dceb7978d755672302"
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
       "bytes": 18181,
-      "sha256": "482a2ce90ec21d2e27680aeccf67cfc9072ce5df8326ec726b7b90dfe4607830"
+      "sha256": "669b2fbd745d178553bcf389d62c5f5a6a25236ab7559e2d06eb2ce38948192c"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
       "bytes": 31730,
-      "sha256": "08234d01239bf16b2974e5fd92e413c465463811c14a9e542545bf8d56729934"
+      "sha256": "9fb4a75b43527bb1d745b92f912e6cef81e166aa27fcb639db3e4e42f3c639b9"
     },
     {
       "path": "app/View/Contact/msg.html",
       "bytes": 14931,
-      "sha256": "8a82e0ebd70e36dd4ab8e208620169a05029c49c9058382d0b1e42aca4a7eb26"
+      "sha256": "006cdf1fc98d2e0d6e9ca7afec0868a05431854014d96028bf97bdbc83959c1d"
     },
     {
       "path": "app/View/Contact/thanks.html",
       "bytes": 11879,
-      "sha256": "1faee56ac16e4540684269cde79575a39c36960136548b1f4ed4b71e5f79b8a3"
+      "sha256": "ea2f3709474dae579eac81af6601f97449ed41c619cd21094dd424ee6c37251b"
     },
     {
       "path": "app/View/Elements/seo_meta.html",
@@ -63,7 +63,7 @@
     {
       "path": "app/View/Homes/index.html",
       "bytes": 28830,
-      "sha256": "32e71d24f26d5f72e201693a244ff7817fb6d361ddf7646923a6d90042da36e5"
+      "sha256": "66fdb6fda26b6366d7014f518a9b27fb43f9c84a152001582d3f65542c27ceff"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -78,17 +78,17 @@
     {
       "path": "app/webroot/achievements.html",
       "bytes": 698640,
-      "sha256": "42b402c61cb8731086111b25fbbc9df2cfcaf39db70dd27fd99d2d3024d67c9a"
+      "sha256": "e812c2b7d0e03f7c3f74b394691544e5e2b396b28561db3e8af54d7056e1ac7c"
     },
     {
       "path": "app/webroot/business.html",
       "bytes": 17385,
-      "sha256": "6f31a634fe530eb78e46d832e3d28e4db1d6234dd17fa0dac999a5d83dd43302"
+      "sha256": "a474ada7de478762b7732f7b00a1142d8a2afd077ab503bd2941b7a89d16708d"
     },
     {
       "path": "app/webroot/contact.html",
       "bytes": 25057,
-      "sha256": "a6f216dff70669d04aee4d73546c2027e93c3fc3e39f54392eb2ee73d67b622f"
+      "sha256": "063ba075fcb0004f4400d47dda9ebb57695a9b86f2c002c6f3a802cb05d938f8"
     },
     {
       "path": "app/webroot/css/mus_guide.css",
@@ -108,17 +108,17 @@
     {
       "path": "app/webroot/css/style.css",
       "bytes": 62268,
-      "sha256": "3ecfefd8b233a6692539bed80109818259142016f8f3d7ac014bf98f31e27911"
+      "sha256": "036afac0714183a82f49435b087d46ed41e7e786aabca66efb34020fde957778"
     },
     {
       "path": "app/webroot/equipment.html",
       "bytes": 15240,
-      "sha256": "bab5220c138c36a089516d7a4f666d705218632dcad9d16c7f14b6ade769a62d"
+      "sha256": "19f1f05e6eabf4d70d5aff09e3d2a4328f9e7a5cd81807cc44a36e5e4f8d6bfd"
     },
     {
       "path": "app/webroot/guide.html",
       "bytes": 26997,
-      "sha256": "37d482a0f8e83ba3f6cb1fc190cd21936fcac17d9900421d1e73cc1c4b1c9c5e"
+      "sha256": "aba8ca2d3d49c303fb269ef2d7edbb073ef7b9e4bf38a8410a358128b1dc2918"
     },
     {
       "path": "app/webroot/js/bootstrap.js",
