@@ -53,9 +53,7 @@ def validate_templates() -> None:
         page = text(relative_path)
         check("element('seo_meta'" in page, f"{relative_path}: shared SEO element is not called")
         check('<h1 class="osu3">' not in page, f"{relative_path}: logo is still the page H1")
-        expected_h1_templates = (
-            2 if relative_path == "app/View/catalog/cl01_2/default/index.html" else 1
-        )
+        expected_h1_templates = 1
         check(page.count("<h1") == expected_h1_templates, f"{relative_path}: unexpected H1 template count")
     check('class="site-logo osu3"' in page, f"{relative_path}: semantic logo wrapper missing")
 

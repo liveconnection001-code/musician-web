@@ -727,6 +727,11 @@ def build_catalog_pages() -> None:
     works = normalize_achievements_links(works)
     works = apply_works_catalog_policy(works)
     write("app/View/catalog/cl01_2/default/index.html", works)
+    curated_works = ROOT / "new_site" / "works_deployment" / "app" / "View" / "catalog" / "cl01_2" / "default" / "index.html"
+    if curated_works.is_file() and "$worksCategoryMeta" in read(curated_works):
+        # The approved five-category Works template is the canonical source.
+        # Keep SEO regeneration from restoring the legacy single-category layout.
+        write("app/View/catalog/cl01_2/default/index.html", read(curated_works))
 
     company = read(CURRENT_COMPANY)
     company = replace_php_preamble(company, COMPANY_PREAMBLE, "company preamble")
