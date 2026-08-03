@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 from build_home_preview import build as build_home_preview
@@ -37,6 +38,38 @@ def write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def ensure_guide_header_nav(text: str) -> str:
+    """Keep Guide between Achievements and the mobile-only Contact item."""
+    legacy_footer_label = '<span class="en">Guide / ' + 'FAQ</span>'
+    text = text.replace(legacy_footer_label, '<span class="en">Guide</span>')
+    header, marker, remainder = text.partition("</header>")
+    if not marker:
+        return text
+    if re.search(
+        r'<li(?: class="navi-on")?><a href="/?guide\.html"><span class="en">Guide</span></a></li>',
+        header,
+    ):
+        return text
+    pattern = re.compile(
+        r'(?P<indent>^[ \t]*)'
+        r'(?P<achievements><li(?: class="navi-on")?><a href="(?P<root>/?)achievements\.html">'
+        r'<span class="en">Achievements</span></a></li>)',
+        re.MULTILINE,
+    )
+    header, count = pattern.subn(
+        lambda match: (
+            f'{match.group("indent")}{match.group("achievements")}\n'
+            f'{match.group("indent")}<li><a href="{match.group("root")}guide.html">'
+            '<span class="en">Guide</span></a></li>'
+        ),
+        header,
+        count=1,
+    )
+    if count != 1:
+        raise RuntimeError(f"Guide header nav: expected one insertion point, found {count}")
+    return header + marker + remainder
+
+
 def finalize_deployment() -> None:
     home_path = DEPLOYMENT / "app" / "View" / "Homes" / "index.html"
     home = home_path.read_text(encoding="utf-8")
@@ -46,6 +79,7 @@ def finalize_deployment() -> None:
         '<img class="object-fit-img cover" src="images/mv/mv_img01.jpg" alt="企業イベントを彩るプロ演奏家の生演奏" fetchpriority="high" decoding="async">',
         "home priority image",
     )
+    home = ensure_guide_header_nav(home)
     write(home_path, home)
 
     company_path = DEPLOYMENT / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html"
@@ -56,6 +90,7 @@ def finalize_deployment() -> None:
         "  'seoPageType' => $seoIsRoot ? 'AboutPage' : 'CollectionPage',",
         "company schema page type",
     )
+    company = ensure_guide_header_nav(company)
     write(company_path, company)
 
 
@@ -69,14 +104,14 @@ def finalize_preview() -> None:
     )
     new_meta = (
         '<title>MUSICIANについて・演奏実績｜公開前確認</title>\n'
-        '<meta name="description" content="出張演奏・演奏家手配のMUSICIANについて、2019年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご確認いただけます。">\n'
+        '<meta name="description" content="出張演奏・イベント音楽制作のMUSICIANについて、2019年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご確認いただけます。">\n'
         '<meta name="robots" content="noindex, nofollow">'
     )
     company = replace_once_idempotent(company, old_meta, new_meta, "preview metadata")
     company = replace_once_idempotent(
         company,
         '<h1 class="osu3"><a href="https://www.musician.co.jp/index.html"><img src="images/head_logo_1.png" alt="プロ演奏家の出張演奏サービスはMUSICIAN。" class="img-fluid"></a></h1>',
-        '<div class="site-logo osu3"><a href="https://www.musician.co.jp/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>',
+        '<div class="site-logo osu3"><a href="https://www.musician.co.jp/"><img src="images/head_logo_1.png" alt="出張演奏・イベント音楽制作のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>',
         "preview header logo",
     )
     company = replace_once_idempotent(
@@ -87,6 +122,7 @@ def finalize_preview() -> None:
     )
     company = company.replace('target="_blank"', 'target="_blank" rel="noopener noreferrer"')
     company = company.replace('2022 MUSICIAN.CO.JP', '2022–2026 MUSICIAN.CO.JP')
+    company = ensure_guide_header_nav(company)
     write(company_path, company)
 
     css_path = PREVIEW / "css" / "style.css"

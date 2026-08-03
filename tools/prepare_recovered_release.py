@@ -219,6 +219,38 @@ def write_text(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def ensure_guide_header_nav(text: str) -> str:
+    """Keep Guide between Achievements and the mobile-only Contact item."""
+    legacy_footer_label = '<span class="en">Guide / ' + 'FAQ</span>'
+    text = text.replace(legacy_footer_label, '<span class="en">Guide</span>')
+    header, marker, remainder = text.partition("</header>")
+    if not marker:
+        return text
+    if re.search(
+        r'<li(?: class="navi-on")?><a href="/?guide\.html"><span class="en">Guide</span></a></li>',
+        header,
+    ):
+        return text
+    pattern = re.compile(
+        r'(?P<indent>^[ \t]*)'
+        r'(?P<achievements><li(?: class="navi-on")?><a href="(?P<root>/?)achievements\.html">'
+        r'<span class="en">Achievements</span></a></li>)',
+        re.MULTILINE,
+    )
+    header, count = pattern.subn(
+        lambda match: (
+            f'{match.group("indent")}{match.group("achievements")}\n'
+            f'{match.group("indent")}<li><a href="{match.group("root")}guide.html">'
+            '<span class="en">Guide</span></a></li>'
+        ),
+        header,
+        count=1,
+    )
+    if count != 1:
+        raise RuntimeError(f"Guide header nav: expected one insertion point, found {count}")
+    return header + marker + remainder
+
+
 def cache_bust(text: str) -> str:
     return re.sub(
         r'href="css/style\.css(?:\?v=[^"]+)?"',
@@ -268,11 +300,11 @@ def prepare_company() -> None:
     text = text.replace('\t<link href="css/sidemenu2.css" rel="stylesheet"><!--サイドメニュー-->\n', '')
     text = text.replace('<link href="css/recent_achievements.css" rel="stylesheet"><!--近年の実績-->\n', '')
     text = text.replace(
-        "MUSICIANについて・演奏実績｜出張演奏・演奏家手配",
+        "MUSICIANについて・演奏実績｜出張演奏・イベント音楽制作",
         "MUSICIANについて｜株式会社東京アーティスト協会",
     )
     text = text.replace(
-        "出張演奏・演奏家手配のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。",
+        "出張演奏・イベント音楽制作のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。",
         "株式会社東京アーティスト協会が運営するMUSICIANの会社情報と、音楽・芸術制作に携わる大町めぐみ、宮﨑隆のプロフィールをご紹介します。",
     )
     text = text.replace(
@@ -486,6 +518,7 @@ def prepare_achievements() -> None:
         '<li><a href="business.html"><span class="en">Business</span></a></li>',
         1,
     )
+    prefix = ensure_guide_header_nav(prefix)
     prefix = prefix.replace(
         '<li><a href="achievements.html"><span class="en">Achievements</span></a></li>',
         '<li class="navi-on"><a href="achievements.html"><span class="en">Achievements</span></a></li>',

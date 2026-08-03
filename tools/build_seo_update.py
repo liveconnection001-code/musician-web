@@ -51,6 +51,54 @@ def replace_regex_once(text: str, pattern: str, replacement: str, label: str) ->
     return updated
 
 
+WORKS_ARRANGEMENT_MARKUP = r'''<?php if ($worksIsArrangement): ?>
+			<section id="works-arrangement">
+				<div class="mb_content">
+					<h3 class="midashi2 mb30_md50">編成に合わせたアレンジ・譜面制作</h3>
+					<div class="row mb30_md50">
+						<div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+							<div class="fotorama" data-nav="thumbs" data-width="100%" data-ratio="960/720" data-fit="contain" data-allowfullscreen="true">
+								<?php foreach ($worksArrangementScores as $worksArrangementScore): ?>
+								<img src="<?php echo htmlspecialchars($worksArrangementScore['src'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($worksArrangementScore['alt'], ENT_QUOTES, 'UTF-8'); ?>" data-caption="<?php echo htmlspecialchars($worksArrangementScore['caption'], ENT_QUOTES, 'UTF-8'); ?>">
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
+					<div class="works_box clearfix">
+						<div class="text"><p>クラシックの大編成から弦楽四重奏、ポップスまで、演奏する編成と会場に合わせてアレンジし、スコアとパート譜を制作します。実際に演奏する奏者の特性や響きを踏まえ、現場で機能する譜面に仕上げています。</p></div>
+					</div>
+				</div>
+			</section>
+			<?php else: ?>'''
+
+
+def apply_works_catalog_policy(text: str) -> str:
+    """Keep the approved Works item visibility/date policy in regenerated output."""
+    text = replace_once(
+        text,
+        "\t\t\t<h2 class=\"midashi3 mb_content tac\"><?php echo $target['title'];?></h2>\n"
+        "\t\t\t<?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>",
+        "\t\t\t<h2 class=\"midashi3 mb_content tac\"><?php echo $target['title'];?></h2>\n"
+        "\t\t\t" + WORKS_ARRANGEMENT_MARKUP + "\n"
+        "\t\t\t<?php foreach($worksDisplayBoxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>\n"
+        "\t\t\t<?php $tbl_title = $worksDisplayTitle($tbl_title); $tbl_html1 = $worksDisplayHtml($tbl_html1); ?>",
+        "works approved item policy start",
+    )
+    text = replace_once(
+        text,
+        "\t\t\t<?php endforeach;?>\n\t\t\t<?php\n\t\t\techo $this->element('paging'",
+        "\t\t\t<?php endforeach;?>\n\t\t\t<?php endif; ?>\n\t\t\t<?php\n\t\t\techo $this->element('paging'",
+        "works approved item policy end",
+    )
+    text = replace_once(
+        text,
+        "<!-- 大サイズ用モーダル -->\n<?php foreach($boxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>",
+        "<!-- 大サイズ用モーダル -->\n<?php foreach($worksDisplayBoxes as $box):extract($box['CatalogBox'],EXTR_PREFIX_ALL,'tbl'); ?>",
+        "works approved item modal policy",
+    )
+    return text
+
+
 def replace_heading_level(
     text: str,
     old_level: int,
@@ -106,6 +154,38 @@ def normalize_achievements_links(text: str) -> str:
     return text
 
 
+def ensure_guide_header_nav(text: str) -> str:
+    """Keep Guide between Achievements and the mobile-only Contact item."""
+    legacy_footer_label = '<span class="en">Guide / ' + 'FAQ</span>'
+    text = text.replace(legacy_footer_label, '<span class="en">Guide</span>')
+    header, marker, remainder = text.partition("</header>")
+    if not marker:
+        return text
+    if re.search(
+        r'<li(?: class="navi-on")?><a href="/?guide\.html"><span class="en">Guide</span></a></li>',
+        header,
+    ):
+        return text
+    pattern = re.compile(
+        r'(?P<indent>^[ \t]*)'
+        r'(?P<achievements><li(?: class="navi-on")?><a href="(?P<root>/?)achievements\.html">'
+        r'<span class="en">Achievements</span></a></li>)',
+        re.MULTILINE,
+    )
+    header, count = pattern.subn(
+        lambda match: (
+            f'{match.group("indent")}{match.group("achievements")}\n'
+            f'{match.group("indent")}<li><a href="{match.group("root")}guide.html">'
+            '<span class="en">Guide</span></a></li>'
+        ),
+        header,
+        count=1,
+    )
+    if count != 1:
+        raise RuntimeError(f"Guide header nav: expected one insertion point, found {count}")
+    return header + marker + remainder
+
+
 def replace_php_preamble(text: str, preamble: str, label: str) -> str:
     return replace_regex_once(text, r"\A<\?php.*?\?>", preamble.strip(), label)
 
@@ -130,13 +210,18 @@ HEADER_LOGO_OLD = (
 )
 HEADER_LOGO_NEW = (
     '<div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" '
-    'alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>'
+    'alt="出張演奏・イベント音楽制作のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>'
 )
 
 
 def improve_shared_markup(text: str, *, banner_label: str | None = None) -> str:
     if HEADER_LOGO_OLD in text:
         text = text.replace(HEADER_LOGO_OLD, HEADER_LOGO_NEW, 1)
+    legacy_service_alt = 'alt="出張演奏・演奏家' + '手' + '配のMUSICIAN"'
+    text = text.replace(
+        legacy_service_alt,
+        'alt="出張演奏・イベント音楽制作のMUSICIAN"',
+    )
     text = text.replace('href="index.html"', 'href="/"')
     text = text.replace('target="_blank"', 'target="_blank" rel="noopener noreferrer"')
     text = text.replace('alt="株式会社MUSICIAN"', 'alt="MUSICIAN"')
@@ -161,7 +246,7 @@ def improve_shared_markup(text: str, *, banner_label: str | None = None) -> str:
             # Some inputs already keep their heading as h1 without the specific legacy
             # marker; keep them intact instead of failing hard.
             pass
-    return text
+    return ensure_guide_header_nav(text)
 
 
 SEO_ELEMENT = r'''<?php
@@ -289,16 +374,16 @@ $seoJson = json_encode(
 
 
 HOME_META = r'''<?php echo $this->element('seo_meta', array(
-  'seoTitle' => '出張演奏・演奏家手配のMUSICIAN｜企業・式典・ホテル・学校公演',
-  'seoDescription' => '企業パーティー、表彰式、周年記念、ホテル・商業施設、学校・公共施設などへ、プロ演奏家を全国手配。クラシック、ジャズ、和楽器ほか、企画から演奏・音響・収録までご相談いただけます。',
+  'seoTitle' => '出張演奏・イベント音楽制作のMUSICIAN｜企業・式典・ホテル',
+  'seoDescription' => '企業パーティー、表彰式、周年記念、ホテル・商業施設、学校・公共施設などへ、プロ演奏家が全国で演奏。クラシック、ジャズ、和楽器ほか、企画から演奏・舞台演出・音響・収録までご相談いただけます。',
   'seoCanonicalPath' => '/',
   'seoPageType' => 'WebPage',
   'seoAdditionalSchema' => array(
     array(
       '@type' => 'Service',
       '@id' => 'https://www.musician.co.jp/#performance-service',
-      'name' => '出張演奏・演奏家手配サービス',
-      'serviceType' => array('出張演奏', '演奏家手配', '出演者編成', 'イベント音楽制作'),
+      'name' => '出張演奏・イベント音楽制作サービス',
+      'serviceType' => array('出張演奏', '出演者編成', 'イベント音楽制作', '舞台演出', '音響・収録'),
       'areaServed' => array('@type' => 'Country', 'name' => '日本'),
       'provider' => array('@id' => 'https://www.musician.co.jp/#organization')
     )
@@ -307,7 +392,7 @@ HOME_META = r'''<?php echo $this->element('seo_meta', array(
 
 BUSINESS_META = r'''<?php echo $this->element('seo_meta', array(
   'seoTitle' => '出張演奏・イベント音楽制作の事業案内｜MUSICIAN',
-  'seoDescription' => '企業イベントや式典、ホテル、商業施設、学校・公共施設への出張生演奏を中心に、コンサート制作、楽曲制作、アーティスト手配、音響、収録・配信まで目的に合わせてご提案します。',
+  'seoDescription' => '企業イベントや式典、ホテル、商業施設、学校・公共施設への出張生演奏を中心に、コンサート制作、楽曲制作、出演者編成、舞台演出、音響・収録まで目的に合わせてご提案します。',
   'seoCanonicalPath' => '/business.html',
   'seoPageType' => 'WebPage',
   'seoBreadcrumbItems' => array(
@@ -319,7 +404,7 @@ BUSINESS_META = r'''<?php echo $this->element('seo_meta', array(
       '@type' => 'Service',
       '@id' => 'https://www.musician.co.jp/business.html#service',
       'name' => '出張演奏・イベント音楽制作',
-      'serviceType' => array('出張生演奏', 'コンサート制作・運営', '楽曲制作', 'アーティスト手配', '音響・収録・配信'),
+      'serviceType' => array('出張生演奏', 'コンサート制作・運営', '楽曲制作', '出演者編成', '舞台演出', '音響・収録'),
       'areaServed' => array('@type' => 'Country', 'name' => '日本'),
       'provider' => array('@id' => 'https://www.musician.co.jp/#organization')
     )
@@ -328,7 +413,7 @@ BUSINESS_META = r'''<?php echo $this->element('seo_meta', array(
 
 CONTACT_META = r'''<?php echo $this->element('seo_meta', array(
   'seoTitle' => '演奏依頼・出演相談・お見積り｜MUSICIAN',
-  'seoDescription' => '出張演奏、演奏家・アーティストの手配、企業イベントや式典の音楽演出、コンサート制作、収録・配信のお問い合わせ・お見積りはこちら。日時や会場が未確定の段階でもご相談いただけます。',
+  'seoDescription' => '出張演奏、出演者編成・キャスティング、企業イベントや式典の音楽演出、コンサート制作、音響・収録のお問い合わせ・お見積りはこちら。日時や会場が未確定の段階でもご相談いただけます。',
   'seoCanonicalPath' => '/contact.html',
   'seoPageType' => 'ContactPage',
   'seoBreadcrumbItems' => array(
@@ -357,18 +442,63 @@ $seoBreadcrumbItems = array(
 if (!$seoIsRoot) {
   $seoBreadcrumbItems[] = array('name' => $seoCategoryTitle, 'item' => $seoCanonicalPath);
 }
+$worksIsArrangement = ($seoCategoryTitle === 'アレンジ');
+$worksHiddenTitleFragments = array(
+  'MEGUMI OMACHI BD LIVE',
+  'Megumi Omachi Birthday LIVE',
+  'ミモザの日'
+);
+$worksDisplayBoxes = array();
+foreach ((isset($boxes) ? $boxes : array()) as $worksCandidateBox) {
+  if ($worksIsArrangement) {
+    continue;
+  }
+  $worksCandidateTitle = isset($worksCandidateBox['CatalogBox']['title'])
+    ? $worksCandidateBox['CatalogBox']['title']
+    : '';
+  $worksShouldHide = false;
+  foreach ($worksHiddenTitleFragments as $worksHiddenTitleFragment) {
+    if (stripos($worksCandidateTitle, $worksHiddenTitleFragment) !== false) {
+      $worksShouldHide = true;
+      break;
+    }
+  }
+  if (!$worksShouldHide) {
+    $worksDisplayBoxes[] = $worksCandidateBox;
+  }
+}
+$worksDisplayTitle = function ($title) {
+  return trim(preg_replace('/^\s*(?:19|20)\d{2}年(?:\s*\d{1,2}月)?\s*/u', '', (string)$title));
+};
+$worksDisplayHtml = function ($html) {
+  $html = (string)$html;
+  if ($html === '') {
+    return $html;
+  }
+  $html = preg_replace('/<p[^>]*>\s*(?:公演日|開演時間)\s*<\/p>/iu', '', $html);
+  $html = preg_replace('/(<p[^>]*>)\s*(?:【日時】\s*)?(?:19|20)\d{2}年\s*\d{1,2}月\s*\d{1,2}日(?:\s*\([^)]*\))?(?:\s|&nbsp;|<span[^>]*>\s*<\/span>)*/iu', '$1', $html);
+  $html = preg_replace('/<p[^>]*>\s*\d{1,2}[:：]\d{2}(?:\s*(?:開場|開演|開始|OPEN|START))?\s*<\/p>/iu', '', $html);
+  $html = preg_replace('/<p[^>]*>\s*<\/p>/iu', '', $html);
+  return $html;
+};
+$worksArrangementScores = array(
+  array('src' => '/images/works/arrangement/figaro-overture-score.png?v=20260803a', 'caption' => 'モーツァルト：フィガロの結婚 序曲', 'alt' => 'モーツァルト作曲「フィガロの結婚」序曲のオーケストラスコア'),
+  array('src' => '/images/works/arrangement/sabre-dance-score.png?v=20260803a', 'caption' => 'ハチャトゥリアン：剣の舞', 'alt' => 'ハチャトゥリアン作曲「剣の舞」のオーケストラスコア'),
+  array('src' => '/images/works/arrangement/voices-of-spring-score.png?v=20260803a', 'caption' => 'ヨハン・シュトラウス2世：春の声', 'alt' => 'ヨハン・シュトラウス2世作曲「春の声」の弦楽四重奏スコア'),
+  array('src' => '/images/works/arrangement/viva-la-vida-score.png?v=20260803a', 'caption' => 'Coldplay：Viva la Vida', 'alt' => 'Coldplay「Viva la Vida」の弦楽四重奏スコア')
+);
 ?>'''
 
 COMPANY_PREAMBLE = r'''<?php
 $seoIsRoot = ((int)$target_id === 21);
 $seoCategoryTitle = !empty($target['title']) ? trim(strip_tags($target['title'])) : 'MUSICIANについて';
 $seoTitle = $seoIsRoot
-  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家手配'
+  ? 'MUSICIANについて・演奏実績｜出張演奏・イベント音楽制作'
   : $seoCategoryTitle . 'の演奏・イベント実績｜MUSICIAN';
 $seoDescription = !empty($target['description'])
   ? trim(strip_tags($target['description']))
   : ($seoIsRoot
-    ? '出張演奏・演奏家手配のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
+    ? '出張演奏・イベント音楽制作のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
     : $seoCategoryTitle . 'にMUSICIANが担当した主な出張演奏、企業イベント、式典、ホテル・商業施設などの実績をご紹介します。');
 $seoCanonicalPath = $seoIsRoot ? '/company.html' : '/company/index/' . (int)$target_id;
 $seoBreadcrumbItems = array(
@@ -523,12 +653,41 @@ def build_static_pages() -> None:
             f'src="images/business_photo{image_number}.jpg" loading="lazy" decoding="async"',
         )
     business = normalize_achievements_links(business)
+    legacy_artist_phrase = '幅広いジャンルのアーティストが' + '手' + '配可能です。'
+    business = business.replace(
+        legacy_artist_phrase,
+        '幅広いジャンルから出演者を編成します。',
+    )
+    business = business.replace('ディラー', 'ディーラー')
+    business = business.replace(
+        'CMキャスティング、結婚式、葬儀、ホームコンサート、屋外フェスティバル',
+        'CMキャスティング、屋外フェスティバル',
+    )
+    business_lead = '''<div class="content_pd">
+    <div class="container-fluid">
+        <div class="yohaku" data-aos="fade-up">
+            <section class="mb_content">
+                <p class="text_large mb20">MUSICIANは、出演者をご紹介して終わりの会社ではありません。</p>
+                <p class="mb20">企画の意図を伺い、出演者の編成、選曲・編曲から、舞台美術、照明、音響、当日の進行までを一体で統括する、音楽芸術の総合制作会社です。</p>
+                <p class="mb20">オペラをはじめとする舞台作品を、美術や衣装まで含めてつくり上げてきた経験が土台にあります。</p>
+                <p>全体を統括する場合も、演出の一部を担う場合も、現場に潜む問題を事前に取り除き、当日を滞りなく本番へ導きます。</p>
+            </section>'''
+    business = business.replace(
+        '<div class="content_pd">\n    <div class="container-fluid">\n        <div class="yohaku" data-aos="fade-up">',
+        business_lead,
+        1,
+    )
     business = replace_once(
         business,
         "海外とオンラインで繋いでの表彰式なども行えます。</div>",
         "海外とオンラインで繋いでの表彰式なども行えます。\n"
-        "                        <p class=\"business-equipment-link\"><a href=\"equipment.html\" class=\"btn btn-1\">音響・撮影・配信機材を見る</a></p></div>",
+        "                        <p class=\"business-equipment-link\"><a href=\"equipment.html\" class=\"btn btn-1\">音響・撮影機材を見る</a></p></div>",
         "business equipment link",
+    )
+    business = business.replace(
+        '\n\n        </div>\n    </div>\n</div>\n\n</main>',
+        '\n\n            <p class="text_large">個人のお客様のご依頼も承ります。</p>\n\n        </div>\n    </div>\n</div>\n\n</main>',
+        1,
     )
     write("app/webroot/business.html", business)
 
@@ -542,7 +701,7 @@ def build_static_pages() -> None:
     contact = replace_once(
         contact,
         'アーティストのブッキング、各種お問い合わせは<br class="d-none d-sm-block">こちらのメールフォームまたはお電話でご連絡ください。',
-        '出張演奏、演奏家・アーティストの手配、企業イベントや式典の音楽演出は、<br class="d-none d-sm-block">日時や会場が未確定の段階でもメールフォームまたはお電話でご相談いただけます。',
+        '出張演奏、出演者編成・キャスティング、企業イベントや式典の音楽演出は、<br class="d-none d-sm-block">日時や会場が未確定の段階でもメールフォームまたはお電話でご相談いただけます。',
         "contact intro copy",
     )
     contact = normalize_achievements_links(contact)
@@ -566,6 +725,7 @@ def build_catalog_pages() -> None:
         'class="img-fluid" loading="lazy" decoding="async"></span>',
     )
     works = normalize_achievements_links(works)
+    works = apply_works_catalog_policy(works)
     write("app/View/catalog/cl01_2/default/index.html", works)
 
     company = read(CURRENT_COMPANY)
@@ -862,7 +1022,7 @@ def build_routing_and_errors() -> None:
 </head>
 <body>
   <main>
-    <a href="/"><img src="/images/head_logo_1.png" width="478" height="138" alt="出張演奏・演奏家手配のMUSICIAN"></a>
+    <a href="/"><img src="/images/head_logo_1.png" width="478" height="138" alt="出張演奏・イベント音楽制作のMUSICIAN"></a>
     <h1>ページが見つかりません</h1>
     <p>URLをご確認いただくか、下記のメニューからお探しください。</p>
     <nav aria-label="主要ページ">

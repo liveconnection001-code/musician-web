@@ -25,7 +25,7 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 27, "deployment must contain 27 staged files")
+    check(manifest.get("file_count") == 32, "deployment must contain 32 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
@@ -34,6 +34,7 @@ def validate_manifest() -> None:
     check("app/webroot/guide.html" in expected, "Guide / FAQ page missing from manifest")
     check("app/webroot/css/mus_guide.css" in expected, "Guide / FAQ CSS missing from manifest")
     check("app/webroot/css/mus_reasons.css" in expected, "Top reasons CSS missing from manifest")
+    check("app/webroot/css/mus_record.css" in expected, "Top achievements strip CSS missing from manifest")
 
 
 def validate_templates() -> None:
@@ -52,7 +53,9 @@ def validate_templates() -> None:
         page = text(relative_path)
         check("element('seo_meta'" in page, f"{relative_path}: shared SEO element is not called")
         check('<h1 class="osu3">' not in page, f"{relative_path}: logo is still the page H1")
-        expected_h1_templates = 1 if relative_path == "app/View/catalog/cl01_3/default/index.html" else 1
+        expected_h1_templates = (
+            2 if relative_path == "app/View/catalog/cl01_2/default/index.html" else 1
+        )
         check(page.count("<h1") == expected_h1_templates, f"{relative_path}: unexpected H1 template count")
     check('class="site-logo osu3"' in page, f"{relative_path}: semantic logo wrapper missing")
 
@@ -88,7 +91,19 @@ def validate_templates() -> None:
     check('style.css?v=20260802f' in home, "home: shared stylesheet cache key missing")
     check('mus_reasons.css?v=20260802c' in home, "home: reasons stylesheet missing")
     check(home.count('class="mus-reasons__item"') == 3, "home: expected three reasons")
-    check("MUSICIANは、演奏の現場を知る音楽家が中心となって運営しています。" in home, "home: approved About copy missing")
+    for token in (
+        "演奏、編曲、舞台美術、照明、音響まで。",
+        "音楽家が率いる制作チームが、企画から本番までを一つの手でつくりあげます。",
+        "JRA賞授賞式、企業表彰式、国際レセプション、ホテル・商業施設、コンサートホール ——",
+        "2006年から積み重ねた実績は2,000件を超えます。",
+        "MUSICIANは、演奏の現場を知る音楽家が中心となって運営する、音楽芸術の制作会社です。",
+        "舞台のすべてを、一つの窓口で",
+        "ご予算を、成果に変える設計をします",
+    ):
+        check(token in home, f"home: approved Phase 3 copy missing: {token}")
+    check('mus_record.css?v=20260803a' in home, "home: achievements strip stylesheet missing")
+    check('href="achievements.html"' in home, "home: achievements strip link missing")
+    check("配信" not in home, "home: streaming remains in promotional copy")
 
     guide = text("app/webroot/guide.html")
     check(guide.count("'@type' => 'Question'") == 8, "guide: FAQPage schema must contain eight questions")
@@ -183,11 +198,23 @@ def validate_templates() -> None:
             f"artist: concise display name missing for ID {artist_id}",
         )
 
+    business = text("app/webroot/business.html")
+    for token in (
+        "MUSICIANは、出演者をご紹介して終わりの会社ではありません。",
+        "舞台美術、照明、音響、当日の進行までを一体で統括する、音楽芸術の総合制作会社です。",
+        "オペラをはじめとする舞台作品を、美術や衣装まで含めてつくり上げてきた経験が土台にあります。",
+        "個人のお客様のご依頼も承ります。",
+    ):
+        check(token in business, f"business: approved Phase 3 copy missing: {token}")
+    check("ディラー" not in business and "ディーラー" in business, "business: dealer spelling is not corrected")
+    check("equipment.html" in business, "business: Equipment page link missing")
+
     equipment = text("app/webroot/equipment.html")
     for token in (
         "音と映像の仕上がりを、",
-        "機材費で利益を取らない。",
-        "プロのオペレーターにも手配料を上乗せせず、原価でご提供します。",
+        "自社機材と自社技術で、",
+        "機材費に利益を上乗せしません。",
+        "自社案件でご利用いただく機材です（機材単体のレンタルは行っていません）。",
         "スピーカー 24台",
         "<strong>48ch</strong><span>最大同時入力数</span>",
         "業務用4Kカメラ 4台、2Kカメラ 8台",
@@ -198,7 +225,8 @@ def validate_templates() -> None:
     check("音響だけ、映像だけでも。" not in equipment, "equipment: standalone audio/video offer remains")
     check("音楽芸術をつくるための、" in equipment, "equipment: artistic-production positioning missing")
     check("音楽・演出・機材を相談する" in equipment, "equipment: integrated consultation label missing")
-    check("equipment.html" in text("app/webroot/business.html"), "business: Equipment page link missing")
+    for prohibited in ("低価格", "安い", "格安", "お得", "安さ", "原価"):
+        check(prohibited not in equipment, f"equipment: prohibited value wording remains: {prohibited}")
     check(".equipment-hero" in site_css, "equipment: page styles missing")
 
     company = text("app/View/catalog/cl01_3/default/index.html")
@@ -286,16 +314,36 @@ def validate_routing() -> None:
 
 
 def validate_service_wording() -> None:
-    prohibited = "\u6d3e\u9063"
+    prohibited_words = ("\u6d3e\u9063", "低価格", "安い", "格安")
     checked_suffixes = {".html", ".php", ".xml", ".json", ".txt"}
     for path in DEPLOYMENT.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in checked_suffixes:
             continue
         page = path.read_text(encoding="utf-8", errors="replace")
-        check(
-            prohibited not in page,
-            f"{path.relative_to(DEPLOYMENT).as_posix()}: prohibited service wording remains",
-        )
+        for prohibited in prohibited_words:
+            check(
+                prohibited not in page,
+                f"{path.relative_to(DEPLOYMENT).as_posix()}: prohibited service wording remains: {prohibited}",
+            )
+
+    brand_paths = (
+        "app/View/Homes/index.html",
+        "app/webroot/business.html",
+        "app/webroot/contact.html",
+        "app/webroot/equipment.html",
+        "app/View/catalog/cl01_2/default/index.html",
+    )
+    for relative_path in brand_paths:
+        page = text(relative_path)
+        check("手配" not in page, f"{relative_path}: '手配' remains in brand copy")
+
+    for relative_path in ("app/View/Homes/index.html", "app/webroot/business.html"):
+        page = text(relative_path)
+        for subject in ("舞台美術", "照明", "衣装"):
+            check(
+                re.search(rf"{subject}.{{0,50}}(?:保有|完備)|(?:保有|完備).{{0,50}}{subject}", page) is None,
+                f"{relative_path}: unsupported ownership wording is attached to {subject}",
+            )
 
 
 def validate_preview() -> None:
@@ -332,7 +380,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 27 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 32 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

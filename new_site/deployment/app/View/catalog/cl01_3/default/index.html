@@ -2,12 +2,12 @@
 $seoIsRoot = ((int)$target_id === 21);
 $seoCategoryTitle = !empty($target['title']) ? trim(strip_tags($target['title'])) : 'MUSICIANについて';
 $seoTitle = $seoIsRoot
-  ? 'MUSICIANについて・演奏実績｜出張演奏・演奏家手配'
+  ? 'MUSICIANについて・演奏実績｜出張演奏・イベント音楽制作'
   : $seoCategoryTitle . 'の演奏・イベント実績｜MUSICIAN';
 $seoDescription = !empty($target['description'])
   ? trim(strip_tags($target['description']))
   : ($seoIsRoot
-    ? '出張演奏・演奏家手配のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
+    ? '出張演奏・イベント音楽制作のMUSICIANについて、サービス方針と2010年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご紹介します。'
     : $seoCategoryTitle . 'にMUSICIANが担当した主な出張演奏、企業イベント、式典、ホテル・商業施設などの実績をご紹介します。');
 $seoCanonicalPath = $seoIsRoot ? '/company.html' : '/company/index/' . (int)$target_id;
 $seoBreadcrumbItems = array(
@@ -55,7 +55,7 @@ if (!$seoIsRoot) {
     <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-sm-11 col-md-3">
-                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
+                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・イベント音楽制作のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
 					<ul class="btn_tel2 osu2 d-block d-md-none">
 						<li><span data-action="call"><img src="images/phone.png" alt="03-6261-4348" class="img-fluid" loading="lazy" decoding="async"></span></li>
 						<li><a href="/contact.html"><img src="images/mail.png" alt="mail" class="img-fluid"></a></li>
@@ -77,6 +77,7 @@ if (!$seoIsRoot) {
                                     <li><a href="/artist.html"><span class="en">Artist</span></a></li>
                                     <li class="navi-on"><a href="/company.html"><span class="en">About us</span></a></li>
                                     <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li><a href="/guide.html"><span class="en">Guide</span></a></li>
                                     <li class="d-block d-md-none"><a href="/contact.html"><span class="en">Contact</span></a></li>
                                     <li class="d-block d-md-none">
 										<div class="sns_list">
@@ -280,7 +281,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">式典・表彰</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">ISEKI Global Awards</p>
-              <p class="achievement-list__detail">ソプラノ歌唱の出演手配</p>
+              <p class="achievement-list__detail">ソプラノ歌唱の出演者編成</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -336,7 +337,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">式典・表彰</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">2026年全国大会（ジャパンアワード）</p>
-              <p class="achievement-list__detail">演奏者手配</p>
+              <p class="achievement-list__detail">出演者編成</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -388,7 +389,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">国際イベント</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">2025年大阪・関西万博 サウジアラビアPR</p>
-              <p class="achievement-list__detail">出演者手配</p>
+              <p class="achievement-list__detail">出演者編成</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -402,7 +403,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">式典・表彰</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">2025年全国大会（ジャパンアワード）</p>
-              <p class="achievement-list__detail">演奏者手配</p>
+              <p class="achievement-list__detail">出演者編成</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -447,7 +448,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">配信・映像</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">夢のかけ橋 コンサート Vol.4</p>
-              <p class="achievement-list__detail">ライブ配信・回線手配</p>
+              <p class="achievement-list__detail">ライブ配信・配信回線の確保</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -475,7 +476,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">式典・表彰</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">FOREVER JAPAN AWARD 2024</p>
-              <p class="achievement-list__detail">出演者手配</p>
+              <p class="achievement-list__detail">出演者編成</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -503,7 +504,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">コンサート</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">レクサス高崎 クリスマスコンサート</p>
-              <p class="achievement-list__detail">出演者手配・公演運営</p>
+              <p class="achievement-list__detail">出演者編成・公演運営</p>
             </div>
           </li>
         </ul>
@@ -649,7 +650,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">コンサート</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">二胡フェスティバル2022</p>
-              <p class="achievement-list__detail">制作・出演手配・運営</p>
+              <p class="achievement-list__detail">制作・出演者編成・運営</p>
             </div>
           </li>
           <li class="achievement-list__item">
@@ -743,7 +744,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">商業施設</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">聖蹟桜ケ丘SC クリスマスコンサート</p>
-              <p class="achievement-list__detail">出演者手配・公演運営</p>
+              <p class="achievement-list__detail">出演者編成・公演運営</p>
             </div>
           </li>
         </ul>
@@ -938,7 +939,7 @@ if (!$seoIsRoot) {
             <span class="achievement-list__category">定期公演</span>
             <div class="achievement-list__content">
               <p class="achievement-list__title">柏の杜 ランチタイムコンサート</p>
-              <p class="achievement-list__detail">月例コンサートの出演者手配・運営</p>
+              <p class="achievement-list__detail">月例コンサートの出演者編成・運営</p>
             </div>
           </li>
         </ul>
@@ -1012,7 +1013,7 @@ if (!$seoIsRoot) {
 							<ul class="foot_link d-none d-md-block">
 							  <li><a href="/company.html"><span class="en">About us</span></a></li>
 							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
-							  <li><a href="/guide.html"><span class="en">Guide / FAQ</span></a></li>
+							  <li><a href="/guide.html"><span class="en">Guide</span></a></li>
 							  <li><a href="/contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>

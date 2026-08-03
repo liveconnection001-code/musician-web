@@ -3,7 +3,7 @@
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
-  "file_count": 27,
+  "file_count": 32,
   "files": [
     {
       "path": ".htaccess",
@@ -22,33 +22,33 @@
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
-      "bytes": 25015,
-      "sha256": "da44abd5a64c493c6db4e0bb85275faa227a267f61d4a43757286dbf37acc982"
+      "bytes": 54516,
+      "sha256": "bdca6d6973539af8936b77880d8df1df9a0e8b36bbd5b7c022a34e8d7e673a57"
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
-      "bytes": 21418,
-      "sha256": "231d58aea88267cc19c14dc2abef909af2eb40274d1b730452e7dd24c1537d11"
+      "bytes": 21855,
+      "sha256": "89a25cffe7e5d5f4566ff64e6b6e3415cda4d8a331e702c0b7bf02cecdcfc6c8"
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
-      "bytes": 18182,
-      "sha256": "5d5dfe43d4af3e65fc127fb0910ac3c0cc3a0bd9f4b9bdb2ebefc52d2fe8557b"
+      "bytes": 18285,
+      "sha256": "af390d834f3a0dad14b311de99e73ce70640485c66599cc163bcbbda995bc121"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
-      "bytes": 31731,
-      "sha256": "4f0dee201bc697e38ed7fbd8406916cda7ceb80371a81b46178e0d4c9fe16258"
+      "bytes": 31834,
+      "sha256": "673c97fcfe48e44776901cbc7a02ca15c3a53da4b8d4c376a5047b9e6c355165"
     },
     {
       "path": "app/View/Contact/msg.html",
-      "bytes": 14932,
-      "sha256": "6a063e0016d8f7c148e04a8bbe23fd90ff6c8caf80a9834fda3014884f103a9a"
+      "bytes": 15034,
+      "sha256": "afb5bdef2d1b616e004759e1defcc588620dd486a294f97941bd957bcda94e37"
     },
     {
       "path": "app/View/Contact/thanks.html",
-      "bytes": 11880,
-      "sha256": "ae1349d1d783c2f84fb3f572a1fad8a3d2260cb2bddf89e84c413a95a4da99db"
+      "bytes": 11982,
+      "sha256": "7e43c717211a0bc663f410cf7d7c848cb22914598c4680261cb5cf231fc35cf9"
     },
     {
       "path": "app/View/Elements/seo_meta.html",
@@ -57,13 +57,13 @@
     },
     {
       "path": "app/View/Errors/error400.html",
-      "bytes": 1585,
-      "sha256": "9cbb8817f60c916114fb8e5bc86f250fee9e586f29cf635eff0f7e24612c263d"
+      "bytes": 1593,
+      "sha256": "643ae66d015b69b6c173c97465136f52938780081d3f695533608bc8c572e72f"
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 28850,
-      "sha256": "5c0ef33816514c09eef94c56b5a66c4f897165a3cd4e3332473568e32c8f4070"
+      "bytes": 30049,
+      "sha256": "336ecdeaae6c0dd272a05dfd6f654f166e41d375eefc48825ff7adf123739697"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -72,23 +72,23 @@
     },
     {
       "path": "app/webroot/.htaccess",
-      "bytes": 4012,
-      "sha256": "10fbf6e475fa9b6b06016f74b9926c37e59e17c85bcaccd7c80dab02a0557640"
+      "bytes": 4223,
+      "sha256": "68fd82f88df86daf14568419d63efda56aa3ff79e8b9414f7bf9233589535787"
     },
     {
       "path": "app/webroot/achievements.html",
-      "bytes": 698641,
-      "sha256": "74d75007d4e0b6cfa1ddbe7239ae3ed91b6c9fffbe7cd0b02f5583f93cf23a02"
+      "bytes": 698864,
+      "sha256": "ea20124ad63cc9f665dba2734ff6d5d157b5ca99ea11a124a76b0c3ef588a3f9"
     },
     {
       "path": "app/webroot/business.html",
-      "bytes": 17386,
-      "sha256": "e8569f750668da29418d5efd35e1636faaa2635b198e89ddf8aaac8a23e93d13"
+      "bytes": 18352,
+      "sha256": "ab25ccdb60c1c39d32aa90056c32fe6cadc0aa3627c4278c2a0eccd95a0a63ae"
     },
     {
       "path": "app/webroot/contact.html",
-      "bytes": 25058,
-      "sha256": "9bea4d9a14d85387831f42fdf1122196d70d2269c4be48894323f43a28fba020"
+      "bytes": 25160,
+      "sha256": "eafbec6fa69c0c7fc115d3c5722fbef1056423addf7e2f8176ff5afcfcd76bd0"
     },
     {
       "path": "app/webroot/css/mus_guide.css",
@@ -99,6 +99,11 @@
       "path": "app/webroot/css/mus_reasons.css",
       "bytes": 1943,
       "sha256": "258682259a781e4562609ff9d52f5f7287704bf96f8d8d7296e60b5043ae9c2e"
+    },
+    {
+      "path": "app/webroot/css/mus_record.css",
+      "bytes": 679,
+      "sha256": "655885b3eb9bb7d7eeb70facf4be87b0b7660df89b420a32ffc39df70b86004f"
     },
     {
       "path": "app/webroot/css/recent_achievements.css",
@@ -112,13 +117,33 @@
     },
     {
       "path": "app/webroot/equipment.html",
-      "bytes": 15241,
-      "sha256": "28a50380cfc4402904c94c56d2a98a80bd7ed3bee7d53b4bfb7ce55b9871acc9"
+      "bytes": 15174,
+      "sha256": "5a432cbe2622a73541eccf8d463a03f3f0e725982fefbfcca2c8e18dfc500827"
     },
     {
       "path": "app/webroot/guide.html",
-      "bytes": 26998,
-      "sha256": "520fbc21a52cd21c53280a41c0770a65fe01de6bb1b281ae9dbb8e75ad468ac1"
+      "bytes": 27084,
+      "sha256": "020aec5fd45f04912e1a1fc47c37785fb7d67b4e2787adab964adb73be6b0550"
+    },
+    {
+      "path": "app/webroot/images/works/arrangement/figaro-overture-score.png",
+      "bytes": 176576,
+      "sha256": "4f5e07148028b3294d07de1971ba0062db5b8c51e2b1ba172baf7181dc3bea4d"
+    },
+    {
+      "path": "app/webroot/images/works/arrangement/sabre-dance-score.png",
+      "bytes": 156507,
+      "sha256": "6db4612635a19d8c5b84c2ebe8ba1f32ee5493ec71d28af0489a9a55956f780a"
+    },
+    {
+      "path": "app/webroot/images/works/arrangement/viva-la-vida-score.png",
+      "bytes": 86860,
+      "sha256": "67628f42cea40d7534a147fe66c81789190c73a6ceb800c1048a6bd5461522c2"
+    },
+    {
+      "path": "app/webroot/images/works/arrangement/voices-of-spring-score.png",
+      "bytes": 227528,
+      "sha256": "325cf4d719aed70a24f8faa150ed2419b02541d8d17616bb2834115470961e3b"
     },
     {
       "path": "app/webroot/js/bootstrap.js",

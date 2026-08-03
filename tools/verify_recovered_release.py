@@ -96,7 +96,7 @@ def validate_achievements() -> None:
     require(text.count('class="achievement-category-group__item"') == 85, "Recent achievement item count changed")
     require('class="achievement-category-group"' in text, "Recent achievements are not grouped by category")
     require(len(re.findall(r'<details class="achievement-year(?: achievement-year--archive)?"[^>]*\sopen(?:\s|>)', text)) == 21, "All 21 years must be open by default")
-    require("ISEKI Global Awards</span><span class=\"achievement-list__detail\">ソプラノ歌唱の出演手配" in text, "Achievement title/detail are not kept inline")
+    require("ISEKI Global Awards</span><span class=\"achievement-list__detail\">ソプラノ歌唱の出演者編成" in text, "Achievement title/detail are not kept inline")
     require("recent_achievements.css?v=20260730a" in text, "Achievements CSS missing")
     require("seoCanonicalPath' => '/achievements.html'" in text, "Achievements canonical missing")
     require("2006年から2026年" in text, "Achievements description does not cover full archive")

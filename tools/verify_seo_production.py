@@ -128,8 +128,11 @@ def main() -> int:
     megumi = rendered["/artist/view/62"]
     taikoban = rendered["/artist-asakusa-taikoban.html"]
     equipment = rendered["/equipment.html"]
-    check("機材費で利益を取らない。" in equipment, "equipment: value proposition")
-    check("プロのオペレーターにも手配料を上乗せせず、原価でご提供します。" in equipment, "equipment: operator pricing")
+    check("機材費に利益を上乗せしません。" in equipment, "equipment: value proposition")
+    check(
+        "自社案件でご利用いただく機材です（機材単体のレンタルは行っていません）。" in equipment,
+        "equipment: in-house project disclaimer",
+    )
     check("スピーカー 24台" in equipment, "equipment: speaker count")
     check("<strong>48ch</strong><span>最大同時入力数</span>" in equipment, "equipment: mixer capacity label")
     check("業務用4Kカメラ 4台、2Kカメラ 8台" in equipment, "equipment: camera counts")

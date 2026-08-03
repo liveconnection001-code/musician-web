@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php echo $this->element('seo_meta', array(
-  'seoTitle' => '出張演奏・演奏家手配のMUSICIAN｜企業・式典・ホテル・学校公演',
-  'seoDescription' => '企業パーティー、表彰式、周年記念、ホテル・商業施設、学校・公共施設などへ、プロ演奏家を全国手配。クラシック、ジャズ、和楽器ほか、企画から演奏・音響・収録までご相談いただけます。',
+  'seoTitle' => '出張演奏・イベント音楽制作のMUSICIAN｜企業・式典・ホテル',
+  'seoDescription' => '企業パーティー、表彰式、周年記念、ホテル・商業施設、学校・公共施設などへ、プロ演奏家が全国で演奏。クラシック、ジャズ、和楽器ほか、企画から演奏・舞台演出・音響・収録までご相談いただけます。',
   'seoCanonicalPath' => '/',
   'seoPageType' => 'WebPage',
   'seoAdditionalSchema' => array(
     array(
       '@type' => 'Service',
       '@id' => 'https://www.musician.co.jp/#performance-service',
-      'name' => '出張演奏・演奏家手配サービス',
-      'serviceType' => array('出張演奏', '演奏家手配', '出演者編成', 'イベント音楽制作'),
+      'name' => '出張演奏・イベント音楽制作サービス',
+      'serviceType' => array('出張演奏', '出演者編成', 'イベント音楽制作', '舞台演出', '音響・収録'),
       'areaServed' => array('@type' => 'Country', 'name' => '日本'),
       'provider' => array('@id' => 'https://www.musician.co.jp/#organization')
     )
@@ -24,6 +24,7 @@
 <link href="css/style.css?v=20260802f" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
 <link href="css/mus_reasons.css?v=20260802c" rel="stylesheet">
+<link href="css/mus_record.css?v=20260803a" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
 <link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
@@ -50,7 +51,7 @@
     <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-sm-11 col-md-3">
-                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・演奏家手配のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
+                    <div class="site-logo osu3"><a href="/"><img src="images/head_logo_1.png" alt="出張演奏・イベント音楽制作のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>
 					<ul class="btn_tel2 osu2 d-block d-md-none">
 						<li><a href="tel:0362614348"><img src="images/phone.png" alt="03-6261-4348" class="img-fluid" loading="lazy" decoding="async"></a></li>
 						<li><a href="contact.html"><img src="images/mail.png" alt="mail" class="img-fluid"></a></li>
@@ -72,6 +73,7 @@
                                     <li><a href="artist.html"><span class="en">Artist</span></a></li>
                                     <li><a href="company.html"><span class="en">About us</span></a></li>
                                     <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
+                                    <li><a href="/guide.html"><span class="en">Guide</span></a></li>
                                     <li class="d-block d-md-none"><a href="contact.html"><span class="en">Contact</span></a></li>
                                     <li class="d-block d-md-none">
 										<div class="sns_list">
@@ -129,6 +131,10 @@
 		<div class="content_pd">
 			<h1 class="ja caption mb40">大切な瞬間を彩る、華やかな生演奏</h1>
 			<p class="ja sub_caption">
+				演奏、編曲、舞台美術、照明、音響まで。<br>
+				音楽家が率いる制作チームが、企画から本番までを一つの手でつくりあげます。
+			</p>
+			<p class="ja sub_caption">
 				企業パーティー、表彰式、周年行事、ホテル・商業施設、学校公演などへ、<br>
 				イベント制作経験豊富なスタッフが目的に合うプロ演奏家と演出をご提案します。<br>
 				<a href="works.html">演奏実績</a>・<a href="artist.html">アーティスト</a>をご覧のうえ、<a href="contact.html">お気軽にご相談ください</a>。
@@ -145,6 +151,14 @@
 
 <main>
 
+<section class="mus-record" aria-label="主な実績">
+	<div class="container-fluid">
+		<div class="mus-record__inner">
+			<p>JRA賞授賞式、企業表彰式、国際レセプション、ホテル・商業施設、コンサートホール ——<br>2006年から積み重ねた実績は2,000件を超えます。 <a href="achievements.html">実績一覧を見る</a></p>
+		</div>
+	</div>
+</section>
+
 <section>
 	<div id="top01">
 		<div class="content_pd2">
@@ -154,9 +168,9 @@
 						<div class="col-12 col-md-6 offset-md-6">
 							<div class="pd_yohaku">
 								<h2 class="midashi1 mb30_md50 tal_sptac"><span class="en">About</span>私たちについて</h2>
-								<p class="mb20">MUSICIANは、演奏の現場を知る音楽家が中心となって運営しています。</p>
-								<p class="mb20">お客様のご相談を音楽家が直接お伺いするため、会場の響き、進行、ご来場の方々の顔ぶれまで踏まえた具体的なご提案が可能です。</p>
-								<p class="mb20">編成・選曲から音響・配信、当日の運営まで一つの窓口で承り、ご予算の範囲で最良の形を一緒に組み立てます。</p>
+								<p class="mb20">MUSICIANは、演奏の現場を知る音楽家が中心となって運営する、音楽芸術の制作会社です。</p>
+								<p class="mb20">ご相談は音楽家が直接お伺いします。会場の響きや進行、ご来場の方々の顔ぶれまで踏まえ、編成・選曲・編曲はもちろん、舞台美術、照明、音響、衣装まで、舞台をかたちづくる要素のすべてを一体で設計します。</p>
+								<p class="mb20">ご要望をそのまま形にするだけではなく、目的に照らして、より良い形をご提案すること。それが私たちの仕事です。</p>
 								<p class="tar_sptac"><a href="business.html" class="btn btn-1 en">View More</a></p>
 							</div>
 						</div>
@@ -181,16 +195,16 @@
 				<p class="mus-reasons__text">現場を知る音楽家がそのままお打ち合わせを担当。会場の条件や進行に合わせて、編成・選曲・音量まで具体的にご提案します。</p>
 			</article>
 			<article class="mus-reasons__item">
-				<svg class="mus-reasons__icon" viewBox="0 0 72 72" role="img" aria-label="編成から配信までをつなぐイメージ"><circle cx="14" cy="36" r="7" fill="none" stroke="#041e42" stroke-width="3"/><circle cx="58" cy="18" r="7" fill="none" stroke="#e36927" stroke-width="3"/><circle cx="58" cy="54" r="7" fill="none" stroke="#041e42" stroke-width="3"/><path d="M21 34 51 20M21 38l30 14" fill="none" stroke="#e36927" stroke-width="3"/></svg>
+				<svg class="mus-reasons__icon" viewBox="0 0 72 72" role="img" aria-label="舞台を構成する要素をつなぐイメージ"><circle cx="14" cy="36" r="7" fill="none" stroke="#041e42" stroke-width="3"/><circle cx="58" cy="18" r="7" fill="none" stroke="#e36927" stroke-width="3"/><circle cx="58" cy="54" r="7" fill="none" stroke="#041e42" stroke-width="3"/><path d="M21 34 51 20M21 38l30 14" fill="none" stroke="#e36927" stroke-width="3"/></svg>
 				<span class="mus-reasons__number">02</span>
-				<h3 class="mus-reasons__title">編成から音響・配信までを一つの窓口で</h3>
-				<p class="mus-reasons__text">演奏者の手配だけでなく、音響、照明との連携、収録・配信までまとめて対応。複数の業者とやり取りする手間がかかりません。</p>
+				<h3 class="mus-reasons__title">舞台のすべてを、一つの窓口で</h3>
+				<p class="mus-reasons__text">出演者の編成に加えて、舞台美術、照明、音響、衣装や小道具まで、舞台を構成する要素を一括して統括。数多くの現場で他業種の段取りまで熟知しているからこそ、起こりうる問題を事前に取り除き、本番を滞りなく成功へ導きます。</p>
 			</article>
 			<article class="mus-reasons__item">
 				<svg class="mus-reasons__icon" viewBox="0 0 72 72" role="img" aria-label="編成を設計するイメージ"><path d="M11 57V43h12v14M30 57V31h12v26M49 57V17h12v40" fill="none" stroke="#041e42" stroke-width="3"/><path d="m10 30 14-10 13 4 23-13" fill="none" stroke="#e36927" stroke-width="3"/><circle cx="10" cy="30" r="3" fill="#e36927"/><circle cx="24" cy="20" r="3" fill="#e36927"/><circle cx="37" cy="24" r="3" fill="#e36927"/><circle cx="60" cy="11" r="3" fill="#e36927"/></svg>
 				<span class="mus-reasons__number">03</span>
-				<h3 class="mus-reasons__title">ご予算に合わせて編成を設計します</h3>
-				<p class="mus-reasons__text">代理店を介さない体制のため、限られたご予算でも編成や構成を工夫してご提案できます。</p>
+				<h3 class="mus-reasons__title">ご予算を、成果に変える設計をします</h3>
+				<p class="mus-reasons__text">代理店を介さない直接の体制により、ご予算を演奏と演出の質に集中させることができます。規模の大小ではなく、その場の目的にとって最良の形をご提案します。</p>
 			</article>
 		</div>
 	</div>
@@ -354,7 +368,7 @@
 							<ul class="foot_link d-none d-md-block">
 							  <li><a href="company.html"><span class="en">About us</span></a></li>
 							  <li><a href="/achievements.html"><span class="en">Achievements</span></a></li>
-							  <li><a href="/guide.html"><span class="en">Guide / FAQ</span></a></li>
+							  <li><a href="/guide.html"><span class="en">Guide</span></a></li>
 							  <li><a href="contact.html"><span class="en">Contact</span></a></li>
 							</ul>
 						</div>

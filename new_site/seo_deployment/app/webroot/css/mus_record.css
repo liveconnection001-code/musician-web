@@ -1,0 +1,45 @@
+.mus-record {
+  background: #041e42;
+  color: #fbe1bd;
+}
+
+.mus-record__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 26px 4.5%;
+}
+
+.mus-record__inner p {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 2;
+  letter-spacing: .06em;
+}
+
+.mus-record__inner a {
+  color: #fff;
+  margin-left: .6em;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
+
+.mus-record__inner a:hover,
+.mus-record__inner a:focus {
+  color: #fbe1bd;
+}
+
+@media (max-width: 767px) {
+  .mus-record__inner {
+    padding: 21px 5%;
+  }
+
+  .mus-record__inner p {
+    font-size: 1.4rem;
+    line-height: 1.9;
+  }
+
+  .mus-record__inner a {
+    display: inline-block;
+    margin-left: 0;
+  }
+}

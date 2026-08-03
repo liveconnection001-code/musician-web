@@ -22,7 +22,7 @@ SHOWCASE = r'''<main class="works-showcase">
   <div class="works-showcase__hero-content">
     <p class="works-showcase__kicker">SELECTED WORKS</p>
     <h1 id="works-showcase-title">その場にふさわしい音楽を、<br>企画から本番まで。</h1>
-    <p class="works-showcase__lead">企業イベント、国際レセプション、ホテル、展示会、配信公演まで。<br class="works-showcase__desktop-only">目的と空間に合わせ、音楽と現場を一つにつなげます。</p>
+    <p class="works-showcase__lead">企業イベント、国際レセプション、ホテル、展示会など。<br class="works-showcase__desktop-only">目的と空間に合わせ、音楽と現場を一つにつなげます。</p>
     <a class="works-showcase__scroll" href="#selected-works">仕事を見る <span aria-hidden="true">↓</span></a>
   </div>
 </section>
@@ -32,7 +32,7 @@ SHOWCASE = r'''<main class="works-showcase">
     <p class="works-showcase__kicker works-showcase__kicker--dark">WHAT WE CREATE</p>
     <h2 id="works-selected-heading">実施時期ではなく、<br>音楽でつくった体験から。</h2>
   </div>
-  <p>MUSICIANの仕事は、演奏家を手配するだけではありません。目的を聞き、最適な編成を考え、選曲・アレンジ・音響・配信・当日進行まで、必要な要素を組み合わせます。</p>
+  <p>MUSICIANが手がけるのは、出演者を編成するだけではありません。演者と音楽を核に、音響・照明はもちろん、空間の佇まい、動線、進行までを一つの表現として設計し、五感に響く音楽芸術の場を制作・演出します。</p>
 </section>
 
 <section class="works-showcase__grid" aria-label="主な仕事例">
@@ -46,7 +46,7 @@ SHOWCASE = r'''<main class="works-showcase">
   </article>
   <article class="works-case" id="work-japanese-culture">
     <div class="works-case__image"><picture><source srcset="images/works/japanese-hospitality-clean.webp" type="image/webp"><img src="images/works/japanese-hospitality-clean.jpg" alt="国際会議の歓迎演出で和楽器を演奏するステージ" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">03</span></div>
-    <div class="works-case__content"><p class="works-case__category">JAPANESE CULTURE</p><h3>和のお出迎え</h3><p>和楽器の音色を、国際会議やレセプションのステージへ。伝統性を大切にしながら、式次第と観客に合わせた見せ方まで組み立てます。</p><ul aria-label="対応内容"><li>和楽器手配</li><li>衣装・編成</li><li>舞台進行</li></ul></div>
+    <div class="works-case__content"><p class="works-case__category">JAPANESE CULTURE</p><h3>和のお出迎え</h3><p>和楽器の音色を、国際会議やレセプションのステージへ。伝統性を大切にしながら、式次第と観客に合わせた見せ方まで組み立てます。</p><ul aria-label="対応内容"><li>和楽器編成</li><li>衣装・編成</li><li>舞台進行</li></ul></div>
   </article>
   <article class="works-case" id="work-hotel-party">
     <div class="works-case__image"><picture><source srcset="images/works/hotel-live-clean.webp" type="image/webp"><img src="images/works/hotel-live-clean.jpg" alt="ホテル宴会場で演奏するジャズカルテット" width="1440" height="900" loading="lazy"></picture><span aria-hidden="true">04</span></div>
@@ -67,7 +67,7 @@ SHOWCASE = r'''<main class="works-showcase">
   <h2 id="works-scope-title">企画・キャスティング・現場運営を、ひとつのチームで。</h2>
   <div class="works-showcase__steps">
     <div><span>01</span><strong>目的と空間を理解</strong><p>場の役割、来場者、進行、ご予算を整理します。</p></div>
-    <div><span>02</span><strong>音楽体験を設計</strong><p>編成、選曲、演出、音響・配信をご提案します。</p></div>
+    <div><span>02</span><strong>芸術体験を構想・制作</strong><p>演者、音楽、音響、照明、空間演出を一つの表現として設計します。</p></div>
     <div><span>03</span><strong>本番を成立させる</strong><p>出演準備から当日の進行まで、現場を支えます。</p></div>
   </div>
 </section>
