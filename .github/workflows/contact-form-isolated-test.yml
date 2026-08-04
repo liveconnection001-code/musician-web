@@ -35,17 +35,22 @@ jobs:
           TEST_ROOT: ${{ runner.temp }}/musician-contact-cake
         run: |
           set -euo pipefail
-          cp -a backup_2026-07-25/site_files "$TEST_ROOT"
+          mkdir -p "$TEST_ROOT/app/Config" "$TEST_ROOT/app/Controller" "$TEST_ROOT/app/Model" "$TEST_ROOT/app/Network/Email" "$TEST_ROOT/app/View/Contact" "$TEST_ROOT/app/webroot" "$TEST_ROOT/tests"
+          composer require --working-dir "$TEST_ROOT" --no-interaction --no-progress cakephp/cakephp:2.10.18
+          cp tests/fixtures/isolated-cake/core.php "$TEST_ROOT/app/Config/core.php"
+          cp tests/fixtures/isolated-cake/AppModel.php "$TEST_ROOT/app/Model/AppModel.php"
+          cp tests/fixtures/isolated-cake/MailSend.php "$TEST_ROOT/app/Model/MailSend.php"
+          cp tests/fixtures/isolated-cake/AppController.php "$TEST_ROOT/app/Controller/AppController.php"
           cp new_site/seo_deployment/app/webroot/contact.html "$TEST_ROOT/app/webroot/contact.html"
           cp new_site/seo_deployment/app/Model/ContactMailSend.php "$TEST_ROOT/app/Model/ContactMailSend.php"
           cp new_site/seo_deployment/app/Controller/ContactController.php "$TEST_ROOT/app/Controller/ContactController.php"
           cp new_site/seo_deployment/app/View/Contact/msg.html "$TEST_ROOT/app/View/Contact/msg.html"
           cp new_site/seo_deployment/app/View/Contact/thanks.html "$TEST_ROOT/app/View/Contact/thanks.html"
-          mkdir -p "$TEST_ROOT/app/Network/Email" "$TEST_ROOT/tests"
+          cp -a new_site/seo_deployment/app/webroot/css "$TEST_ROOT/app/webroot/css"
           cp tests/fixtures/LogTransport.php "$TEST_ROOT/app/Network/Email/LogTransport.php"
           cp tests/fixtures/isolated-email.php "$TEST_ROOT/app/Config/email.php"
           cp tests/contact_isolated_cake_test.php "$TEST_ROOT/tests/contact_isolated_cake_test.php"
-          test "$(tr -d '\r\n' < "$TEST_ROOT/lib/Cake/VERSION.txt")" = '2.10.18'
+          test "$(tr -d '\r\n' < "$TEST_ROOT/vendor/cakephp/cakephp/lib/Cake/VERSION.txt")" = '2.10.18'
 
       - name: Run T1 through T7 with isolated CakePHP and LogTransport
         env:

@@ -17,13 +17,16 @@ define('ROOT', rtrim($root, DS));
 define('APP_DIR', 'app');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS);
-define('CAKE_CORE_INCLUDE_PATH', ROOT);
+define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 
-require ROOT . DS . 'lib' . DS . 'Cake' . DS . 'bootstrap.php';
+require CAKE_CORE_INCLUDE_PATH . DS . 'lib' . DS . 'Cake' . DS . 'bootstrap.php';
 
-App::uses('AppController', 'Controller');
-App::uses('ContactMailSend', 'Model');
-App::uses('ContactController', 'Controller');
+require ROOT . DS . 'app' . DS . 'Model' . DS . 'AppModel.php';
+require ROOT . DS . 'app' . DS . 'Model' . DS . 'MailSend.php';
+require ROOT . DS . 'app' . DS . 'Model' . DS . 'ContactMailSend.php';
+require ROOT . DS . 'app' . DS . 'Controller' . DS . 'AppController.php';
+require ROOT . DS . 'app' . DS . 'Controller' . DS . 'ContactController.php';
+require ROOT . DS . 'app' . DS . 'Network' . DS . 'Email' . DS . 'LogTransport.php';
 
 class ContactTestSmtp {
   public function find($type, $options = array()) {
@@ -150,7 +153,7 @@ function contact_model_for(array $form) {
 }
 
 try {
-  $version = trim(file_get_contents(ROOT . DS . 'lib' . DS . 'Cake' . DS . 'VERSION.txt'));
+  $version = trim(file_get_contents(CAKE_CORE_INCLUDE_PATH . DS . 'lib' . DS . 'Cake' . DS . 'VERSION.txt'));
   contact_assert_same('2.10.18', $version, 'CakePHP core version must be 2.10.18');
 
   $controller = contact_controller();
