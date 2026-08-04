@@ -44,6 +44,7 @@ jobs:
           mv "$TEST_ROOT/vendor/cakephp/cakephp-2.10.18" "$TEST_ROOT/vendor/cakephp/cakephp"
           test -f "$TEST_ROOT/vendor/cakephp/cakephp/lib/Cake/VERSION.txt"
           cp tests/fixtures/isolated-cake/core.php "$TEST_ROOT/app/Config/core.php"
+          cp tests/fixtures/isolated-cake/bootstrap.php "$TEST_ROOT/app/Config/bootstrap.php"
           cp tests/fixtures/isolated-cake/AppModel.php "$TEST_ROOT/app/Model/AppModel.php"
           cp tests/fixtures/isolated-cake/MailSend.php "$TEST_ROOT/app/Model/MailSend.php"
           cp tests/fixtures/isolated-cake/AppController.php "$TEST_ROOT/app/Controller/AppController.php"
