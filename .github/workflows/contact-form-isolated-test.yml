@@ -36,7 +36,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$TEST_ROOT/app/Config" "$TEST_ROOT/app/Controller" "$TEST_ROOT/app/Model" "$TEST_ROOT/app/Network/Email" "$TEST_ROOT/app/View/Contact" "$TEST_ROOT/app/webroot" "$TEST_ROOT/tests"
-          composer require --working-dir "$TEST_ROOT" --no-interaction --no-progress cakephp/cakephp:2.10.18
+          mkdir -p "$TEST_ROOT/vendor/cakephp"
+          curl --fail --location --retry 3 --silent --show-error --output "$RUNNER_TEMP/cakephp-2.10.18.zip" https://github.com/cakephp/cakephp/archive/refs/tags/2.10.18.zip
+          unzip -q "$RUNNER_TEMP/cakephp-2.10.18.zip" -d "$TEST_ROOT/vendor/cakephp"
+          mv "$TEST_ROOT/vendor/cakephp/cakephp-2.10.18" "$TEST_ROOT/vendor/cakephp/cakephp"
           cp tests/fixtures/isolated-cake/core.php "$TEST_ROOT/app/Config/core.php"
           cp tests/fixtures/isolated-cake/AppModel.php "$TEST_ROOT/app/Model/AppModel.php"
           cp tests/fixtures/isolated-cake/MailSend.php "$TEST_ROOT/app/Model/MailSend.php"
