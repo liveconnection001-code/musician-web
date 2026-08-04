@@ -237,15 +237,26 @@ def improve_shared_markup(text: str, *, banner_label: str | None = None) -> str:
     text = text.replace('2022 MUSICIAN.CO.JP', '2022–2026 MUSICIAN.CO.JP')
     if banner_label:
         old = f'<h2 data-aos="fade-up">{banner_label}</h2>'
-        new = f'<h1 data-aos="fade-up">{banner_label}</h1>'
+        new = f'<h1>{banner_label}</h1>'
         if old in text:
             text = replace_once(text, old, new, f"banner H1 {banner_label}")
         elif f'<h1 data-aos="fade-up">{banner_label}</h1>' in text:
+            text = text.replace(
+                f'<h1 data-aos="fade-up">{banner_label}</h1>',
+                new,
+                1,
+            )
+        elif new in text:
             pass
         else:
             # Some inputs already keep their heading as h1 without the specific legacy
             # marker; keep them intact instead of failing hard.
             pass
+    text = re.sub(
+        r'src="(?P<prefix>(?:/|\.\./|\.\./\.\./)?js/title\.js)(?:\?v=[^"]+)?"',
+        r'src="\g<prefix>?v=20260804b"',
+        text,
+    )
     return ensure_guide_header_nav(text)
 
 

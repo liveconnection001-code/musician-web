@@ -55,6 +55,13 @@ def validate_templates() -> None:
         check('<h1 class="osu3">' not in page, f"{relative_path}: logo is still the page H1")
         expected_h1_templates = 1
         check(page.count("<h1") == expected_h1_templates, f"{relative_path}: unexpected H1 template count")
+        if 'id="midashi_h2"' in page:
+            title = re.search(r'<div id="midashi_h2".*?<h1\b([^>]*)>\s*<span>', page, re.S)
+            check(title is not None, f"{relative_path}: shared page title H1 missing")
+            if title:
+                check("data-aos" not in title.group(1), f"{relative_path}: page title still depends on AOS")
+        if "js/title.js" in page:
+            check("js/title.js?v=20260804b" in page, f"{relative_path}: title script cache key missing")
     check('class="site-logo osu3"' in page, f"{relative_path}: semantic logo wrapper missing")
 
     public_templates = indexed_templates + ["app/View/Contact/msg.html", "app/View/Contact/thanks.html"]

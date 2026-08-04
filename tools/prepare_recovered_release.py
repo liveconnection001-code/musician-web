@@ -29,6 +29,7 @@ SITEMAP = SEO / "app" / "webroot" / "sitemap.xml"
 MANIFEST = SEO / "seo_manifest.json"
 ASSET_VERSION = "20260730a"
 STYLE_VERSION = "20260802f"
+TITLE_SCRIPT_VERSION = "20260804b"
 
 
 ARCHIVE_DATE_RE = re.compile(
@@ -252,9 +253,14 @@ def ensure_guide_header_nav(text: str) -> str:
 
 
 def cache_bust(text: str) -> str:
-    return re.sub(
+    text = re.sub(
         r'href="css/style\.css(?:\?v=[^"]+)?"',
         f'href="css/style.css?v={STYLE_VERSION}"',
+        text,
+    )
+    return re.sub(
+        r'src="(?P<prefix>(?:/|\.\./|\.\./\.\./)?js/title\.js)(?:\?v=[^"]+)?"',
+        rf'src="\g<prefix>?v={TITLE_SCRIPT_VERSION}"',
         text,
     )
 
@@ -561,7 +567,7 @@ def prepare_achievements() -> None:
   <div id="midashi_h2" class="h2_bg">
     <div class="container-fluid">
       <div class="yohaku">
-        <h1 data-aos="fade-up"><span>Achievements</span>実績一覧</h1>
+        <h1><span>Achievements</span>実績一覧</h1>
         <p class="pankuzu"><a href="/">Home</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;Achievements</p>
       </div>
     </div>

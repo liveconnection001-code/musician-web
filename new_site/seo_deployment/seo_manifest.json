@@ -22,33 +22,33 @@
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
-      "bytes": 55610,
-      "sha256": "1439684b54144b7b81cc3362ba4d8bbb713235892705efbe3c78b9f5972dfb0e"
+      "bytes": 55622,
+      "sha256": "cd81b0335cb77cf9266b86a886f569b65ab079a84a76d4bbbcd7363f355cb58d"
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
-      "bytes": 21855,
-      "sha256": "89a25cffe7e5d5f4566ff64e6b6e3415cda4d8a331e702c0b7bf02cecdcfc6c8"
+      "bytes": 21848,
+      "sha256": "c137646ecaee49d1c5e59b6e4cd1d4e6e38e8b3339a90af611d86f411209bba1"
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
-      "bytes": 18285,
-      "sha256": "af390d834f3a0dad14b311de99e73ce70640485c66599cc163bcbbda995bc121"
+      "bytes": 18278,
+      "sha256": "4187315a4502d01c13363214a9b3642db7d2f4c9cc3d72fd29710365191e2ec6"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
-      "bytes": 31989,
-      "sha256": "45f49fd08cb43e6d12e491546953d5fabad3c5ccfd6bebaed63018a3d045a887"
+      "bytes": 31982,
+      "sha256": "8a7605f15eedcd0453d508bb34802b12a38cbad45ef2e34c8ba5cc0cd7d206d1"
     },
     {
       "path": "app/View/Contact/msg.html",
-      "bytes": 15034,
-      "sha256": "afb5bdef2d1b616e004759e1defcc588620dd486a294f97941bd957bcda94e37"
+      "bytes": 15027,
+      "sha256": "09b00478284823adfb0324fa4a32ff765eca58bd9d30dbb1d2f72d42f14b12f6"
     },
     {
       "path": "app/View/Contact/thanks.html",
-      "bytes": 11982,
-      "sha256": "7e43c717211a0bc663f410cf7d7c848cb22914598c4680261cb5cf231fc35cf9"
+      "bytes": 11975,
+      "sha256": "31410cfdd43ca42b1ea623bb85fc3054c9c99ff160fe1b81dba736456d977b1d"
     },
     {
       "path": "app/View/Elements/seo_meta.html",
@@ -62,8 +62,8 @@
     },
     {
       "path": "app/View/Homes/index.html",
-      "bytes": 30049,
-      "sha256": "336ecdeaae6c0dd272a05dfd6f654f166e41d375eefc48825ff7adf123739697"
+      "bytes": 30061,
+      "sha256": "0930975095748be13835cca53c7a7cdb71de9b172b50a5faf5408325fb7e2723"
     },
     {
       "path": "app/View/Homes/robots.html",
@@ -77,18 +77,18 @@
     },
     {
       "path": "app/webroot/achievements.html",
-      "bytes": 698864,
-      "sha256": "ea20124ad63cc9f665dba2734ff6d5d157b5ca99ea11a124a76b0c3ef588a3f9"
+      "bytes": 698857,
+      "sha256": "9d0f32d5411ecb3df8e0b6875213a1170310135a249cef1589e67dc1a165b007"
     },
     {
       "path": "app/webroot/business.html",
-      "bytes": 18352,
-      "sha256": "ab25ccdb60c1c39d32aa90056c32fe6cadc0aa3627c4278c2a0eccd95a0a63ae"
+      "bytes": 18345,
+      "sha256": "4c5cd7c8c33614c3239a9c4e4ecd0c16171eef63f27c151f2f497bd12774c20d"
     },
     {
       "path": "app/webroot/contact.html",
-      "bytes": 25160,
-      "sha256": "eafbec6fa69c0c7fc115d3c5722fbef1056423addf7e2f8176ff5afcfcd76bd0"
+      "bytes": 25153,
+      "sha256": "12601be6aa1c84faf2e0f9fd60b357edf46c5cf08881c4754ed3e9071a12e239"
     },
     {
       "path": "app/webroot/css/mus_guide.css",
@@ -117,13 +117,13 @@
     },
     {
       "path": "app/webroot/equipment.html",
-      "bytes": 15174,
-      "sha256": "5a432cbe2622a73541eccf8d463a03f3f0e725982fefbfcca2c8e18dfc500827"
+      "bytes": 15155,
+      "sha256": "8c573f2300b09f6b2ea7f725238d5153af9fa63ef27924f7895d831b4ef72431"
     },
     {
       "path": "app/webroot/guide.html",
-      "bytes": 27084,
-      "sha256": "020aec5fd45f04912e1a1fc47c37785fb7d67b4e2787adab964adb73be6b0550"
+      "bytes": 27077,
+      "sha256": "f81a460b121fd6d7c64be9f5a8f113a243a26be09cc839464ee3ba607bc7e797"
     },
     {
       "path": "app/webroot/images/works/arrangement/figaro-overture-score.png",

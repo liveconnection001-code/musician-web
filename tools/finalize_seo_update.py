@@ -38,6 +38,16 @@ def write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def stabilize_page_heading(text: str) -> str:
+    """Keep the shared page title visible on first paint and bypass stale title.js."""
+    text = re.sub(r'<h1\s+data-aos="fade-up">(?=<span>)', '<h1>', text, count=1)
+    return re.sub(
+        r'src="(?P<prefix>(?:/|\.\./|\.\./\.\./)?js/title\.js)(?:\?v=[^"]+)?"',
+        r'src="\g<prefix>?v=20260804b"',
+        text,
+    )
+
+
 def ensure_guide_header_nav(text: str) -> str:
     """Keep Guide between Achievements and the mobile-only Contact item."""
     legacy_footer_label = '<span class="en">Guide / ' + 'FAQ</span>'
@@ -73,13 +83,14 @@ def ensure_guide_header_nav(text: str) -> str:
 def finalize_deployment() -> None:
     home_path = DEPLOYMENT / "app" / "View" / "Homes" / "index.html"
     home = home_path.read_text(encoding="utf-8")
-    home = replace_once_idempotent(
-        home,
-        '<img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/mv_img01.jpg" alt="企業イベントを彩るプロ演奏家の生演奏" fetchpriority="high" decoding="async">',
-        '<img class="object-fit-img cover" src="images/mv/mv_img01.jpg" alt="企業イベントを彩るプロ演奏家の生演奏" fetchpriority="high" decoding="async">',
-        "home priority image",
-    )
+    legacy_priority = '<img class="object-fit-img cover" loading="lazy" decoding="async" src="images/mv/mv_img01.jpg" alt="企業イベントを彩るプロ演奏家の生演奏" fetchpriority="high" decoding="async">'
+    finalized_priority = '<img class="object-fit-img cover" src="images/mv/mv_img01.jpg" alt="企業イベントを彩るプロ演奏家の生演奏" fetchpriority="high" decoding="async">'
+    if legacy_priority in home or finalized_priority in home:
+        home = replace_once_idempotent(home, legacy_priority, finalized_priority, "home priority image")
+    elif not re.search(r'<div class="swiper-slide">\s*<div class="mv_photo"><img\b[^>]*fetchpriority="high"', home):
+        raise RuntimeError("home priority image: current first slide is not prioritized")
     home = ensure_guide_header_nav(home)
+    home = stabilize_page_heading(home)
     write(home_path, home)
 
     company_path = DEPLOYMENT / "app" / "View" / "catalog" / "cl01_3" / "default" / "index.html"
@@ -91,6 +102,7 @@ def finalize_deployment() -> None:
         "company schema page type",
     )
     company = ensure_guide_header_nav(company)
+    company = stabilize_page_heading(company)
     write(company_path, company)
 
 
@@ -107,22 +119,41 @@ def finalize_preview() -> None:
         '<meta name="description" content="出張演奏・イベント音楽制作のMUSICIANについて、2019年から2026年までの主な企業イベント、式典、ホテル、商業施設、学校公演などの実績をご確認いただけます。">\n'
         '<meta name="robots" content="noindex, nofollow">'
     )
-    company = replace_once_idempotent(company, old_meta, new_meta, "preview metadata")
-    company = replace_once_idempotent(
+    if old_meta in company or new_meta in company:
+        company = replace_once_idempotent(company, old_meta, new_meta, "preview metadata")
+    elif (
+        '<meta name="robots" content="noindex, nofollow">' in company
+        and "<title>" not in company
+        and '<meta name="description"' not in company
+    ):
+        company = company.replace(
+            '<meta name="robots" content="noindex, nofollow">',
+            f"{new_meta}\n<meta name=\"robots\" content=\"noindex, nofollow\">",
+            1,
+        )
+    else:
+        raise RuntimeError("preview metadata: unrecognized current metadata state")
+    old_logo = '<h1 class="osu3"><a href="https://www.musician.co.jp/index.html"><img src="images/head_logo_1.png" alt="プロ演奏家の出張演奏サービスはMUSICIAN。" class="img-fluid"></a></h1>'
+    new_logo = '<div class="site-logo osu3"><a href="https://www.musician.co.jp/"><img src="images/head_logo_1.png" alt="出張演奏・イベント音楽制作のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>'
+    if old_logo in company or new_logo in company:
+        company = replace_once_idempotent(company, old_logo, new_logo, "preview header logo")
+    elif not re.search(
+        r'<div class="site-logo osu3"><a href="/">'
+        r'<img src="images/head_logo_1\.png" alt="出張演奏・イベント音楽制作のMUSICIAN"'
+        r' class="img-fluid" width="478" height="138"></a></div>',
         company,
-        '<h1 class="osu3"><a href="https://www.musician.co.jp/index.html"><img src="images/head_logo_1.png" alt="プロ演奏家の出張演奏サービスはMUSICIAN。" class="img-fluid"></a></h1>',
-        '<div class="site-logo osu3"><a href="https://www.musician.co.jp/"><img src="images/head_logo_1.png" alt="出張演奏・イベント音楽制作のMUSICIAN" class="img-fluid" width="478" height="138"></a></div>',
-        "preview header logo",
-    )
+    ):
+        raise RuntimeError("preview header logo: unrecognized current logo state")
     company = replace_once_idempotent(
         company,
         '<h2 data-aos="fade-up"><span>About us</span>私たちについて</h2>',
-        '<h1 data-aos="fade-up"><span>About us</span>私たちについて</h1>',
+        '<h1><span>About us</span>私たちについて</h1>',
         "preview H1",
     )
     company = company.replace('target="_blank"', 'target="_blank" rel="noopener noreferrer"')
     company = company.replace('2022 MUSICIAN.CO.JP', '2022–2026 MUSICIAN.CO.JP')
     company = ensure_guide_header_nav(company)
+    company = stabilize_page_heading(company)
     write(company_path, company)
 
     css_path = PREVIEW / "css" / "style.css"

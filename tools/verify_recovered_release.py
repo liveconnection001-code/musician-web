@@ -47,6 +47,12 @@ def validate_shared_headers() -> None:
         require(text.count("<footer>") == 1, f"{label}: footer count")
         require(text.count('id="midashi_h2"') == 1, f"{label}: shared heading missing")
         require("style.css?v=20260802f" in text, f"{label}: CSS cache key missing")
+        title = re.search(r'<div id="midashi_h2".*?<h1\b([^>]*)>\s*<span>', text, re.S)
+        require(title is not None, f"{label}: shared page title H1 missing")
+        if title:
+            require("data-aos" not in title.group(1), f"{label}: page title still depends on AOS")
+        if "js/title.js" in text:
+            require("js/title.js?v=20260804b" in text, f"{label}: title script cache key missing")
     css = STYLE.read_text(encoding="utf-8")
     require("approved shared page heading" in css, "Approved heading CSS missing")
     require(re.search(r"#midashi_h2\s*\{[^}]*height:\s*40px", css, re.S), "Navy band is not 40px")
