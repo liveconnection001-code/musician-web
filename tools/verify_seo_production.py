@@ -17,6 +17,8 @@ import xml.etree.ElementTree as ET
 BASE = "https://www.musician.co.jp"
 ERRORS: list[str] = []
 CHECKS: list[str] = []
+FETCH_TIMEOUT_SECONDS = int(os.environ.get("MUSICIAN_VERIFY_FETCH_TIMEOUT_SECONDS", "20"))
+FETCH_ATTEMPTS = int(os.environ.get("MUSICIAN_VERIFY_FETCH_ATTEMPTS", "3"))
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -43,16 +45,16 @@ def fetch(path: str) -> tuple[int, dict[str, str], bytes]:
             "Pragma": "no-cache",
         },
     )
-    for attempt in range(3):
+    for attempt in range(FETCH_ATTEMPTS):
         try:
-            response = OPENER.open(request, timeout=20)
+            response = OPENER.open(request, timeout=FETCH_TIMEOUT_SECONDS)
             return response.status, {key.lower(): value for key, value in response.headers.items()}, response.read()
         except urllib.error.HTTPError as exc:
             return exc.code, {key.lower(): value for key, value in exc.headers.items()}, exc.read()
         except urllib.error.URLError as exc:
-            if attempt == 2:
+            if attempt == FETCH_ATTEMPTS - 1:
                 return 0, {}, f"request failed after retries: {exc}".encode("utf-8")
-            time.sleep(2 ** attempt)
+            time.sleep(1)
     return 0, {}, b"request failed"
 
 
