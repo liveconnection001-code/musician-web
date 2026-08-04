@@ -23,6 +23,10 @@ class ContactVisualRenderer {
     $this->Html = new ContactVisualHtmlHelper();
   }
 
+  public function element($name, $data = array()) {
+    return '';
+  }
+
   public function render($template) {
     include $template;
   }
