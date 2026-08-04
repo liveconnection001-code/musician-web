@@ -939,6 +939,24 @@ def build_javascript() -> None:
     )
     if count != 8:
         raise RuntimeError(f"title.js guard: expected 8 animation targets, found {count}")
+
+    banner_pattern = re.compile(
+        r"\(function\(\) \{\s*setTimeout\(banner1, 10\);.*?\n\}\)\(\);",
+        re.DOTALL,
+    )
+    title, banner_count = banner_pattern.subn(
+        """(function() {
+    var banner = document.getElementById('banner1');
+    if (!banner) return;
+    banner.style.opacity = '1';
+    banner.style.visibility = 'visible';
+})();""",
+        title,
+    )
+    if banner_count != 1:
+        raise RuntimeError(
+            f"title.js static heading: expected one banner1 animation, found {banner_count}"
+        )
     write("app/webroot/js/title.js", title)
 
 def build_routing_and_errors() -> None:

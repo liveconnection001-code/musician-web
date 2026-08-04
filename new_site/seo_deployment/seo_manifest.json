@@ -152,8 +152,8 @@
     },
     {
       "path": "app/webroot/js/title.js",
-      "bytes": 9807,
-      "sha256": "04b0f828ce125e8980484f2e82d6111174cf68b100727d7a491ecc99749d33b4"
+      "bytes": 8734,
+      "sha256": "328bce6a7fa78d40b7720a74872b011dc014f7502c0db8703164ed60a26cfb90"
     },
     {
       "path": "app/webroot/sitemap.xml",

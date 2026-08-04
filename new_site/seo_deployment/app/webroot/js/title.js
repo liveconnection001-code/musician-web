@@ -134,37 +134,10 @@ setTimeout(title04, 10);
 
 
 (function() {
-setTimeout(banner1, 10);
-    function banner1() {
-        var scrollElemToWatch_1 = document.getElementById('banner1');
-        if (!scrollElemToWatch_1) return;
-        var watcher_1 = scrollMonitor.create(scrollElemToWatch_1, -100),                
-            rev1 = new RevealFx(scrollElemToWatch_1, {
-                revealSettings : {
-                    bgcolor: '#0d2f5f',
-                    duration: 555,
-					/*direction: 'rl',右から左*/
-                    onStart: function(contentEl, revealerEl) { 
-                        anime.remove(contentEl);
-                        contentEl.style.opacity = 0; 
-                    },
-                    onCover: function(contentEl, revealerEl) { 
-                        contentEl.style.opacity = 1;
-                        anime({
-                            targets: contentEl,
-                            duration: 100,
-                            delay: 10,
-                            easing: 'easeOutExpo',
-                            opacity: [0,1]
-                        });
-                    }
-                }
-            })
-        watcher_1.enterViewport(function() {
-            rev1.reveal();
-            watcher_1.destroy();
-        });
-    }
+    var banner = document.getElementById('banner1');
+    if (!banner) return;
+    banner.style.opacity = '1';
+    banner.style.visibility = 'visible';
 })();
 
 
@@ -272,4 +245,3 @@ setTimeout(banner4, 10);
         });
     }
 })();
-

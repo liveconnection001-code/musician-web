@@ -261,7 +261,9 @@ def validate_javascript() -> None:
     bootstrap = text("app/webroot/js/bootstrap.js")
     title = text("app/webroot/js/title.js")
     check("throw new Error('Bootstrap tooltips require Tether" not in bootstrap, "Bootstrap still throws when unused Tether is absent")
-    check(title.count("if (!scrollElemToWatch_1) return;") == 8, "title animation guards must cover all eight optional targets")
+    check(title.count("if (!scrollElemToWatch_1) return;") == 7, "title animation guards must cover all seven remaining optional targets")
+    check("setTimeout(banner1" not in title, "primary page heading must not use delayed reveal animation")
+    check("banner.style.visibility = 'visible';" in title, "primary page heading must be visible from first paint")
 
 def validate_sitemap_and_robots() -> None:
     sitemap_path = DEPLOYMENT / "app" / "webroot" / "sitemap.xml"
