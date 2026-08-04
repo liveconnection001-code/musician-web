@@ -188,6 +188,7 @@ try {
     contact_assert(is_array($decoded) && isset($decoded['message']), 'T2: mail log entry is invalid');
     $mailText .= $decoded['message'] . "\n";
   }
+  $mailText = str_replace("\r\n", "\n", $mailText);
   foreach (array('【想定人数】' . "\n" . '120名程度', '【ご覧になった写真番号】' . "\n" . '写真番号：１２、No.34、56') as $expected) {
     contact_assert(substr_count($mailText, $expected) === 2, 'T2: both mail bodies must include ' . $expected);
   }
