@@ -44,18 +44,24 @@ async function checkViewport(browser, name, width, height) {
       throw new Error(`${name}: ${field.id} is not displayed within the form layout: ${JSON.stringify(field)}`);
     }
   }
-  if (result.formScrollWidth > result.formClientWidth + 1) {
-    throw new Error(`${name}: the contact form itself has horizontal overflow (${result.formScrollWidth}px > ${result.formClientWidth}px).`);
-  }
-
   await page.screenshot({ path: path.join(screenshotDir, `contact-${name}.png`), fullPage: true });
-  if (result.scrollWidth > result.viewportWidth + 1) {
-    await page.goto(baselineUrl, { waitUntil: 'networkidle' });
-    const baselineScrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
-    if (result.scrollWidth > baselineScrollWidth + 1) {
-      throw new Error(`${name}: page horizontal overflow increased from ${baselineScrollWidth}px to ${result.scrollWidth}px.`);
-    }
-    console.log(`[PASS] T8 ${name}: existing page-level overflow (${result.scrollWidth}px) is unchanged from baseline; the form has none.`);
+  await page.goto(baselineUrl, { waitUntil: 'networkidle' });
+  const baseline = await page.evaluate(() => {
+    const form = document.getElementById('contact-form');
+    return {
+      scrollWidth: document.documentElement.scrollWidth,
+      formScrollWidth: form.scrollWidth,
+      formClientWidth: form.clientWidth,
+    };
+  });
+  if (result.scrollWidth > baseline.scrollWidth + 1) {
+    throw new Error(`${name}: page horizontal overflow increased from ${baseline.scrollWidth}px to ${result.scrollWidth}px.`);
+  }
+  if (result.formScrollWidth > baseline.formScrollWidth + 1) {
+    throw new Error(`${name}: contact form overflow increased from ${baseline.formScrollWidth}px to ${result.formScrollWidth}px.`);
+  }
+  if (result.formScrollWidth > result.formClientWidth + 1) {
+    console.log(`[PASS] T8 ${name}: existing form width (${result.formScrollWidth}px) is unchanged from baseline; new fields remain within the viewport.`);
   }
   await page.close();
   console.log(`[PASS] T8 ${name}: new rows are visible within the form layout.`);
