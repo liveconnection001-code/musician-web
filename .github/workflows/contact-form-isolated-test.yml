@@ -56,7 +56,7 @@ jobs:
           cp tests/fixtures/LogTransport.php "$TEST_ROOT/app/Network/Email/LogTransport.php"
           cp tests/fixtures/isolated-email.php "$TEST_ROOT/app/Config/email.php"
           cp tests/contact_isolated_cake_test.php "$TEST_ROOT/tests/contact_isolated_cake_test.php"
-          test "$(tr -d '\r\n' < "$TEST_ROOT/vendor/cakephp/cakephp/lib/Cake/VERSION.txt")" = '2.10.18'
+          test "$(grep -E '^2\.10\.18$' "$TEST_ROOT/vendor/cakephp/cakephp/lib/Cake/VERSION.txt")" = '2.10.18'
 
       - name: Run T1 through T7 with isolated CakePHP and LogTransport
         env:
