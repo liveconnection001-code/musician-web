@@ -184,12 +184,20 @@ $budgets = array('未定・ご相談しながら決めたい', '〜30万円', '3
                                     <td><input id="venue" name="venue" type="text" class="form-control" placeholder="例：○○ホテル 宴会場、本社ロビー、屋外ステージ" value="<?php echo $contact_value('venue'); ?>"<?php echo $contact_invalid('venue'); ?>><?php if ($contact_error('venue') !== ''): ?><p id="venue-error" class="contact-form__error" role="alert"><?php echo $contact_error('venue'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
+                                    <th><label for="attendee_count">想定人数</label></th>
+                                    <td><input id="attendee_count" name="attendee_count" type="text" class="form-control" placeholder="例：100名程度" value="<?php echo $contact_value('attendee_count'); ?>"<?php echo $contact_invalid('attendee_count'); ?>><?php if ($contact_error('attendee_count') !== ''): ?><p id="attendee_count-error" class="contact-form__error" role="alert"><?php echo $contact_error('attendee_count'); ?></p><?php endif; ?></td>
+                                  </tr>
+                                  <tr>
                                     <th><label for="budget">ご予算の目安</label></th>
                                     <td><select id="budget" name="budget" class="form-control"<?php echo $contact_invalid('budget'); ?>><option value="">選択してください</option><?php foreach ($budgets as $option): ?><option value="<?php echo h($option); ?>"<?php echo isset($contact_data['budget']) && $contact_data['budget'] === $option ? ' selected="selected"' : ''; ?>><?php echo h($option); ?></option><?php endforeach; ?></select><?php if ($contact_error('budget') !== ''): ?><p id="budget-error" class="contact-form__error" role="alert"><?php echo $contact_error('budget'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
                                     <th><label for="genre">ご希望のジャンル・編成</label></th>
                                     <td><input id="genre" name="genre" type="text" class="form-control" placeholder="例：弦楽四重奏、ジャズバンド、和楽器、オーケストラ" value="<?php echo $contact_value('genre'); ?>"<?php echo $contact_invalid('genre'); ?>><?php if ($contact_error('genre') !== ''): ?><p id="genre-error" class="contact-form__error" role="alert"><?php echo $contact_error('genre'); ?></p><?php endif; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th><label for="photo_numbers">ご覧になった写真番号</label></th>
+                                    <td><input id="photo_numbers" name="photo_numbers" type="text" class="form-control" placeholder="例：12、34、56" value="<?php echo $contact_value('photo_numbers'); ?>"<?php echo $contact_invalid('photo_numbers'); ?>><?php if ($contact_error('photo_numbers') !== ''): ?><p id="photo_numbers-error" class="contact-form__error" role="alert"><?php echo $contact_error('photo_numbers'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
                                     <th><label for="message">お問い合わせ内容<span>必須</span></label></th>

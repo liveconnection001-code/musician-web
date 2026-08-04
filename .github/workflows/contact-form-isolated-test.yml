@@ -1,0 +1,95 @@
+name: test-musician-contact-form
+
+on:
+  push:
+    branches:
+      - feature/contact-form-renewal
+    paths:
+      - 'new_site/seo_deployment/app/webroot/contact.html'
+      - 'new_site/seo_deployment/app/Model/ContactMailSend.php'
+      - 'new_site/seo_deployment/app/Controller/ContactController.php'
+      - 'new_site/seo_deployment/app/View/Contact/msg.html'
+      - 'new_site/seo_deployment/app/View/Contact/thanks.html'
+      - 'tests/**'
+      - '.github/workflows/contact-form-isolated-test.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contact-form:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up isolated PHP 7.4 runtime
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring
+
+      - name: Build an isolated CakePHP 2.10.18 test root
+        env:
+          TEST_ROOT: ${{ runner.temp }}/musician-contact-cake
+        run: |
+          set -euo pipefail
+          cp -a backup_2026-07-25/site_files "$TEST_ROOT"
+          cp new_site/seo_deployment/app/webroot/contact.html "$TEST_ROOT/app/webroot/contact.html"
+          cp new_site/seo_deployment/app/Model/ContactMailSend.php "$TEST_ROOT/app/Model/ContactMailSend.php"
+          cp new_site/seo_deployment/app/Controller/ContactController.php "$TEST_ROOT/app/Controller/ContactController.php"
+          cp new_site/seo_deployment/app/View/Contact/msg.html "$TEST_ROOT/app/View/Contact/msg.html"
+          cp new_site/seo_deployment/app/View/Contact/thanks.html "$TEST_ROOT/app/View/Contact/thanks.html"
+          mkdir -p "$TEST_ROOT/app/Network/Email" "$TEST_ROOT/tests"
+          cp tests/fixtures/LogTransport.php "$TEST_ROOT/app/Network/Email/LogTransport.php"
+          cp tests/fixtures/isolated-email.php "$TEST_ROOT/app/Config/email.php"
+          cp tests/contact_isolated_cake_test.php "$TEST_ROOT/tests/contact_isolated_cake_test.php"
+          test "$(tr -d '\r\n' < "$TEST_ROOT/lib/Cake/VERSION.txt")" = '2.10.18'
+
+      - name: Run T1 through T7 with isolated CakePHP and LogTransport
+        env:
+          MUSICIAN_CONTACT_TEST_ROOT: ${{ runner.temp }}/musician-contact-cake
+          MUSICIAN_CONTACT_TEST_LOG: ${{ runner.temp }}/contact-test-mail.log
+        run: php "$MUSICIAN_CONTACT_TEST_ROOT/tests/contact_isolated_cake_test.php"
+
+      - name: Render a no-send visual fixture for responsive testing
+        env:
+          MUSICIAN_CONTACT_TEMPLATE: ${{ runner.temp }}/musician-contact-cake/app/webroot/contact.html
+          VISUAL_ROOT: ${{ runner.temp }}/contact-visual
+        run: |
+          set -euo pipefail
+          mkdir -p "$VISUAL_ROOT/css"
+          cp -a "$RUNNER_TEMP/musician-contact-cake/app/webroot/css/." "$VISUAL_ROOT/css/"
+          php tests/render_contact_visual_fixture.php > "$VISUAL_ROOT/contact.html"
+
+      - name: Run T8 browser checks at desktop and 375px mobile
+        env:
+          VISUAL_ROOT: ${{ runner.temp }}/contact-visual
+          MUSICIAN_CONTACT_SCREENSHOT_DIR: ${{ runner.temp }}/contact-screenshots
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/playwright-browsers
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --directory "$VISUAL_ROOT" > "$RUNNER_TEMP/contact-visual-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/contact.html > /dev/null; then break; fi
+            sleep 1
+          done
+          mkdir -p "$RUNNER_TEMP/playwright-node"
+          npm install --prefix "$RUNNER_TEMP/playwright-node" --no-save playwright@1.52.0
+          "$RUNNER_TEMP/playwright-node/node_modules/.bin/playwright" install --with-deps chromium
+          NODE_PATH="$RUNNER_TEMP/playwright-node/node_modules" MUSICIAN_CONTACT_VISUAL_URL=http://127.0.0.1:8765/contact.html node tests/contact_layout_check.cjs
+
+      - name: Preserve isolated mail log and responsive screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: musician-contact-isolated-test-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/contact-test-mail.log
+            ${{ runner.temp }}/contact-screenshots/
+            ${{ runner.temp }}/contact-visual-server.log
+          if-no-files-found: warn
+          retention-days: 30

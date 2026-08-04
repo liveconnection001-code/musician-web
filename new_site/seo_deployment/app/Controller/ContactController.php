@@ -79,7 +79,7 @@ class ContactController extends AppController {
   }
 
   private function normaliseForm($data) {
-    $fields = array('inquiry_type', 'company', 'name', 'furigana', 'email', 'tel', 'event_date', 'event_pref', 'venue', 'budget', 'genre', 'message', 'website');
+    $fields = array('inquiry_type', 'company', 'name', 'furigana', 'email', 'tel', 'event_date', 'event_pref', 'venue', 'attendee_count', 'budget', 'genre', 'photo_numbers', 'message', 'website');
     $form = array();
     foreach ($fields as $field) {
       $value = isset($data[$field]) && !is_array($data[$field]) ? (string)$data[$field] : '';
@@ -165,7 +165,8 @@ class ContactController extends AppController {
     $labels = array(
         'inquiry_type' => 'お問い合わせ種別', 'company' => '貴社名・団体名', 'name' => 'お名前', 'furigana' => 'フリガナ',
         'email' => 'メールアドレス', 'tel' => '電話番号', 'event_date' => '開催予定日', 'event_date_tbd' => '日程は未定・調整中',
-        'event_pref' => '開催エリア', 'venue' => '会場名・会場の種類', 'budget' => 'ご予算の目安', 'genre' => 'ご希望のジャンル・編成',
+        'event_pref' => '開催エリア', 'venue' => '会場名・会場の種類', 'attendee_count' => '想定人数', 'budget' => 'ご予算の目安',
+        'genre' => 'ご希望のジャンル・編成', 'photo_numbers' => 'ご覧になった写真番号',
         'message' => 'お問い合わせ内容', 'agree' => '個人情報保護方針への同意',
     );
     $result = array();

@@ -22,8 +22,8 @@
     },
     {
       "path": "app/Controller/ContactController.php",
-      "bytes": 9251,
-      "sha256": "650adb2c9dd15f2889e8aab827cb3a957d82cd4fe06028261c9ee3283bcc38ed"
+      "bytes": 9383,
+      "sha256": "41d8643b30b2b7b9cc6433c1609584d6c693654cb584b30cf6d437f2837c9dcf"
     },
     {
       "path": "app/Controller/HomesController.php",
@@ -32,8 +32,8 @@
     },
     {
       "path": "app/Model/ContactMailSend.php",
-      "bytes": 5581,
-      "sha256": "897b9e3147f13e7b2be66a52e022651384bd215137255315edcff4d7a1efc4f4"
+      "bytes": 5765,
+      "sha256": "d8d12c0a54db550694f5c512cb3509a4446a30cb68f4513d55d1703e7167e689"
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
@@ -102,8 +102,8 @@
     },
     {
       "path": "app/webroot/contact.html",
-      "bytes": 27292,
-      "sha256": "e1f041a42d1b206144dfdc687ace4986c74a0e55dc1fcfcdfacc635c531f8903"
+      "bytes": 28560,
+      "sha256": "1f4f07e85bd9a6765087259e1dcb20e130dc73789b5045fadae3781e9cb0e7b0"
     },
     {
       "path": "app/webroot/css/contact.css",

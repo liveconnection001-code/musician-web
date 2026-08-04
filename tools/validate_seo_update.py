@@ -60,8 +60,8 @@ def validate_contact_form() -> None:
     required_fields = ("inquiry_type", "name", "email", "message", "agree")
     all_fields = (
         "inquiry_type", "company", "name", "furigana", "email", "tel",
-        "event_date", "event_date_tbd", "event_pref", "venue", "budget",
-        "genre", "message", "agree", "website",
+        "event_date", "event_date_tbd", "event_pref", "venue", "attendee_count",
+        "budget", "genre", "photo_numbers", "message", "agree", "website",
     )
     for field in all_fields:
         check(f'name="{field}"' in contact, f"contact: missing field {field}")
@@ -80,9 +80,13 @@ def validate_contact_form() -> None:
     check("Contact.PendingForm" in controller and "$form = $pending['form']" in controller, "contact: session-backed final send is missing")
     check('name="contact_token"' in confirmation, "contact: confirmation token is missing")
     check(
-        re.search(r'name="(?:inquiry_type|company|name|furigana|email|tel|event_date|event_pref|venue|budget|genre|message|agree)"', confirmation) is None,
+        re.search(r'name="(?:inquiry_type|company|name|furigana|email|tel|event_date|event_pref|venue|attendee_count|budget|genre|photo_numbers|message|agree)"', confirmation) is None,
         "contact: confirmation must not submit client-controlled field values",
     )
+    for field, label in (("attendee_count", "想定人数"), ("photo_numbers", "ご覧になった写真番号")):
+        check(f'name="{field}"' in contact, f"contact: new optional field is missing: {field}")
+        check(f"'{field}'" in model and f"'name' => '{label}'" in model, f"contact: model label is missing: {label}")
+        check(f"'{field}' => '{label}'" in controller, f"contact: mail label is missing: {label}")
     check("replyTo($replyTo)" in controller, "contact: administrator Reply-To is missing")
     check("【Webお問い合わせ】" in controller, "contact: administrator subject is missing")
     check("【MUSICIAN】お問い合わせを受け付けました" in controller, "contact: automatic-reply subject is missing")
