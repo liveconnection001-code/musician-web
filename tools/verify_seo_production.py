@@ -6,56 +6,181 @@ from __future__ import annotations
 import json
 import os
 import re
-import ssl
+import subprocess
 import sys
+import tempfile
 import time
-import urllib.error
-import urllib.request
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
+from pathlib import Path
 
 
 BASE = "https://www.musician.co.jp"
 ERRORS: list[str] = []
 CHECKS: list[str] = []
 FETCH_TIMEOUT_SECONDS = int(os.environ.get("MUSICIAN_VERIFY_FETCH_TIMEOUT_SECONDS", "20"))
-FETCH_ATTEMPTS = int(os.environ.get("MUSICIAN_VERIFY_FETCH_ATTEMPTS", "3"))
+TARGET_MAX_ATTEMPTS = min(3, max(1, int(os.environ.get("MUSICIAN_VERIFY_TARGET_MAX_ATTEMPTS", "3"))))
+TARGET_RETRY_DELAY_SECONDS = int(os.environ.get("MUSICIAN_VERIFY_TARGET_RETRY_DELAY_SECONDS", "15"))
+# Reserve 30 seconds inside the workflow's hard eight-minute timeout so that
+# the verifier can always emit its rollback/manual-check decision itself.
+VERIFY_BUDGET_SECONDS = int(os.environ.get("MUSICIAN_VERIFY_BUDGET_SECONDS", "450"))
+CONTROL_PATH = os.environ.get("MUSICIAN_VERIFY_CONTROL_PATH", "/robots.txt")
+RESULT_PATH = os.environ.get("MUSICIAN_VERIFY_RESULT_PATH", "production-verify-result.json")
+STARTED_AT = time.monotonic()
 
 
-class NoRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        return None
+@dataclass
+class FetchResult:
+    status: int
+    headers: dict[str, str]
+    payload: bytes
+    curl_exit: int
+    duration_ms: int
+
+    def __iter__(self):
+        yield self.status
+        yield self.headers
+        yield self.payload
 
 
-SSL_CONTEXT = ssl.create_default_context()
-SSL_CONTEXT.check_hostname = False
-SSL_CONTEXT.verify_mode = ssl.CERT_NONE
-OPENER = urllib.request.build_opener(
-    urllib.request.HTTPHandler(),
-    urllib.request.HTTPSHandler(context=SSL_CONTEXT),
-    NoRedirect(),
-)
+class ManualCheckRequired(RuntimeError):
+    """The runner cannot reach both a page and its unchanged control URL."""
 
 
-def fetch(path: str) -> tuple[int, dict[str, str], bytes]:
-    request = urllib.request.Request(
-        BASE + path,
-        headers={
-            "User-Agent": "MUSICIAN-SEO-PostDeploy-Check/1.0",
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache",
-        },
+class TargetUnavailable(RuntimeError):
+    """Only the target URL failed after a reachable control URL and retries."""
+
+
+class ContentVerificationFailure(RuntimeError):
+    """A response proves a deployed page or required SEO resource is invalid."""
+
+
+def _remaining_seconds() -> int:
+    return int(VERIFY_BUDGET_SECONDS - (time.monotonic() - STARTED_AT))
+
+
+def _is_transport_failure(result: FetchResult) -> bool:
+    return result.status == 0
+
+
+def _parse_headers(raw: bytes) -> dict[str, str]:
+    blocks = re.split(r"\r?\n\r?\n", raw.decode("iso-8859-1", errors="replace"))
+    for block in reversed(blocks):
+        lines = block.splitlines()
+        if lines and lines[0].startswith("HTTP/"):
+            return {
+                key.strip().lower(): value.strip()
+                for line in lines[1:]
+                if ":" in line
+                for key, value in [line.split(":", 1)]
+            }
+    return {}
+
+
+def _fetch_once(path: str, *, purpose: str, attempt: int) -> FetchResult:
+    remaining = _remaining_seconds()
+    if remaining <= 0:
+        raise ManualCheckRequired(
+            f"検証時間予算 {VERIFY_BUDGET_SECONDS} 秒を使い切りました。手動で9ページ200とSEO検証を実施してください。"
+        )
+
+    request_timeout = max(1, min(FETCH_TIMEOUT_SECONDS, remaining))
+    started = time.monotonic()
+    with tempfile.TemporaryDirectory(prefix="musician_verify_") as temp_dir:
+        temp = Path(temp_dir)
+        body_path = temp / "body"
+        headers_path = temp / "headers"
+        completed = subprocess.run(
+            [
+                "curl",
+                "--silent",
+                "--show-error",
+                "--insecure",
+                "--max-time",
+                str(request_timeout),
+                "--connect-timeout",
+                str(min(3, request_timeout)),
+                "--output",
+                str(body_path),
+                "--dump-header",
+                str(headers_path),
+                "--write-out",
+                "%{http_code}",
+                "--header",
+                "User-Agent: MUSICIAN-SEO-PostDeploy-Check/2.0",
+                "--header",
+                "Cache-Control: no-cache",
+                "--header",
+                "Pragma: no-cache",
+                BASE + path,
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        duration_ms = round((time.monotonic() - started) * 1000)
+        status_text = completed.stdout.strip()
+        status = int(status_text) if status_text.isdigit() else 0
+        payload = body_path.read_bytes() if body_path.exists() else b""
+        headers = _parse_headers(headers_path.read_bytes()) if headers_path.exists() else {}
+
+    result = FetchResult(status, headers, payload, completed.returncode, duration_ms)
+    print(
+        "HTTP_PROBE "
+        + json.dumps(
+            {
+                "path": path,
+                "purpose": purpose,
+                "attempt": attempt,
+                "http_status": result.status,
+                "curl_exit": result.curl_exit,
+                "duration_ms": result.duration_ms,
+            },
+            ensure_ascii=False,
+        )
     )
-    for attempt in range(FETCH_ATTEMPTS):
-        try:
-            response = OPENER.open(request, timeout=FETCH_TIMEOUT_SECONDS)
-            return response.status, {key.lower(): value for key, value in response.headers.items()}, response.read()
-        except urllib.error.HTTPError as exc:
-            return exc.code, {key.lower(): value for key, value in exc.headers.items()}, exc.read()
-        except urllib.error.URLError as exc:
-            if attempt == FETCH_ATTEMPTS - 1:
-                return 0, {}, f"request failed after retries: {exc}".encode("utf-8")
-            time.sleep(1)
-    return 0, {}, b"request failed"
+    return result
+
+
+def establish_initial_control() -> None:
+    """Probe an unchanged resource before checking any deployed page."""
+    control = _fetch_once(CONTROL_PATH, purpose="initial-control", attempt=1)
+    if not _is_transport_failure(control):
+        return
+
+    target = _fetch_once("/", purpose="initial-target-after-control-failure", attempt=1)
+    control_retry = _fetch_once(CONTROL_PATH, purpose="initial-control-retry", attempt=2)
+    if _is_transport_failure(target) and _is_transport_failure(control_retry):
+        raise ManualCheckRequired(
+            "対照URLと対象ページの両方が応答不能です。ロールバックせず、手動で9ページ200とSEO検証を実施してください。"
+        )
+    raise ManualCheckRequired(
+        "対照URLの通信状態が不安定です。ロールバックせず、手動で9ページ200とSEO検証を実施してください。"
+    )
+
+
+def fetch(path: str) -> FetchResult:
+    target = _fetch_once(path, purpose="target", attempt=1)
+    if not _is_transport_failure(target):
+        return target
+
+    control_path = "/" if path == CONTROL_PATH else CONTROL_PATH
+    control = _fetch_once(control_path, purpose="control-after-target-failure", attempt=1)
+    if _is_transport_failure(control):
+        raise ManualCheckRequired(
+            f"{path} と対照URL {control_path} の両方が応答不能です。ロールバックせず、手動で9ページ200とSEO検証を実施してください。"
+        )
+
+    for attempt in range(2, TARGET_MAX_ATTEMPTS + 1):
+        if TARGET_RETRY_DELAY_SECONDS:
+            time.sleep(TARGET_RETRY_DELAY_SECONDS)
+        target = _fetch_once(path, purpose="target-retry", attempt=attempt)
+        if not _is_transport_failure(target):
+            return target
+
+    raise TargetUnavailable(
+        f"{path} は対照URL取得可の状態で{TARGET_MAX_ATTEMPTS}回とも応答不能でした。内容起因の可能性としてロールバックします。"
+    )
 
 
 def check(condition: bool, message: str) -> None:
@@ -73,6 +198,8 @@ def normalize_location(location: str) -> str:
 
 def verify_html(path: str, canonical: str) -> str:
     status, _headers, payload = fetch(path)
+    if 400 <= status <= 599:
+        raise ContentVerificationFailure(f"{path}: expected 200, got {status}")
     html = payload.decode("utf-8", errors="replace")
     check(status == 200, f"{path}: expected 200, got {status}")
     check("<?php" not in html, f"{path}: raw PHP leaked")
@@ -100,6 +227,8 @@ def verify_html(path: str, canonical: str) -> str:
 
 def verify_redirect(path: str, destination: str) -> None:
     status, headers, _payload = fetch(path)
+    if 400 <= status <= 599:
+        raise ContentVerificationFailure(f"{path}: expected 301, got {status}")
     location = headers.get("location", "")
     check(status == 301, f"{path}: expected 301, got {status}")
     check(
@@ -108,7 +237,8 @@ def verify_redirect(path: str, destination: str) -> None:
     )
 
 
-def main() -> int:
+def verify() -> bool:
+    establish_initial_control()
     pages = {
         "/": "/",
         "/business.html": "/business.html",
@@ -224,6 +354,8 @@ def main() -> int:
         verify_redirect(path, destination)
 
     status, _headers, payload = fetch("/robots.txt")
+    if 400 <= status <= 599:
+        raise ContentVerificationFailure(f"robots.txt: expected 200, got {status}")
     robots = payload.decode("utf-8", errors="replace")
     check(status == 200, f"robots.txt: expected 200, got {status}")
     check("Disallow: /\n" not in robots, "robots.txt: production is not globally blocked")
@@ -231,6 +363,8 @@ def main() -> int:
     check(f"Sitemap: {BASE}/sitemap.xml" in robots, "robots.txt: sitemap declaration")
 
     status, _headers, payload = fetch("/sitemap.xml")
+    if 400 <= status <= 599:
+        raise ContentVerificationFailure(f"sitemap.xml: expected 200, got {status}")
     check(status == 200, f"sitemap.xml: expected 200, got {status}")
     try:
         root = ET.fromstring(payload)
@@ -291,12 +425,20 @@ def main() -> int:
         expected = (403, 404)
         check(status in expected, f"{sample_path}: expected blocked status {expected}, got {status}")
 
+    return not ERRORS
+
+
+def finish(decision: str) -> int:
     result = {
         "passed": len(CHECKS),
         "failed": len(ERRORS),
         "errors": ERRORS,
+        "decision": decision,
+        "elapsed_ms": round((time.monotonic() - STARTED_AT) * 1000),
+        "control_url": BASE + CONTROL_PATH,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    Path(RESULT_PATH).write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if os.environ.get("GITHUB_ACTIONS") == "true":
         for error in ERRORS:
             annotation = (
@@ -305,7 +447,26 @@ def main() -> int:
                 .replace("\n", "%0A")
             )
             print(f"::error title=Production verification failed::{annotation}")
-    return 1 if ERRORS else 0
+    return {"verified": 0, "rollback": 1, "manual_check": 2}[decision]
+
+
+def main() -> int:
+    try:
+        return finish("verified" if verify() else "rollback")
+    except ManualCheckRequired as exc:
+        ERRORS.append(str(exc))
+        print("MANUAL_CONFIRMATION_REQUIRED: 9ページのHTTP 200と公開SEO検証をローカルから実施してください。")
+        return finish("manual_check")
+    except TargetUnavailable as exc:
+        ERRORS.append(str(exc))
+        return finish("rollback")
+    except ContentVerificationFailure as exc:
+        ERRORS.append(str(exc))
+        return finish("rollback")
+    except Exception as exc:
+        ERRORS.append(f"検証実行環境の内部エラー: {exc}")
+        print("MANUAL_CONFIRMATION_REQUIRED: 検証器の異常終了です。ロールバックせず、手動で9ページ200とSEO検証を実施してください。")
+        return finish("manual_check")
 
 
 if __name__ == "__main__":

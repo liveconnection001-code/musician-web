@@ -98,15 +98,44 @@ jobs:
           PY
 
       - name: Verify deployed production
-        # Leave enough of the 30-minute job for an automatic rollback if a
-        # remote response stalls during read-only verification.
+        id: verify
+        # The verifier has an eight-minute budget.  It distinguishes a bad
+        # deployed response from a GitHub runner that cannot reach both the
+        # target and an unchanged control resource.
         env:
           MUSICIAN_VERIFY_FETCH_TIMEOUT_SECONDS: "5"
-          MUSICIAN_VERIFY_FETCH_ATTEMPTS: "2"
-        run: timeout --signal=TERM --kill-after=30s 10m python tools/verify_seo_production.py
+          MUSICIAN_VERIFY_TARGET_MAX_ATTEMPTS: "3"
+          MUSICIAN_VERIFY_TARGET_RETRY_DELAY_SECONDS: "15"
+          MUSICIAN_VERIFY_BUDGET_SECONDS: "450"
+          MUSICIAN_VERIFY_RESULT_PATH: production-verify-result.json
+        run: |
+          set +e
+          timeout --signal=TERM --kill-after=30s 8m python tools/verify_seo_production.py
+          verify_status=$?
+          set -e
+          decision="$(python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = Path("production-verify-result.json")
+          if not result.is_file():
+              print("manual_check")
+          else:
+              print(json.loads(result.read_text(encoding="utf-8")).get("decision", "manual_check"))
+          PY
+          )"
+          echo "decision=${decision}" >> "$GITHUB_OUTPUT"
+          if [ "${decision}" = "manual_check" ]; then
+            {
+              echo "### 検証未完・手動確認要"
+              echo "GitHub runnerから対象URLと対照URLの両方へ通信できませんでした。公開は維持しています。"
+              echo "ローカルから、全9ページのHTTP 200と `python tools/verify_seo_production.py` を確認してください。"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "${verify_status}"
 
       - name: Roll back a failed production verification
-        if: failure() && steps.deploy.outputs.backup_dir != ''
+        if: failure() && steps.verify.outputs.decision == 'rollback' && steps.deploy.outputs.backup_dir != ''
         env:
           MUSICIAN_TEMP_FTP_PASSWORD: ${{ secrets.MUSICIAN_TEMP_FTP_PASSWORD }}
           MUSICIAN_WORKSPACE: ${{ github.workspace }}
