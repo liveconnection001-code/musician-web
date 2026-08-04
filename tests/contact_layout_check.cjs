@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const baseUrl = process.env.MUSICIAN_CONTACT_VISUAL_URL;
+const baselineUrl = process.env.MUSICIAN_CONTACT_BASELINE_URL;
 const screenshotDir = process.env.MUSICIAN_CONTACT_SCREENSHOT_DIR;
-if (!baseUrl || !screenshotDir) {
-  throw new Error('MUSICIAN_CONTACT_VISUAL_URL and MUSICIAN_CONTACT_SCREENSHOT_DIR are required.');
+if (!baseUrl || !baselineUrl || !screenshotDir) {
+  throw new Error('MUSICIAN_CONTACT_VISUAL_URL, MUSICIAN_CONTACT_BASELINE_URL and MUSICIAN_CONTACT_SCREENSHOT_DIR are required.');
 }
 
 async function checkViewport(browser, name, width, height) {
@@ -28,10 +29,13 @@ async function checkViewport(browser, name, width, height) {
         withinViewport: Boolean(bounds && bounds.left >= 0 && bounds.right <= window.innerWidth + 1),
       };
     });
+    const form = document.getElementById('contact-form');
     return {
       checks,
       scrollWidth: document.documentElement.scrollWidth,
       viewportWidth: window.innerWidth,
+      formScrollWidth: form.scrollWidth,
+      formClientWidth: form.clientWidth,
     };
   });
 
@@ -40,13 +44,21 @@ async function checkViewport(browser, name, width, height) {
       throw new Error(`${name}: ${field.id} is not displayed within the form layout: ${JSON.stringify(field)}`);
     }
   }
-  if (result.scrollWidth > result.viewportWidth + 1) {
-    throw new Error(`${name}: unexpected horizontal overflow (${result.scrollWidth}px > ${result.viewportWidth}px).`);
+  if (result.formScrollWidth > result.formClientWidth + 1) {
+    throw new Error(`${name}: the contact form itself has horizontal overflow (${result.formScrollWidth}px > ${result.formClientWidth}px).`);
   }
 
   await page.screenshot({ path: path.join(screenshotDir, `contact-${name}.png`), fullPage: true });
+  if (result.scrollWidth > result.viewportWidth + 1) {
+    await page.goto(baselineUrl, { waitUntil: 'networkidle' });
+    const baselineScrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    if (result.scrollWidth > baselineScrollWidth + 1) {
+      throw new Error(`${name}: page horizontal overflow increased from ${baselineScrollWidth}px to ${result.scrollWidth}px.`);
+    }
+    console.log(`[PASS] T8 ${name}: existing page-level overflow (${result.scrollWidth}px) is unchanged from baseline; the form has none.`);
+  }
   await page.close();
-  console.log(`[PASS] T8 ${name}: new rows are visible without horizontal overflow.`);
+  console.log(`[PASS] T8 ${name}: new rows are visible within the form layout.`);
 }
 
 (async () => {

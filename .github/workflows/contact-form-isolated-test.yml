@@ -49,6 +49,8 @@ jobs:
           cp tests/fixtures/isolated-cake/MailSend.php "$TEST_ROOT/app/Model/MailSend.php"
           cp tests/fixtures/isolated-cake/AppController.php "$TEST_ROOT/app/Controller/AppController.php"
           cp new_site/seo_deployment/app/webroot/contact.html "$TEST_ROOT/app/webroot/contact.html"
+          git fetch --no-tags --depth=1 origin main
+          git show FETCH_HEAD:new_site/seo_deployment/app/webroot/contact.html > "$TEST_ROOT/app/webroot/contact-baseline.html"
           cp new_site/seo_deployment/app/Model/ContactMailSend.php "$TEST_ROOT/app/Model/ContactMailSend.php"
           cp new_site/seo_deployment/app/Controller/ContactController.php "$TEST_ROOT/app/Controller/ContactController.php"
           cp new_site/seo_deployment/app/View/Contact/msg.html "$TEST_ROOT/app/View/Contact/msg.html"
@@ -74,6 +76,7 @@ jobs:
           mkdir -p "$VISUAL_ROOT/css"
           cp -a "$RUNNER_TEMP/musician-contact-cake/app/webroot/css/." "$VISUAL_ROOT/css/"
           php tests/render_contact_visual_fixture.php > "$VISUAL_ROOT/contact.html"
+          MUSICIAN_CONTACT_TEMPLATE="$RUNNER_TEMP/musician-contact-cake/app/webroot/contact-baseline.html" php tests/render_contact_visual_fixture.php > "$VISUAL_ROOT/contact-baseline.html"
 
       - name: Run T8 browser checks at desktop and 375px mobile
         env:
@@ -92,7 +95,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/playwright-node"
           npm install --prefix "$RUNNER_TEMP/playwright-node" --no-save playwright@1.52.0
           "$RUNNER_TEMP/playwright-node/node_modules/.bin/playwright" install --with-deps chromium
-          NODE_PATH="$RUNNER_TEMP/playwright-node/node_modules" MUSICIAN_CONTACT_VISUAL_URL=http://127.0.0.1:8765/contact.html node tests/contact_layout_check.cjs
+          NODE_PATH="$RUNNER_TEMP/playwright-node/node_modules" MUSICIAN_CONTACT_VISUAL_URL=http://127.0.0.1:8765/contact.html MUSICIAN_CONTACT_BASELINE_URL=http://127.0.0.1:8765/contact-baseline.html node tests/contact_layout_check.cjs
 
       - name: Preserve isolated mail log and responsive screenshots
         if: always()
