@@ -17,9 +17,9 @@ define('ROOT', rtrim($root, DS));
 define('APP_DIR', 'app');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS);
-define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
+define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS . 'lib');
 
-require CAKE_CORE_INCLUDE_PATH . DS . 'lib' . DS . 'Cake' . DS . 'bootstrap.php';
+require CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'bootstrap.php';
 
 require ROOT . DS . 'app' . DS . 'Model' . DS . 'AppModel.php';
 require ROOT . DS . 'app' . DS . 'Model' . DS . 'MailSend.php';
@@ -153,7 +153,7 @@ function contact_model_for(array $form) {
 }
 
 try {
-  $versionContents = file_get_contents(CAKE_CORE_INCLUDE_PATH . DS . 'lib' . DS . 'Cake' . DS . 'VERSION.txt');
+  $versionContents = file_get_contents(CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'VERSION.txt');
   preg_match('/^([0-9]+\.[0-9]+\.[0-9]+)$/m', $versionContents, $versionMatch);
   $version = isset($versionMatch[1]) ? $versionMatch[1] : '';
   contact_assert_same('2.10.18', $version, 'CakePHP core version must be 2.10.18');
