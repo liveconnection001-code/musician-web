@@ -247,6 +247,9 @@ HEADER_LOGO_NEW = (
 
 
 def improve_shared_markup(text: str, *, banner_label: str | None = None) -> str:
+    # The July backup still links achievements through company.html.  Normalize
+    # that legacy destination before inserting Guide after Achievements.
+    text = normalize_achievements_links(text)
     if HEADER_LOGO_OLD in text:
         text = text.replace(HEADER_LOGO_OLD, HEADER_LOGO_NEW, 1)
     legacy_service_alt = 'alt="出張演奏・演奏家' + '手' + '配のMUSICIAN"'
