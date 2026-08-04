@@ -1,0 +1,32 @@
+# HTTP access to the retired EZManager application is intentionally disabled.
+# The public CakePHP application still reads admin/Model, admin/View and
+# admin/Vendor from the filesystem; Apache authorization does not affect that.
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	#RewriteBase /admin/
+
+  #テスト環境用設定 httpsで運用する時は下記三行をコメントアウトすること
+  RewriteCond %{HTTP_HOST} !^www
+  RewriteRule (.*) https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  RewriteCond %{ENV:HTTPS} !^on$
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  #wwwありへ統一
+  # RewriteCond %{HTTP_HOST} !^www
+  # RewriteRule (.*) http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  #httpsありへ統一
+  # RewriteCond %{HTTPS} off
+  # RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L]
+
+	RewriteRule ^$ webroot/ [L]
+	RewriteRule (.*) webroot/$1 [L]
+</IfModule>

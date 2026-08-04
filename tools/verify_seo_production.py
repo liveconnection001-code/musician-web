@@ -204,6 +204,10 @@ def main() -> int:
         check(bool(headers.get(header)), f"home: {header} security header")
     check(not headers.get("x-powered-by"), "home: X-Powered-By is hidden")
 
+    for admin_path in ("/admin", "/admin/", "/admin/index.php", "/admin/webroot/"):
+        status, _headers, _payload = fetch(admin_path)
+        check(status == 403, f"{admin_path}: expected 403, got {status}")
+
     redirects = {
         "/index.html": "/",
         "/works/index/22": "/works.html",

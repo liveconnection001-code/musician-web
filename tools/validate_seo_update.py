@@ -25,7 +25,7 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 36, "deployment must contain 36 staged files")
+    check(manifest.get("file_count") == 37, "deployment must contain 37 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
@@ -35,6 +35,7 @@ def validate_manifest() -> None:
     check("app/webroot/css/mus_guide.css" in expected, "Guide / FAQ CSS missing from manifest")
     check("app/webroot/css/mus_reasons.css" in expected, "Top reasons CSS missing from manifest")
     check("app/webroot/css/mus_record.css" in expected, "Top achievements strip CSS missing from manifest")
+    check("admin/.htaccess" in expected, "admin HTTP access block is missing from manifest")
     for relative_path in (
         "app/Controller/ContactController.php",
         "app/Model/ContactMailSend.php",
@@ -42,6 +43,10 @@ def validate_manifest() -> None:
         "app/webroot/privacy.html",
     ):
         check(relative_path in expected, f"contact-form deployment asset missing from manifest: {relative_path}")
+
+    admin_htaccess = text("admin/.htaccess")
+    check("Require all denied" in admin_htaccess, "admin HTTP access block lacks Apache 2.4 denial")
+    check("Deny from all" in admin_htaccess, "admin HTTP access block lacks Apache 2.2 denial")
 
 
 def validate_contact_form() -> None:
@@ -455,7 +460,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 36 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 37 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":
