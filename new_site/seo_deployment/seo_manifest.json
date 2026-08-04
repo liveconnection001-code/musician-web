@@ -37,8 +37,8 @@
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
-      "bytes": 31834,
-      "sha256": "673c97fcfe48e44776901cbc7a02ca15c3a53da4b8d4c376a5047b9e6c355165"
+      "bytes": 31989,
+      "sha256": "45f49fd08cb43e6d12e491546953d5fabad3c5ccfd6bebaed63018a3d045a887"
     },
     {
       "path": "app/View/Contact/msg.html",
