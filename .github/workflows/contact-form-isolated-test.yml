@@ -8,6 +8,8 @@ on:
       - 'new_site/seo_deployment/app/webroot/contact.html'
       - 'new_site/seo_deployment/app/Model/ContactMailSend.php'
       - 'new_site/seo_deployment/app/Controller/ContactController.php'
+      - 'new_site/seo_deployment/app/Controller/HomesController.php'
+      - 'new_site/seo_deployment/app/Lib/ContactTiming.php'
       - 'new_site/seo_deployment/app/View/Contact/msg.html'
       - 'new_site/seo_deployment/app/View/Contact/thanks.html'
       - 'tests/**'
@@ -35,7 +37,7 @@ jobs:
           TEST_ROOT: ${{ runner.temp }}/musician-contact-cake
         run: |
           set -euo pipefail
-          mkdir -p "$TEST_ROOT/app/Config" "$TEST_ROOT/app/Controller" "$TEST_ROOT/app/Model" "$TEST_ROOT/app/Network/Email" "$TEST_ROOT/app/View/Contact" "$TEST_ROOT/app/webroot" "$TEST_ROOT/tests"
+          mkdir -p "$TEST_ROOT/app/Config" "$TEST_ROOT/app/Controller" "$TEST_ROOT/app/Lib" "$TEST_ROOT/app/Model" "$TEST_ROOT/app/Network/Email" "$TEST_ROOT/app/View/Contact" "$TEST_ROOT/app/webroot" "$TEST_ROOT/tests"
           mkdir -p "$TEST_ROOT/vendor/cakephp"
           curl --fail --location --retry 3 --show-error --output "$RUNNER_TEMP/cakephp-2.10.18.zip" https://github.com/cakephp/cakephp/archive/refs/tags/2.10.18.zip
           test -s "$RUNNER_TEMP/cakephp-2.10.18.zip"
@@ -48,6 +50,7 @@ jobs:
           cp tests/fixtures/isolated-cake/AppModel.php "$TEST_ROOT/app/Model/AppModel.php"
           cp tests/fixtures/isolated-cake/MailSend.php "$TEST_ROOT/app/Model/MailSend.php"
           cp tests/fixtures/isolated-cake/AppController.php "$TEST_ROOT/app/Controller/AppController.php"
+          cp new_site/seo_deployment/app/Lib/ContactTiming.php "$TEST_ROOT/app/Lib/ContactTiming.php"
           cp new_site/seo_deployment/app/webroot/contact.html "$TEST_ROOT/app/webroot/contact.html"
           git fetch --no-tags --depth=1 origin main
           git show FETCH_HEAD:new_site/seo_deployment/app/webroot/contact.html > "$TEST_ROOT/app/webroot/contact-baseline.html"
@@ -61,7 +64,7 @@ jobs:
           cp tests/contact_isolated_cake_test.php "$TEST_ROOT/tests/contact_isolated_cake_test.php"
           test "$(grep -E '^2\.10\.18$' "$TEST_ROOT/vendor/cakephp/cakephp/lib/Cake/VERSION.txt")" = '2.10.18'
 
-      - name: Run T1 through T7 with isolated CakePHP and LogTransport
+      - name: Run K-T1 through K-T5 and K-T8 with isolated CakePHP and LogTransport
         env:
           MUSICIAN_CONTACT_TEST_ROOT: ${{ runner.temp }}/musician-contact-cake
           MUSICIAN_CONTACT_TEST_LOG: ${{ runner.temp }}/contact-test-mail.log

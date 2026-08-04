@@ -129,6 +129,7 @@
 <?php
 $contact_data = isset($contact_data) && is_array($contact_data) ? $contact_data : array();
 $contact_errors = isset($contact_errors) && is_array($contact_errors) ? $contact_errors : array();
+$contact_timing = isset($contact_timing) ? (string)$contact_timing : '';
 $contact_value = function ($field) use ($contact_data) {
   return isset($contact_data[$field]) ? h($contact_data[$field]) : '';
 };
@@ -143,6 +144,8 @@ $event_prefs = array('未定', '北海道', '青森県', '岩手県', '宮城県
 $budgets = array('未定・ご相談しながら決めたい', '〜30万円', '30万〜50万円', '50万〜100万円', '100万〜300万円', '300万円以上');
 ?>
                             <form id="contact-form" class="contact-form" method="post" action="<?php echo $this->Html->url(array('controller' => 'contact', 'action' => 'postmail')); ?>" novalidate>
+                                <input name="contact_timing" type="hidden" value="<?php echo h($contact_timing); ?>">
+                                <?php if ($contact_error('_form') !== ''): ?><p class="contact-form__error" role="alert"><?php echo $contact_error('_form'); ?></p><?php endif; ?>
                                 <table class="table_form mb30_md50">
                                   <tr>
                                     <th><label for="inquiry_type">お問い合わせ種別<span>必須</span></label></th>
@@ -196,10 +199,6 @@ $budgets = array('未定・ご相談しながら決めたい', '〜30万円', '3
                                     <td><input id="genre" name="genre" type="text" class="form-control" placeholder="例：弦楽四重奏、ジャズバンド、和楽器、オーケストラ" value="<?php echo $contact_value('genre'); ?>"<?php echo $contact_invalid('genre'); ?>><?php if ($contact_error('genre') !== ''): ?><p id="genre-error" class="contact-form__error" role="alert"><?php echo $contact_error('genre'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th><label for="photo_numbers">ご覧になった写真番号</label></th>
-                                    <td><input id="photo_numbers" name="photo_numbers" type="text" class="form-control" placeholder="例：12、34、56" value="<?php echo $contact_value('photo_numbers'); ?>"<?php echo $contact_invalid('photo_numbers'); ?>><?php if ($contact_error('photo_numbers') !== ''): ?><p id="photo_numbers-error" class="contact-form__error" role="alert"><?php echo $contact_error('photo_numbers'); ?></p><?php endif; ?></td>
-                                  </tr>
-                                  <tr>
                                     <th><label for="message">お問い合わせ内容<span>必須</span></label></th>
                                     <td><textarea id="message" name="message" rows="6" class="form-control" aria-required="true" placeholder="イベントの目的やご検討中の内容を、分かる範囲でお聞かせください"<?php echo $contact_invalid('message'); ?>><?php echo $contact_value('message'); ?></textarea><?php if ($contact_error('message') !== ''): ?><p id="message-error" class="contact-form__error" role="alert"><?php echo $contact_error('message'); ?></p><?php endif; ?></td>
                                   </tr>
@@ -209,7 +208,10 @@ $budgets = array('未定・ご相談しながら決めたい', '〜30万円', '3
                                   </tr>
                                 </table>
 
-                                <div class="contact-form__honeypot" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" value="<?php echo $contact_value('website'); ?>"></div>
+                                <div class="contact-form__honeypot" aria-hidden="true">
+                                  <label for="website">Website</label><input id="website" name="website" type="text" aria-hidden="true" tabindex="-1" autocomplete="off" value="<?php echo $contact_value('website'); ?>">
+                                  <label for="photo_numbers">ご覧になった写真番号</label><input id="photo_numbers" name="photo_numbers" type="text" aria-hidden="true" tabindex="-1" autocomplete="off">
+                                </div>
 
                                 <div class="row mb05">
                                     <div class="offset-sm-2 col-sm-8 offset-lg-3 col-lg-6 tac contact_btn"><button type="submit" class="btn btn-primary btn-block btn-lg">入力内容を確認する</button></div>

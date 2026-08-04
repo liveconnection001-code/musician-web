@@ -3,7 +3,7 @@
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
-  "file_count": 37,
+  "file_count": 38,
   "files": [
     {
       "path": ".htaccess",
@@ -22,23 +22,28 @@
     },
     {
       "path": "app/Controller/ContactController.php",
-      "bytes": 9383,
-      "sha256": "41d8643b30b2b7b9cc6433c1609584d6c693654cb584b30cf6d437f2837c9dcf"
+      "bytes": 9792,
+      "sha256": "865a9dbd7e55965b27945b27a0e4dcd537cfe102e42371a19d96b765e43f422e"
     },
     {
       "path": "app/Controller/HomesController.php",
-      "bytes": 2907,
-      "sha256": "c96f11af23b39eeb56c9ef4e4433789605fa140f37a74eda4a35cc5f300c6148"
+      "bytes": 3061,
+      "sha256": "380b4321445e116d516c90e1a4af1ccc3445e86bbfaa3b12ef57dd2887017d20"
+    },
+    {
+      "path": "app/Lib/ContactTiming.php",
+      "bytes": 1691,
+      "sha256": "4835652c9765ed4018583c38238680c8e8d48fa3fb755197f7cd417a06564bfd"
     },
     {
       "path": "app/Model/ContactMailSend.php",
-      "bytes": 5765,
-      "sha256": "d8d12c0a54db550694f5c512cb3509a4446a30cb68f4513d55d1703e7167e689"
+      "bytes": 5664,
+      "sha256": "98a801571207e8770f115976704c21653d63d41fa643d3824dc8306bb439db35"
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
-      "bytes": 55621,
-      "sha256": "97ae2ff4e840356fa6726bab09a2ca1a291394dec9032cff2e2be2df446c2dcc"
+      "bytes": 55746,
+      "sha256": "4a4d5f67c3223688ac21964ebda1b662737637a2bfe782d170271267c735c661"
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
@@ -102,8 +107,8 @@
     },
     {
       "path": "app/webroot/contact.html",
-      "bytes": 28560,
-      "sha256": "1f4f07e85bd9a6765087259e1dcb20e130dc73789b5045fadae3781e9cb0e7b0"
+      "bytes": 28589,
+      "sha256": "d1e2a6fb93c9d59f941b50a922469e709ce2b7f1a87bc2f57d4b015c112b0a59"
     },
     {
       "path": "app/webroot/css/contact.css",

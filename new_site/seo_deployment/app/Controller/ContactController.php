@@ -1,4 +1,5 @@
 <?php
+App::uses('ContactTiming', 'Lib');
 
 class ContactController extends AppController {
 
@@ -31,9 +32,14 @@ class ContactController extends AppController {
     }
 
     $form = $this->normaliseForm($submitted);
-    if ($form['website'] !== '') {
+    if ($form['website'] !== '' || $form['photo_numbers'] !== '') {
       $this->Session->delete($this->sessionKey);
       return $this->render('thanks');
+    }
+
+    $timingToken = isset($submitted['contact_timing']) ? (string)$submitted['contact_timing'] : '';
+    if (!ContactTiming::isValid($timingToken)) {
+      return $this->renderContactForm($form, array('_form' => '入力内容を確認できませんでした。5秒以上経ってから、もう一度お試しください。'));
     }
 
     $this->ContactMailSend->set(array('ContactMailSend' => $form));
@@ -106,6 +112,7 @@ class ContactController extends AppController {
   private function renderContactForm($form, $errors) {
     $this->set('contact_data', $form);
     $this->set('contact_errors', $errors);
+    $this->set('contact_timing', ContactTiming::issue());
     $this->set('file', WWW_ROOT . 'contact.html');
     return $this->render('/Homes/webroot');
   }
@@ -166,8 +173,8 @@ class ContactController extends AppController {
         'inquiry_type' => 'お問い合わせ種別', 'company' => '貴社名・団体名', 'name' => 'お名前', 'furigana' => 'フリガナ',
         'email' => 'メールアドレス', 'tel' => '電話番号', 'event_date' => '開催予定日', 'event_date_tbd' => '日程は未定・調整中',
         'event_pref' => '開催エリア', 'venue' => '会場名・会場の種類', 'attendee_count' => '想定人数', 'budget' => 'ご予算の目安',
-        'genre' => 'ご希望のジャンル・編成', 'photo_numbers' => 'ご覧になった写真番号',
-        'message' => 'お問い合わせ内容', 'agree' => '個人情報保護方針への同意',
+        'genre' => 'ご希望のジャンル・編成', 'message' => 'お問い合わせ内容',
+        'agree' => '個人情報保護方針への同意',
     );
     $result = array();
     foreach ($labels as $field => $label) {

@@ -34,7 +34,6 @@ class ContactMailSend extends MailSend {
           'attendee_count' => array('name' => '想定人数', 'validation' => ''),
           'budget'         => array('name' => 'ご予算の目安', 'validation' => 'budget'),
           'genre'          => array('name' => 'ご希望のジャンル・編成', 'validation' => ''),
-          'photo_numbers'  => array('name' => 'ご覧になった写真番号', 'validation' => ''),
           'message'        => array('name' => 'お問い合わせ内容', 'validation' => 'required,messageLength'),
           'agree'          => array('name' => '個人情報保護方針への同意', 'validation' => 'agree'),
           'website'        => array('name' => 'website', 'validation' => '', 'check' => 'not_output'),

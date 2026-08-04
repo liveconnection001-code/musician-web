@@ -346,9 +346,9 @@ if ($seoIsRoot) {
 <nav class="works-category-nav" aria-label="実施例カテゴリー">
   <a href="/works.html"<?php if ($worksCategoryKey === 'gallery'): ?> class="is-active" aria-current="page"<?php endif; ?>>ギャラリー</a>
   <a href="/works.html?category=awards"<?php if ($worksCategoryKey === 'awards'): ?> class="is-active" aria-current="page"<?php endif; ?>>式典・オープニング演出</a>
-  <a href="/works/index/25#works-category-cases"<?php if ($worksCategoryKey === 'performance'): ?> class="is-active" aria-current="page"<?php endif; ?>>演奏サービス</a>
-  <a href="/works/index/4#works-category-cases"<?php if ($worksCategoryKey === 'concert'): ?> class="is-active" aria-current="page"<?php endif; ?>>コンサート制作</a>
-  <a href="/works/index/28#works-category-cases"<?php if ($worksCategoryKey === 'arrangement'): ?> class="is-active" aria-current="page"<?php endif; ?>>アレンジ</a>
+  <a href="/works/index/25"<?php if ($worksCategoryKey === 'performance'): ?> class="is-active" aria-current="page"<?php endif; ?>>演奏サービス</a>
+  <a href="/works/index/4"<?php if ($worksCategoryKey === 'concert'): ?> class="is-active" aria-current="page"<?php endif; ?>>コンサート制作</a>
+  <a href="/works/index/28"<?php if ($worksCategoryKey === 'arrangement'): ?> class="is-active" aria-current="page"<?php endif; ?>>アレンジ</a>
 </nav>
 
 <?php if ($worksIsGallery): ?>
@@ -852,6 +852,17 @@ $(function () {
   });
 
 });
+</script>
+
+<script>
+(function() {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+}());
 </script>
 
 

@@ -28,6 +28,7 @@ class ContactVisualRenderer {
   }
 
   public function render($template) {
+    $contact_timing = 'visual-fixture-token';
     include $template;
   }
 }

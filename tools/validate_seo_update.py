@@ -25,7 +25,7 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 37, "deployment must contain 37 staged files")
+    check(manifest.get("file_count") == 38, "deployment must contain 38 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
@@ -38,6 +38,8 @@ def validate_manifest() -> None:
     check("admin/.htaccess" in expected, "admin HTTP access block is missing from manifest")
     for relative_path in (
         "app/Controller/ContactController.php",
+        "app/Controller/HomesController.php",
+        "app/Lib/ContactTiming.php",
         "app/Model/ContactMailSend.php",
         "app/webroot/css/contact.css",
         "app/webroot/privacy.html",
@@ -53,6 +55,7 @@ def validate_contact_form() -> None:
     contact = text("app/webroot/contact.html")
     confirmation = text("app/View/Contact/msg.html")
     controller = text("app/Controller/ContactController.php")
+    timing = text("app/Lib/ContactTiming.php")
     model = text("app/Model/ContactMailSend.php")
     privacy = text("app/webroot/privacy.html")
     stylesheet = text("app/webroot/css/contact.css")
@@ -76,17 +79,23 @@ def validate_contact_form() -> None:
     check("mb_strlen($data, 'UTF-8') < 10" in model, "contact: server-side message minimum is missing")
     check("checkdate(" in model and "strtotime(" not in model, "contact: event date rule must accept valid past dates")
     check("preg_match('/^[0-9+\\-]+$/'" in model, "contact: telephone allowlist is missing")
-    check("$form['website'] !== ''" in controller, "contact: honeypot branch is missing")
+    check("$form['website'] !== '' || $form['photo_numbers'] !== ''" in controller, "contact: honeypot branch is missing")
+    check("ContactTiming::isValid($timingToken)" in controller, "contact: signed timing-token verification is missing")
+    check("hash_hmac('sha256'" in timing and "Security.salt" in timing, "contact: HMAC timing token must use the existing configured secret")
     check("Contact.PendingForm" in controller and "$form = $pending['form']" in controller, "contact: session-backed final send is missing")
     check('name="contact_token"' in confirmation, "contact: confirmation token is missing")
     check(
         re.search(r'name="(?:inquiry_type|company|name|furigana|email|tel|event_date|event_pref|venue|attendee_count|budget|genre|photo_numbers|message|agree)"', confirmation) is None,
         "contact: confirmation must not submit client-controlled field values",
     )
-    for field, label in (("attendee_count", "想定人数"), ("photo_numbers", "ご覧になった写真番号")):
-        check(f'name="{field}"' in contact, f"contact: new optional field is missing: {field}")
+    for field, label in (("attendee_count", "想定人数"),):
+        check(f'name="{field}"' in contact, f"contact: optional field is missing: {field}")
         check(f"'{field}'" in model and f"'name' => '{label}'" in model, f"contact: model label is missing: {label}")
         check(f"'{field}' => '{label}'" in controller, f"contact: mail label is missing: {label}")
+    check('<th><label for="photo_numbers"' not in contact, "contact: photo-number table row must be removed")
+    check('id="photo_numbers" name="photo_numbers" type="text" aria-hidden="true" tabindex="-1" autocomplete="off"' in contact, "contact: photo-number honeypot accessibility contract is missing")
+    check("'photo_numbers'" not in model, "contact: photo-number honeypot must not be a mail output field")
+    check("'photo_numbers' => 'ご覧になった写真番号'" not in controller, "contact: photo-number honeypot must not have a mail label")
     check("replyTo($replyTo)" in controller, "contact: administrator Reply-To is missing")
     check("【Webお問い合わせ】" in controller, "contact: administrator subject is missing")
     check("【MUSICIAN】お問い合わせを受け付けました" in controller, "contact: automatic-reply subject is missing")
@@ -348,6 +357,19 @@ def validate_javascript() -> None:
     check("setTimeout(banner1" not in title, "primary page heading must not use delayed reveal animation")
     check("banner.style.visibility = 'visible';" in title, "primary page heading must be visible from first paint")
 
+def validate_works_categories() -> None:
+    works = text("app/View/catalog/cl01_2/default/index.html")
+    for target in ("/works/index/25", "/works/index/4", "/works/index/28"):
+        check(f'href="{target}"' in works, f"works: category tab link is missing: {target}")
+        check(f'href="{target}#' not in works, f"works: category tab must not include an anchor: {target}")
+    check("#works-category-cases" not in works, "works: removed category anchor still has a reference")
+    page_band = '<div class="works-showcase__page-band" aria-hidden="true"></div>'
+    gallery_branch = "<?php if ($worksCategoryKey === 'gallery'): ?>"
+    check(page_band in works and gallery_branch in works and works.index(page_band) < works.index(gallery_branch), "works: page band must render before category branches")
+    check('class="cb-header"' not in works, "works: legacy cb-header must not be rendered by category state")
+    check("history.scrollRestoration = 'manual';" in works and "window.scrollTo(0, 0);" in works, "works: non-anchor category loads must reset the initial scroll position")
+
+
 def validate_sitemap_and_robots() -> None:
     sitemap_path = DEPLOYMENT / "app" / "webroot" / "sitemap.xml"
     root = ET.parse(sitemap_path).getroot()
@@ -455,6 +477,7 @@ def main() -> None:
     validate_contact_form()
     validate_templates()
     validate_javascript()
+    validate_works_categories()
     validate_sitemap_and_robots()
     validate_routing()
     validate_service_wording()
@@ -464,7 +487,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 37 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 38 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

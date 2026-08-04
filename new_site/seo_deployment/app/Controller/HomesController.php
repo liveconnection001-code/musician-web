@@ -1,4 +1,5 @@
 <?php
+App::uses('ContactTiming', 'Lib');
 
 class HomesController extends AppController {
 
@@ -70,6 +71,9 @@ class HomesController extends AppController {
     }
 
     $this->set('file', $resolved);
+    if (strtolower($requested) === 'contact.html') {
+      $this->set('contact_timing', ContactTiming::issue());
+    }
   }
 
 

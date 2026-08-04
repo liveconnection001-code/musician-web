@@ -12,6 +12,10 @@ if ($root === false || $root === '' || $mailLog === false || $mailLog === '') {
   exit(2);
 }
 
+if (getenv('MUSICIAN_CONTACT_TEST_SECURITY_SALT') === false || getenv('MUSICIAN_CONTACT_TEST_SECURITY_SALT') === '') {
+  putenv('MUSICIAN_CONTACT_TEST_SECURITY_SALT=' . bin2hex(random_bytes(32)));
+}
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', rtrim($root, DS));
 define('APP_DIR', 'app');
@@ -21,6 +25,7 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'c
 
 require CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'bootstrap.php';
 
+require ROOT . DS . 'app' . DS . 'Lib' . DS . 'ContactTiming.php';
 require ROOT . DS . 'app' . DS . 'Model' . DS . 'AppModel.php';
 require ROOT . DS . 'app' . DS . 'Model' . DS . 'MailSend.php';
 require ROOT . DS . 'app' . DS . 'Model' . DS . 'ContactMailSend.php';
@@ -39,6 +44,10 @@ class ContactTestSession {
 
   public function read($key) {
     return isset($this->values[$key]) ? $this->values[$key] : null;
+  }
+
+  public function write($key, $value) {
+    $this->values[$key] = $value;
   }
 
   public function delete($key) {
@@ -83,9 +92,20 @@ class ContactConfirmationRenderer {
 
 class ContactControllerTestHarness extends ContactController {
   public $sentForm;
+  public $viewVars = array();
 
   public function sendData($form) {
     $this->sentForm = $form;
+  }
+
+  public function set($name, $value = null) {
+    if (is_array($name)) {
+      foreach ($name as $key => $item) {
+        $this->viewVars[$key] = $item;
+      }
+      return;
+    }
+    $this->viewVars[$name] = $value;
   }
 
   public function render($view = null, $layout = null) {
@@ -133,7 +153,7 @@ function contact_raw_form() {
       'attendee_count' => '120名程度',
       'budget' => '30万〜50万円',
       'genre' => '弦楽四重奏',
-      'photo_numbers' => '写真番号：１２、No.34、56',
+      'photo_numbers' => '',
       'message' => '隔離環境で確認するお問い合わせ内容です。',
       'agree' => '1',
       'website' => '',
@@ -152,6 +172,15 @@ function contact_model_for(array $form) {
   return $model;
 }
 
+function contact_post_controller(array $submitted) {
+  $controller = contact_controller();
+  $controller->Session = new ContactTestSession();
+  $controller->ContactMailSend = new ContactMailSend();
+  $controller->ContactMailSend->setMailConfigurationId(1);
+  $controller->request = (object)array('data' => array('ContactMailSend' => $submitted));
+  return $controller;
+}
+
 try {
   $versionContents = file_get_contents(CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'VERSION.txt');
   preg_match('/^([0-9]+\.[0-9]+\.[0-9]+)$/m', $versionContents, $versionMatch);
@@ -162,47 +191,76 @@ try {
   $form = contact_normalised_form($controller, contact_raw_form());
   $model = contact_model_for($form);
 
-  // T1: all fields must appear in the automatically enumerated confirmation data.
-  contact_assert(empty($model->error), 'T1: fully populated form must validate');
-  $confirmation = $model->getConfirmData();
-  contact_assert_same('120名程度', $confirmation['想定人数'], 'T1: attendee count is missing from confirmation');
-  contact_assert_same('写真番号：１２、No.34、56', $confirmation['ご覧になった写真番号'], 'T1: photo numbers are missing from confirmation');
+  // K-T1: normal input reaches confirmation and both isolated mail bodies.
+  $normalSubmission = contact_raw_form();
+  $normalSubmission['contact_timing'] = ContactTiming::issue(time() - 5);
+  $normalController = contact_post_controller($normalSubmission);
+  contact_assert_same('msg', $normalController->postmail(), 'K-T1: normal input must render the confirmation screen');
+  $confirmation = $normalController->viewVars['confirm_data'];
+  contact_assert(empty($model->error), 'K-T1: fully populated form must validate');
+  contact_assert_same('120名程度', $confirmation['想定人数'], 'K-T1: attendee count is missing from confirmation');
+  contact_assert(!isset($confirmation['ご覧になった写真番号']), 'K-T1: photo-number label must not appear in confirmation data');
   $confirmationMarkup = (new ContactConfirmationRenderer())->render(ROOT . DS . 'app' . DS . 'View' . DS . 'Contact' . DS . 'msg.html', $confirmation);
-  contact_assert(strpos($confirmationMarkup, '<th>想定人数</th>') !== false && strpos($confirmationMarkup, '120名程度') !== false, 'T1: attendee count is not rendered by msg.html');
-  contact_assert(strpos($confirmationMarkup, '<th>ご覧になった写真番号</th>') !== false && strpos($confirmationMarkup, '写真番号：１２、No.34、56') !== false, 'T1: photo numbers are not rendered by msg.html');
-  echo "[PASS] T1 confirmation lists both new optional fields.\n";
-
-  // T2: send both text bodies through the isolated LogTransport and inspect them.
+  contact_assert(strpos($confirmationMarkup, '<th>想定人数</th>') !== false && strpos($confirmationMarkup, '120名程度') !== false, 'K-T1: attendee count is not rendered by msg.html');
   file_put_contents($mailLog, '');
   $adminText = contact_private($controller, 'buildAdminText', array($form));
   $autoText = contact_private($controller, 'buildAutoReplyText', array($form));
   $autoStatus = contact_private($controller, 'sendContactEmail', array('default', 'customer@example.test', '自動返信テスト', $autoText, 'noreply@example.test'));
   $adminStatus = contact_private($controller, 'sendContactEmail', array('default', 'admin@example.test', '管理者通知テスト', $adminText, 'noreply@example.test', 'customer@example.test'));
-  contact_assert_same('送信済み', $autoStatus, 'T2: automatic reply was not accepted by LogTransport');
-  contact_assert_same('送信済み', $adminStatus, 'T2: administrator notification was not accepted by LogTransport');
+  contact_assert_same('送信済み', $autoStatus, 'K-T1: automatic reply was not accepted by LogTransport');
+  contact_assert_same('送信済み', $adminStatus, 'K-T1: administrator notification was not accepted by LogTransport');
   $mailEntries = array_values(array_filter(explode("\n", trim(file_get_contents($mailLog)))));
-  contact_assert_same(2, count($mailEntries), 'T2: LogTransport must receive both emails');
+  contact_assert_same(2, count($mailEntries), 'K-T1: LogTransport must receive both emails');
   $mailText = '';
   foreach ($mailEntries as $entry) {
     $decoded = json_decode($entry, true);
-    contact_assert(is_array($decoded) && isset($decoded['message']), 'T2: mail log entry is invalid');
+    contact_assert(is_array($decoded) && isset($decoded['message']), 'K-T1: mail log entry is invalid');
     $mailText .= $decoded['message'] . "\n";
   }
   $mailText = str_replace("\r\n", "\n", $mailText);
-  foreach (array('【想定人数】' . "\n" . '120名程度', '【ご覧になった写真番号】' . "\n" . '写真番号：１２、No.34、56') as $expected) {
-    contact_assert(substr_count($mailText, $expected) === 2, 'T2: both mail bodies must include ' . $expected);
-  }
-  echo "[PASS] T2 LogTransport captured both mail bodies with both new fields.\n";
+  $expectedAttendee = '【想定人数】' . "\n" . '120名程度';
+  contact_assert(substr_count($mailText, $expectedAttendee) === 2, 'K-T1: both mail bodies must include attendee count');
+  echo "[PASS] K-T1 normal input reaches confirmation and both isolated mail bodies.\n";
 
-  // T3: both additions remain optional.
+  // K-T2: a filled photo-number honeypot must return thanks without any send path.
+  $honeypotSubmission = contact_raw_form();
+  $honeypotSubmission['photo_numbers'] = '150';
+  $honeypotController = contact_post_controller($honeypotSubmission);
+  contact_assert_same('thanks', $honeypotController->postmail(), 'K-T2: filled photo-number honeypot must render thanks');
+  contact_assert($honeypotController->sentForm === null, 'K-T2: filled honeypot must not invoke mail sending');
+  contact_assert($honeypotController->Session->read('Contact.PendingForm') === null, 'K-T2: filled honeypot must not save pending form data');
+  echo "[PASS] K-T2 filled photo_numbers returns thanks without mail.\n";
+
+  // K-T3: a submission under five seconds must preserve user data and show a normal error.
+  $fastSubmission = contact_raw_form();
+  $fastSubmission['contact_timing'] = ContactTiming::issue();
+  $fastController = contact_post_controller($fastSubmission);
+  contact_assert_same('/Homes/webroot', $fastController->postmail(), 'K-T3: too-fast input must return to the form');
+  contact_assert(isset($fastController->viewVars['contact_errors']['_form']), 'K-T3: too-fast input must have a form error');
+  contact_assert_same($fastSubmission['message'], $fastController->viewVars['contact_data']['message'], 'K-T3: too-fast input must preserve message');
+  contact_assert($fastController->sentForm === null, 'K-T3: too-fast input must not invoke mail sending');
+  echo "[PASS] K-T3 under-five-second input is rejected with preserved data.\n";
+
+  // K-T4: a correctly signed token older than 24 hours must also be rejected.
+  $expiredSubmission = contact_raw_form();
+  $expiredSubmission['contact_timing'] = ContactTiming::issue(time() - (25 * 60 * 60));
+  $expiredController = contact_post_controller($expiredSubmission);
+  contact_assert_same('/Homes/webroot', $expiredController->postmail(), 'K-T4: expired input must return to the form');
+  contact_assert(isset($expiredController->viewVars['contact_errors']['_form']), 'K-T4: expired input must have a form error');
+  contact_assert_same($expiredSubmission['name'], $expiredController->viewVars['contact_data']['name'], 'K-T4: expired input must preserve name');
+  echo "[PASS] K-T4 25-hour token is rejected with preserved data.\n";
+
+  // K-T5: photo numbers must not reach confirmation or either email body.
+  contact_assert(strpos($confirmationMarkup, 'ご覧になった写真番号') === false, 'K-T5: confirmation must not show photo-number label');
+  contact_assert(strpos($mailText, 'ご覧になった写真番号') === false && strpos($mailText, '写真番号：') === false, 'K-T5: mail bodies must not show photo numbers');
+  contact_assert(!isset($model->fields[1]['photo_numbers']), 'K-T5: photo numbers must not remain in the mail field definition');
+  echo "[PASS] K-T5 confirmation and both mail bodies exclude photo numbers.\n";
+
+  // K-T8 regression: the existing optional and required-field rules and final server-held send remain intact.
   $optionalBlank = $form;
   $optionalBlank['attendee_count'] = '';
-  $optionalBlank['photo_numbers'] = '';
   $optionalBlankModel = contact_model_for($optionalBlank);
-  contact_assert(empty($optionalBlankModel->error), 'T3: blank optional fields must not produce validation errors');
-  echo "[PASS] T3 both new fields may be blank.\n";
-
-  // T4: each current required field must still reject an empty value.
+  contact_assert(empty($optionalBlankModel->error), 'K-T8: blank attendee count must remain valid');
   $requiredLabels = array(
       'inquiry_type' => 'お問い合わせ種別',
       'name' => 'お名前',
@@ -214,36 +272,17 @@ try {
     $missing = $form;
     $missing[$field] = '';
     $missingModel = contact_model_for($missing);
-    contact_assert(isset($missingModel->error[$label]), 'T4: required field must fail: ' . $field);
+    contact_assert(isset($missingModel->error[$label]), 'K-T8: required field must fail: ' . $field);
   }
-  echo "[PASS] T4 all five required fields reject empty values.\n";
-
-  // T5: telephone remains optional.
   $telephoneBlank = $form;
   $telephoneBlank['tel'] = '';
   $telephoneBlankModel = contact_model_for($telephoneBlank);
-  contact_assert(empty($telephoneBlankModel->error), 'T5: blank telephone must remain valid');
-  echo "[PASS] T5 telephone may be blank.\n";
-
-  // T6: preserve full-width, half-width and multiple photo numbers in confirmation and both mail bodies.
-  $photoValue = '作品１２、No.34、56';
-  $photoForm = $form;
-  $photoForm['photo_numbers'] = $photoValue;
-  $photoModel = contact_model_for($photoForm);
-  contact_assert(empty($photoModel->error), 'T6: mixed-width photo numbers must validate');
-  contact_assert_same($photoValue, $photoModel->getConfirmData()['ご覧になった写真番号'], 'T6: confirmation changed photo numbers');
-  $photoAdmin = contact_private($controller, 'buildAdminText', array($photoForm));
-  $photoAuto = contact_private($controller, 'buildAutoReplyText', array($photoForm));
-  contact_assert(strpos($photoAdmin, $photoValue) !== false && strpos($photoAuto, $photoValue) !== false, 'T6: mail text changed photo numbers');
-  echo "[PASS] T6 mixed-width and multiple photo numbers remain UTF-8 intact.\n";
-
-  // T7: final send must use the server-side pending form and render thanks.
+  contact_assert(empty($telephoneBlankModel->error), 'K-T8: blank telephone must remain valid');
   $sendController = contact_controller();
   $sendController->Session = new ContactTestSession();
   $sendController->ContactMailSend = new ContactTestMailSend();
   $pending = $form;
   $pending['attendee_count'] = 'セッション側の想定人数';
-  $pending['photo_numbers'] = 'セッション側の写真番号';
   $sendController->Session->values['Contact.PendingForm'] = array('form' => $pending, 'token' => 'contact-test-token');
   $result = contact_private($sendController, 'sendConfirmedForm', array(array(
       'send' => '1',
@@ -251,12 +290,11 @@ try {
       'attendee_count' => '改ざん値',
       'photo_numbers' => '改ざん値',
   )));
-  contact_assert_same('thanks', $result, 'T7: successful confirmation must render thanks');
-  contact_assert_same('セッション側の想定人数', $sendController->sentForm['attendee_count'], 'T7: final send used a client-controlled attendee count');
-  contact_assert_same('セッション側の写真番号', $sendController->sentForm['photo_numbers'], 'T7: final send used client-controlled photo numbers');
-  contact_assert($sendController->ContactMailSend->spamChecked, 'T7: spam check must run before final send');
-  contact_assert($sendController->Session->read('Contact.PendingForm') === null, 'T7: pending form must be cleared after final send');
-  echo "[PASS] T7 confirmation sends server-held data and renders thanks.\n";
+  contact_assert_same('thanks', $result, 'K-T8: successful confirmation must render thanks');
+  contact_assert_same('セッション側の想定人数', $sendController->sentForm['attendee_count'], 'K-T8: final send used client-controlled attendee count');
+  contact_assert($sendController->ContactMailSend->spamChecked, 'K-T8: spam check must run before final send');
+  contact_assert($sendController->Session->read('Contact.PendingForm') === null, 'K-T8: pending form must be cleared after final send');
+  echo "[PASS] K-T8 required fields, optional telephone, server-held confirmation, and thanks transition remain valid.\n";
 
   echo "[PASS] Isolated CakePHP 2.10.18 contact test completed.\n";
 } catch (Exception $exception) {
