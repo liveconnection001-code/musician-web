@@ -37,23 +37,23 @@
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
-      "bytes": 56516,
-      "sha256": "b68eebbf12d44f9d71bbd661b2d801be7cfd1c642816b0be1a0420f851de32d4"
+      "bytes": 55621,
+      "sha256": "97ae2ff4e840356fa6726bab09a2ca1a291394dec9032cff2e2be2df446c2dcc"
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",
-      "bytes": 22281,
-      "sha256": "a019ad89c4f7380271eec903eb214274156702d87f06e75394ee336533cdebc8"
+      "bytes": 21848,
+      "sha256": "c137646ecaee49d1c5e59b6e4cd1d4e6e38e8b3339a90af611d86f411209bba1"
     },
     {
       "path": "app/View/catalog/cl02_4/default/index.html",
-      "bytes": 18677,
-      "sha256": "b33acbfeafdaaffbdd4705a749172d7718eccf107eb14eadb8481f07d332d1a8"
+      "bytes": 18278,
+      "sha256": "4187315a4502d01c13363214a9b3642db7d2f4c9cc3d72fd29710365191e2ec6"
     },
     {
       "path": "app/View/catalog/cl02_4/default/view.html",
-      "bytes": 32615,
-      "sha256": "195994dcc93985e814dd9da84e99d6694e74260b5c04fec8516990c654447087"
+      "bytes": 31982,
+      "sha256": "8a7605f15eedcd0453d508bb34802b12a38cbad45ef2e34c8ba5cc0cd7d206d1"
     },
     {
       "path": "app/View/Contact/msg.html",
@@ -87,8 +87,8 @@
     },
     {
       "path": "app/webroot/.htaccess",
-      "bytes": 4342,
-      "sha256": "11d00edffb5af5b62e0e925b8ba3d3159657605b3f655266b725898831f4b110"
+      "bytes": 4223,
+      "sha256": "68fd82f88df86daf14568419d63efda56aa3ff79e8b9414f7bf9233589535787"
     },
     {
       "path": "app/webroot/achievements.html",
@@ -172,8 +172,8 @@
     },
     {
       "path": "app/webroot/js/title.js",
-      "bytes": 8981,
-      "sha256": "e1601d3a5925b5acac5fead3f1214707adf4a828f9355b5dc367114044c7cd49"
+      "bytes": 8734,
+      "sha256": "328bce6a7fa78d40b7720a74872b011dc014f7502c0db8703164ed60a26cfb90"
     },
     {
       "path": "app/webroot/privacy.html",

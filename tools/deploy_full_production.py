@@ -15,6 +15,8 @@ from datetime import datetime, timezone
 from tempfile import gettempdir
 from pathlib import Path, PurePosixPath
 
+from deployment_manifest import manifest_metadata
+
 
 HOST = "ftp.musician.co.jp"
 USER = "codex_bk_0725@musician.co.jp"
@@ -242,7 +244,8 @@ def read_local_targets() -> tuple[dict[str, bytes], dict]:
             warn(f"SEO manifest refers to missing file: {relative}")
             continue
         payload = local_path.read_bytes()
-        if len(payload) != entry.get("bytes") or sha256(payload) != entry.get("sha256"):
+        payload_size, payload_hash = manifest_metadata(relative, payload)
+        if payload_size != entry.get("bytes") or payload_hash != entry.get("sha256"):
             manifest_mismatches.append(relative)
         targets[relative] = payload
     if manifest_mismatches:

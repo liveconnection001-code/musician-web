@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
+
+from deployment_manifest import manifest_metadata
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,11 +20,13 @@ def main() -> None:
         if path.is_file() and path != MANIFEST and path.name != "CLAUDE_REVIEW.md"
     ):
         payload = path.read_bytes()
+        relative_path = path.relative_to(DEPLOYMENT).as_posix()
+        size, digest = manifest_metadata(relative_path, payload)
         files.append(
             {
-                "path": path.relative_to(DEPLOYMENT).as_posix(),
-                "bytes": len(payload),
-                "sha256": hashlib.sha256(payload).hexdigest(),
+                "path": relative_path,
+                "bytes": size,
+                "sha256": digest,
             }
         )
     manifest["file_count"] = len(files)
