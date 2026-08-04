@@ -83,6 +83,12 @@ def validate_contact_form() -> None:
     check("【MUSICIAN】お問い合わせを受け付けました" in controller, "contact: automatic-reply subject is missing")
     check('href="privacy.html" target="_blank" rel="noopener"' in contact, "contact: privacy link is missing or unsafe")
     check("privacy_scroll" not in contact, "contact: old embedded privacy policy remains")
+    contact_reply_guidance = "出張演奏、出演者編成、企業イベントや式典の音楽演出について、日時や会場が未確定の段階でもお気軽にご相談ください。内容を確認のうえ、通常1営業日以内に担当者よりメールにてご返信いたします。"
+    check(contact.count(contact_reply_guidance) == 1, "contact: existing reply-time guidance must appear exactly once")
+    check(
+        "お問い合わせには1営業日以内にご返信いたします。" not in contact,
+        "contact: duplicate short reply-time notice remains",
+    )
     for required_text in (
         "個人情報保護方針",
         "個人情報の収集、利用、提供等に関する基本原則",
@@ -173,6 +179,10 @@ def validate_templates() -> None:
     check(guide.count("'@type' => 'FAQPage'") == 1, "guide: FAQPage schema must be output once")
     check("ご予算に合わせて編成をご提案します" in guide, "guide: budget-planning heading missing")
     check("まずはご相談ください" in guide and 'href="contact.html"' in guide, "guide: contact CTA missing")
+    reply_notice = "お問い合わせには1営業日以内にご返信いたします。"
+    q1_schema = "お早めにご相談いただけますとより充実したご提案が可能です。お問い合わせには1営業日以内にご返信いたします。"
+    check(guide.count(reply_notice) == 2, "guide: reply-time notice must appear in Q1 and FAQPage schema")
+    check(q1_schema in guide, "guide: Q1 FAQPage schema must match the displayed reply-time notice")
     check(re.search(r"(?:¥|￥|\d[\d,]*(?:円|万円))", guide) is None, "guide: prohibited price amount found")
     site_css = text("app/webroot/css/style.css")
     for token in (

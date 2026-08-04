@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-08-04",
+  "generated_at_jst": "2026-07-26",
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
@@ -137,8 +137,8 @@
     },
     {
       "path": "app/webroot/guide.html",
-      "bytes": 27077,
-      "sha256": "f81a460b121fd6d7c64be9f5a8f113a243a26be09cc839464ee3ba607bc7e797"
+      "bytes": 27260,
+      "sha256": "703052fb08d5f325a1a8ff3efe9e2dc8e60635c440ad0832f9ab7644853f62de"
     },
     {
       "path": "app/webroot/images/works/arrangement/figaro-overture-score.png",
