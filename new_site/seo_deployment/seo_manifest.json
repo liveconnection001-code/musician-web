@@ -112,8 +112,8 @@
     },
     {
       "path": "app/webroot/css/style.css",
-      "bytes": 62268,
-      "sha256": "036afac0714183a82f49435b087d46ed41e7e786aabca66efb34020fde957778"
+      "bytes": 62615,
+      "sha256": "ecf3fac795c8c5a284433abef3bcd7c7e65369e1250193166550ff8b9f2b3e9c"
     },
     {
       "path": "app/webroot/equipment.html",

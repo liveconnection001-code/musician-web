@@ -2539,3 +2539,15 @@ footer .contact_sen .en2 {font-size: 110%;}
         opacity: 1;
     }
 }
+
+
+/* 2026-08-04: keep inner page content on the same ultra-wide frame as Works.
+   Background sections may remain full width; readable content stops at 1540px. */
+@media print, screen and (min-width: 1500px) {
+	.content_pd > .container-fluid > .yohaku {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 1540px;
+		width: 90vw;
+	}
+}
