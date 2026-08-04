@@ -1,0 +1,58 @@
+.contact-form .form-control,
+.contact-form select {
+  font-size: 16px;
+}
+
+.contact-form textarea.form-control {
+  height: auto;
+  line-height: 1.6;
+}
+
+.contact-form__help {
+  display: block;
+  margin-top: 7px;
+  color: #666;
+  font-size: 14px;
+}
+
+.contact-form__error {
+  margin: 8px 0 0;
+  color: #b42519;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.contact-form [aria-invalid="true"] {
+  border-color: #b42519;
+}
+
+.contact-form__check {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+}
+
+.contact-form__check input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin: 0 10px 0 0;
+}
+
+.contact-form__honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-confirmation__notice {
+  margin-bottom: 24px;
+}
+
+@media screen and (max-width: 767px) {
+  .contact-form .btn-lg {
+    min-height: 48px;
+  }
+}

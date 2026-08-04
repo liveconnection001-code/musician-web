@@ -25,7 +25,7 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 32, "deployment must contain 32 staged files")
+    check(manifest.get("file_count") == 36, "deployment must contain 36 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
@@ -35,6 +35,63 @@ def validate_manifest() -> None:
     check("app/webroot/css/mus_guide.css" in expected, "Guide / FAQ CSS missing from manifest")
     check("app/webroot/css/mus_reasons.css" in expected, "Top reasons CSS missing from manifest")
     check("app/webroot/css/mus_record.css" in expected, "Top achievements strip CSS missing from manifest")
+    for relative_path in (
+        "app/Controller/ContactController.php",
+        "app/Model/ContactMailSend.php",
+        "app/webroot/css/contact.css",
+        "app/webroot/privacy.html",
+    ):
+        check(relative_path in expected, f"contact-form deployment asset missing from manifest: {relative_path}")
+
+
+def validate_contact_form() -> None:
+    contact = text("app/webroot/contact.html")
+    confirmation = text("app/View/Contact/msg.html")
+    controller = text("app/Controller/ContactController.php")
+    model = text("app/Model/ContactMailSend.php")
+    privacy = text("app/webroot/privacy.html")
+    stylesheet = text("app/webroot/css/contact.css")
+
+    required_fields = ("inquiry_type", "name", "email", "message", "agree")
+    all_fields = (
+        "inquiry_type", "company", "name", "furigana", "email", "tel",
+        "event_date", "event_date_tbd", "event_pref", "venue", "budget",
+        "genre", "message", "agree", "website",
+    )
+    for field in all_fields:
+        check(f'name="{field}"' in contact, f"contact: missing field {field}")
+    for field in required_fields:
+        check(
+            re.search(rf'id="{re.escape(field)}"[^>]*aria-required="true"', contact) is not None,
+            f"contact: required field lacks aria-required=true: {field}",
+        )
+    for legacy_field in ("word4", "word5", "word6", "word7", "word8", "AjaxZip3"):
+        check(legacy_field not in contact and legacy_field not in confirmation, f"contact: legacy address artifact remains: {legacy_field}")
+
+    check("mb_strlen($data, 'UTF-8') < 10" in model, "contact: server-side message minimum is missing")
+    check("checkdate(" in model and "strtotime(" not in model, "contact: event date rule must accept valid past dates")
+    check("preg_match('/^[0-9+\\-]+$/'" in model, "contact: telephone allowlist is missing")
+    check("$form['website'] !== ''" in controller, "contact: honeypot branch is missing")
+    check("Contact.PendingForm" in controller and "$form = $pending['form']" in controller, "contact: session-backed final send is missing")
+    check('name="contact_token"' in confirmation, "contact: confirmation token is missing")
+    check(
+        re.search(r'name="(?:inquiry_type|company|name|furigana|email|tel|event_date|event_pref|venue|budget|genre|message|agree)"', confirmation) is None,
+        "contact: confirmation must not submit client-controlled field values",
+    )
+    check("replyTo($replyTo)" in controller, "contact: administrator Reply-To is missing")
+    check("【Webお問い合わせ】" in controller, "contact: administrator subject is missing")
+    check("【MUSICIAN】お問い合わせを受け付けました" in controller, "contact: automatic-reply subject is missing")
+    check('href="privacy.html" target="_blank" rel="noopener"' in contact, "contact: privacy link is missing or unsafe")
+    check("privacy_scroll" not in contact, "contact: old embedded privacy policy remains")
+    for required_text in (
+        "個人情報保護方針",
+        "個人情報の収集、利用、提供等に関する基本原則",
+        "個人情報の管理について",
+        "法令及びその他の規範について",
+        "本人からのお問い合わせ",
+    ):
+        check(required_text in privacy, f"privacy: required policy text missing: {required_text}")
+    check(".contact-form" in stylesheet and "font-size: 16px" in stylesheet, "contact: isolated mobile form CSS is missing")
 
 
 def validate_templates() -> None:
@@ -376,6 +433,7 @@ def validate_preview() -> None:
 
 def main() -> None:
     validate_manifest()
+    validate_contact_form()
     validate_templates()
     validate_javascript()
     validate_sitemap_and_robots()
@@ -387,7 +445,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 32 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 36 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

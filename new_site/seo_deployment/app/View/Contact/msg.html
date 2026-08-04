@@ -11,6 +11,7 @@
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
 <link href="css/style.css?v=20260802f" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
+<link href="css/contact.css?v=20260804a" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
 <link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
@@ -102,89 +103,32 @@
 
 
 <?php if(isset($confirm_data)): ?>
-<!--↓↓↓----------入力内容確認----------↓↓↓-->
-
-<p style="padding-bottom:10px; padding-top:10px;">以下の内容でよろしければ送信ボタンを押して下さい</p>
-
-<?php echo $this->Form->create('MailSend',array('url'=>array('controller'=>$this->request['controller'],'action'=>'postmail','thanks.html')));?>
-
-<?php echo $this->Form->input('send',array('type'=>'hidden','value'=>1, 'label'=>false,'div'=>false));?>
-<table cellspacing="0" cellpadding="0" class="table_form mb30_md50" summary="お問い合わせ">
+<div class="contact-confirmation">
+  <p class="contact-confirmation__notice">以下の内容でよろしければ送信ボタンを押してください。</p>
+  <form method="post" action="<?php echo $this->Html->url(array('controller' => 'contact', 'action' => 'postmail')); ?>">
+    <input name="send" type="hidden" value="1">
+    <input name="contact_token" type="hidden" value="<?php echo h($contact_token); ?>">
+    <table cellspacing="0" cellpadding="0" class="table_form mb30_md50" summary="お問い合わせ確認内容">
 <?php foreach($confirm_data as $key => $value): ?>
-<tr>
-<th><?php echo $key;?></th>
-<td>
-<?php if(!is_array($value)): ?><!-- 通常のフィールド -->
-<?php echo nl2br(h($value)); ?>
-<?php echo $this->Form->input($key,array('type'=>'hidden','value'=>h($value), 'label'=>false,'div'=>false));?>
-<?php elseif(isset($value['isfile'])): ?><!-- 添付ファイル -->
-<?php if($value['error'] == 0): ?><!-- 添付ファイルが存在した場合 -->
-<a href="<?php echo $this->element('media',array('var'=>array('id'=>$value['id'],'download'=>true)))?>"><?php echo h($value['file_full_value'])?></a>
-<input type="hidden" name="data[File][<?php echo $value['field']?>][id]" value="<?php echo $value['id']?>" />
-<input type="hidden" name="data[File][<?php echo $value['field']?>][title]" value="<?php echo h($value['title'].'.'.$value['ext'])?>" />
-<input type="hidden" name="data[File][<?php echo $value['field']?>][size]" value="<?php echo $value['size']?>" />
-<input type="hidden" name="data[File][<?php echo $value['field']?>][ext]" value="<?php echo $value['ext']?>" />
-<?php else: ?><!-- 添付ファイルが存在しない場合 -->
-<?php echo nl2br(h($value['file_full_value'])); ?>
-<?php endif; ?>
-<?php echo $this->Form->input($key,array('type'=>'hidden','value'=>h($value['file_full_value']), 'label'=>false,'div'=>false));?>
-<?php ?>
-<?php else: ?><!-- チェックボックス -->
-<?php foreach($value as $k => $v ){
-	if    ($v === '' ) {}
-	elseif($k === 'y') {echo nl2br(h($v))."年";}
-	elseif($k === 'm') {echo nl2br(h($v))."月";}
-	elseif($k === 'd') {echo nl2br(h($v))."日";}
-	elseif($k === 't') {echo nl2br(h($v))."時";}
-	else               {echo "■".nl2br(h($v));}
-	echo $this->Form->input($key.']['.$k,array('type'=>'hidden','value'=>h($v), 'label'=>false,'div'=>false));
-}
-?>
-
-
-<?php endif; ?>
-&nbsp;
-</td>
-</tr>
+      <tr>
+        <th><?php echo h($key); ?></th>
+        <td><?php echo $value === '' ? '—' : nl2br(h($value)); ?></td>
+      </tr>
 <?php endforeach; ?>
-</table>
-<div class="row">
-  <div class="col-12 offset-sm-1 col-sm-10">
+    </table>
     <div class="row">
-      <div class="col-6 tac"><input type="button" onclick="window.history.back()" value="前画面にもどる" class="btn btn-primary btn-block btn-lg" /></div>
-      <div class="col-6 tac"><input type="submit" value="上記内容で送信" class="btn btn-primary btn-block  btn-lg" /></div>
+      <div class="col-12 offset-sm-1 col-sm-10">
+        <div class="row">
+          <div class="col-6 tac"><input type="button" onclick="window.history.back()" value="前画面にもどる" class="btn btn-primary btn-block btn-lg"></div>
+          <div class="col-6 tac"><input type="submit" value="上記内容で送信" class="btn btn-primary btn-block btn-lg"></div>
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
-<?php echo $this->Form->end();?>
-
-<!------------------------------------------------>
-<?php elseif(isset($error_data)): ?>
-<!--↓↓↓-----------入力エラー-----------↓↓↓-->
-
-<p style="padding-bottom:10px; padding-top:10px;">入力内容に誤りがあります。<br />
-前画面に戻って正しく入力してください。</p>
-
-<?php echo $this->Form->create('MailSend',array('url'=>array('controller'=>$this->request['controller'],'action'=>'postmail')));?>
-<table class="table_form mb30_md50">
-<?php foreach($error_data as $key => $value): ?>
-<tr>
-<input name="<?php echo $key;?>" type="hidden" value="<?php echo $value;?>" />
-<th><?php echo $key;?></th>
-<td style="color:red;"><?php echo $value;?></td>
-</tr>
-<?php endforeach;?>
-</table>
-<div class="row">
-  <div class="col-12">
-    <div class="row">
-      <div class="col-6 offset-3 tac"><input type="button" onclick="window.history.back()" value="前画面にもどる" class="btn btn-primary btn-block btn-lg" /></div>
-    </div>
-  </div>
-</div>
-<?php echo $this->Form->end();?>
-
-<!------------------------------------------------>
+<?php elseif(isset($confirm_error)): ?>
+<p class="contact-form__error" role="alert"><?php echo h($confirm_error); ?></p>
+<p><a href="<?php echo $this->Html->url('/contact.html'); ?>" class="text_link">お問い合わせフォームへ戻る</a></p>
 <?php endif; ?>
 
 
@@ -366,11 +310,6 @@ $(function(){
 <script src="js/scrollMonitor.js"></script>
 <script src="js/main.js"></script>
 <script src="js/title.js?v=20260804b"></script>
-
-<!--お問い合わせページ用-->
-<script src="https://ajaxzip3.github.io/ajaxzip3.js"></script>
-<script src="js/not_enter.js"></script>
-
 
 </body>
 </html>

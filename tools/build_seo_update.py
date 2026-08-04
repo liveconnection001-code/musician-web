@@ -33,6 +33,38 @@ def write(relative_path: str, text: str) -> None:
     destination.write_text(text, encoding="utf-8", newline="\n")
 
 
+def require_contact_form_overrides() -> None:
+    """Keep the separately approved contact-form implementation on regeneration.
+
+    The SEO builder normally derives static pages from the July backup.  The
+    contact form instead has a CakePHP controller/model and a session-backed
+    confirmation flow, so regenerating it from that backup would silently
+    restore the retired address fields and unsafe hidden-field submission.
+    These versioned package files are the explicit source for the form until
+    the legacy site is migrated to a dedicated template source.
+    """
+    required = {
+        "app/webroot/contact.html": 'id="contact-form"',
+        "app/webroot/privacy.html": '個人情報保護方針',
+        "app/webroot/css/contact.css": ".contact-form",
+        "app/View/Contact/msg.html": 'name="contact_token"',
+        "app/View/Contact/thanks.html": "通常1営業日以内",
+        "app/Controller/ContactController.php": "Contact.PendingForm",
+        "app/Model/ContactMailSend.php": "class ContactMailSend extends MailSend",
+    }
+    missing = []
+    for relative_path, marker in required.items():
+        path = OUTPUT / relative_path
+        if not path.is_file() or marker not in read(path):
+            missing.append(relative_path)
+    if missing:
+        joined = ", ".join(missing)
+        raise RuntimeError(
+            "Contact-form overrides are missing or incomplete; refusing to "
+            f"regenerate a package that would discard them: {joined}"
+        )
+
+
 def replace_once(text: str, old: str, new: str, label: str) -> str:
     count = text.count(old)
     if count != 1:
@@ -702,23 +734,6 @@ def build_static_pages() -> None:
     )
     write("app/webroot/business.html", business)
 
-    contact = read(BACKUP / "app" / "webroot" / "contact.html")
-    contact = replace_legacy_meta(contact, CONTACT_META, "contact metadata")
-    contact = improve_shared_markup(contact, banner_label="<span>Contact</span>お問い合わせ")
-    contact = replace_heading_level(contact, 3, 2, "midashi1", 1, "contact form heading")
-    contact = replace_heading_level(contact, 3, 2, "midashi4", 1, "privacy policy heading")
-    contact = replace_heading_level(contact, 4, 3, "midashi5", 4, "privacy policy subheadings")
-    contact = contact.replace(' enctype="multipart/form-data"', '')
-    contact = replace_once(
-        contact,
-        'アーティストのブッキング、各種お問い合わせは<br class="d-none d-sm-block">こちらのメールフォームまたはお電話でご連絡ください。',
-        '出張演奏、出演者編成・キャスティング、企業イベントや式典の音楽演出は、<br class="d-none d-sm-block">日時や会場が未確定の段階でもメールフォームまたはお電話でご相談いただけます。',
-        "contact intro copy",
-    )
-    contact = normalize_achievements_links(contact)
-    write("app/webroot/contact.html", contact)
-
-
 def build_catalog_pages() -> None:
     works = read(BACKUP / "app" / "View" / "catalog" / "cl01_2" / "default" / "index.html")
     works = replace_php_preamble(works, WORKS_PREAMBLE, "works preamble")
@@ -834,29 +849,10 @@ def build_catalog_pages() -> None:
 
 
 def build_contact_results() -> None:
-    pages = {
-        "msg.html": (
-            "お問い合わせ内容の確認｜MUSICIAN",
-            "お問い合わせ内容の確認画面です。",
-        ),
-        "thanks.html": (
-            "お問い合わせ送信完了｜MUSICIAN",
-            "お問い合わせを受け付けました。",
-        ),
-    }
-    for filename, (title, description) in pages.items():
-        text = read(BACKUP / "app" / "View" / "Contact" / filename)
-        meta = (
-            f"<title>{title}</title>\n"
-            f'<meta name="description" content="{description}">\n'
-            '<meta name="robots" content="noindex, nofollow">\n'
-            '<link rel="canonical" href="https://www.musician.co.jp/contact.html">'
-        )
-        text = replace_legacy_meta(text, meta, f"{filename} noindex metadata")
-        text = improve_shared_markup(text, banner_label="<span>Contact</span>お問い合わせ")
-        text = replace_heading_level(text, 3, 2, "midashi1", 1, f"{filename} form heading")
-        text = normalize_achievements_links(text)
-        write(f"app/View/Contact/{filename}", text)
+    # See require_contact_form_overrides().  The confirmation and completion
+    # templates must remain paired with ContactController, not be rebuilt from
+    # the legacy generic MailSend templates.
+    return
 
 
 def build_achievements_page() -> None:
@@ -1208,6 +1204,7 @@ def write_manifest() -> None:
 
 
 def main() -> None:
+    require_contact_form_overrides()
     write("app/View/Elements/seo_meta.html", SEO_ELEMENT)
     build_home()
     build_static_pages()

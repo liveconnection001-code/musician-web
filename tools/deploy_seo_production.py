@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deploy or roll back the approved MUSICIAN SEO package over FTP.
 
-The deployment is restricted to an explicit list of 18 production files. Each
+The deployment is restricted to an explicit list of 22 production files. Each
 existing remote file is saved locally before the first production write. New
 content is uploaded to a hidden temporary name, hash-verified, then renamed into
 place. Any deployment error rolls back every file changed in the current run.
@@ -56,9 +56,13 @@ DEPLOYMENT_PATHS = (
     "app/View/Homes/robots.html",
     "app/View/Errors/error400.html",
     "app/Controller/HomesController.php",
+    "app/Model/ContactMailSend.php",
+    "app/Controller/ContactController.php",
     "app/View/Homes/index.html",
     "app/webroot/business.html",
+    "app/webroot/css/contact.css",
     "app/webroot/contact.html",
+    "app/webroot/privacy.html",
     "app/View/catalog/cl01_2/default/index.html",
     "app/View/catalog/cl01_3/default/index.html",
     "app/View/catalog/cl02_4/default/index.html",

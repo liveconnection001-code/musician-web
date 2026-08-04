@@ -16,6 +16,12 @@ Main changes: canonical URLs, page-specific metadata, Open Graph/Twitter cards, 
 2. `python tools/finalize_seo_update.py` — applies the home LCP-image fix, the company page Schema.org type split (AboutPage vs CollectionPage), updates the company and full-home private previews, and refreshes `seo_manifest.json`.
 3. `python tools/validate_seo_update.py` — static validation of the result.
 
+The contact-form files are explicit versioned overrides in this package. They
+are deliberately preserved by `build_seo_update.py`: rebuilding them from the
+July backup would restore obsolete address fields and the old confirmation
+submission flow. `ContactController.php`, `ContactMailSend.php`,
+`css/contact.css`, and `privacy.html` are all part of the deployable package.
+
 ## Next production release
 
 The next approved full production release will use the existing `OBSOLETE_PATHS` quarantine workflow for the 12 superseded gallery files belonging to `traditional-taiko`, `unit-big-band`, and `unit-live-band` (small/card/large variants). Deployment first quarantines these paths; permanent removal is performed only by the existing verified cleanup step after public HTTP checks. No deployment or cleanup is performed as part of this staging update.

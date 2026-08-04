@@ -1,9 +1,9 @@
 {
-  "generated_at_jst": "2026-07-26",
+  "generated_at_jst": "2026-08-04",
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
-  "file_count": 32,
+  "file_count": 36,
   "files": [
     {
       "path": ".htaccess",
@@ -16,9 +16,19 @@
       "sha256": "0010198f896a818986c73b57e94920001ee34f50e7a4fe741032aeb165fe37af"
     },
     {
+      "path": "app/Controller/ContactController.php",
+      "bytes": 9251,
+      "sha256": "650adb2c9dd15f2889e8aab827cb3a957d82cd4fe06028261c9ee3283bcc38ed"
+    },
+    {
       "path": "app/Controller/HomesController.php",
       "bytes": 2907,
       "sha256": "c96f11af23b39eeb56c9ef4e4433789605fa140f37a74eda4a35cc5f300c6148"
+    },
+    {
+      "path": "app/Model/ContactMailSend.php",
+      "bytes": 5581,
+      "sha256": "897b9e3147f13e7b2be66a52e022651384bd215137255315edcff4d7a1efc4f4"
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
@@ -42,13 +52,13 @@
     },
     {
       "path": "app/View/Contact/msg.html",
-      "bytes": 15027,
-      "sha256": "09b00478284823adfb0324fa4a32ff765eca58bd9d30dbb1d2f72d42f14b12f6"
+      "bytes": 12475,
+      "sha256": "7546df46cef8456b873d23ff1c071b99ce9b0bdb1771dab82df5b763ea4e93b4"
     },
     {
       "path": "app/View/Contact/thanks.html",
-      "bytes": 11975,
-      "sha256": "31410cfdd43ca42b1ea623bb85fc3054c9c99ff160fe1b81dba736456d977b1d"
+      "bytes": 11426,
+      "sha256": "dd0cdea1fa22d5f1b1c5e7e4b859ee1eb1b21b5dc02b1db4e4b7cb432293dc3f"
     },
     {
       "path": "app/View/Elements/seo_meta.html",
@@ -87,8 +97,13 @@
     },
     {
       "path": "app/webroot/contact.html",
-      "bytes": 25153,
-      "sha256": "12601be6aa1c84faf2e0f9fd60b357edf46c5cf08881c4754ed3e9071a12e239"
+      "bytes": 27292,
+      "sha256": "e1f041a42d1b206144dfdc687ace4986c74a0e55dc1fcfcdfacc635c531f8903"
+    },
+    {
+      "path": "app/webroot/css/contact.css",
+      "bytes": 886,
+      "sha256": "42dd06f3b8ca4492e4eba91ba90872d9995e97cb05fa2676e75632194e12f966"
     },
     {
       "path": "app/webroot/css/mus_guide.css",
@@ -156,14 +171,19 @@
       "sha256": "328bce6a7fa78d40b7720a74872b011dc014f7502c0db8703164ed60a26cfb90"
     },
     {
+      "path": "app/webroot/privacy.html",
+      "bytes": 10852,
+      "sha256": "56b959375a84c69677dcbb3b8938bb4a1c1ffe9318939c30411fcfa7ab7766d3"
+    },
+    {
       "path": "app/webroot/sitemap.xml",
       "bytes": 15153,
       "sha256": "541a68d6a9fc74b010384844b3ea493901c85aef0ff7aa3d7e647fdc293324be"
     },
     {
       "path": "README.md",
-      "bytes": 2159,
-      "sha256": "ca7b0f69622fa864be6ad129305f7d62fd05b4c9aee8a2b283343857e4ac77b9"
+      "bytes": 2534,
+      "sha256": "436d81e57e267bcd85c038895c4239ca61f47be1d61007be5729c502459b4ff6"
     }
   ]
 }

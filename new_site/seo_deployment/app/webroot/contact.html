@@ -17,6 +17,7 @@
 <link href="css/bootstrap-4.3.1.css" rel="stylesheet" type="text/css">
 <link href="css/style.css?v=20260802f" rel="stylesheet">
 <link href="css/bootstrap4-print.css" rel="stylesheet">
+<link href="css/contact.css?v=20260804a" rel="stylesheet">
 <script src="https://kit.fontawesome.com/286008749b.js" crossorigin="anonymous"></script><!--fontawesome-->
 <link rel="stylesheet" href="css/megamenu.css"><!--ナビ-->
 <link rel="stylesheet" href="css/aos.css"><!--スクロールして動きを出す-->
@@ -29,7 +30,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="apple-touch-icon.png" rel="apple-touch-icon-precomposed">
 </head>
-<body onpageshow="ez_mf_initialize('contact');">
+<body>
 
 
 <header>
@@ -123,151 +124,89 @@
 			<div class="container-fluid">
 				<div class="yohaku" data-aos="fade-up">
 					<h2 class="midashi1 mb30_md50 tal_sptac"><span class="en">Mail form</span>メールフォーム</h2>
-					<p class="mb30_md50">MUSICIANへのお問い合わせありがとうございます。内容を確認次第、ご連絡いたします。<br>
-また、ご連絡先情報の相違やシステムエラー等によってお返事ができない場合がございます。<br>
-しばらくお待ちいただいても返答がない場合には、お手数ですがお電話にてその旨お問い合わせください。<br>
-必須項目が未記入の場合は送信いただけませんので、ご了承ください。</p>
+					<p class="mb30_md50">出張演奏、出演者編成、企業イベントや式典の音楽演出について、日時や会場が未確定の段階でもお気軽にご相談ください。内容を確認のうえ、通常1営業日以内に担当者よりメールにてご返信いたします。</p>
 
-                            <form method="post" action="contact/postmail" novalidate>
+<?php
+$contact_data = isset($contact_data) && is_array($contact_data) ? $contact_data : array();
+$contact_errors = isset($contact_errors) && is_array($contact_errors) ? $contact_errors : array();
+$contact_value = function ($field) use ($contact_data) {
+  return isset($contact_data[$field]) ? h($contact_data[$field]) : '';
+};
+$contact_error = function ($field) use ($contact_errors) {
+  return isset($contact_errors[$field]) ? h($contact_errors[$field]) : '';
+};
+$contact_invalid = function ($field) use ($contact_errors) {
+  return isset($contact_errors[$field]) ? ' aria-invalid="true" aria-describedby="' . h($field) . '-error"' : '';
+};
+$inquiry_types = array('出張演奏のご依頼・お見積り', 'イベント・式典の音楽演出/制作のご相談', 'コンサート制作のご相談', '編曲・楽譜制作/オリジナル楽曲のご相談', '音響・照明・収録・配信のご相談', 'その他（取材・協業など）');
+$event_prefs = array('未定', '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県', '海外');
+$budgets = array('未定・ご相談しながら決めたい', '〜30万円', '30万〜50万円', '50万〜100万円', '100万〜300万円', '300万円以上');
+?>
+                            <form id="contact-form" class="contact-form" method="post" action="<?php echo $this->Html->url(array('controller' => 'contact', 'action' => 'postmail')); ?>" novalidate>
                                 <table class="table_form mb30_md50">
                                   <tr>
-                                    <th>貴社名</th>
-                                    <td><input name="word1" type="text" class="form-control" placeholder="入力　例：MUSICIAN"></td>
+                                    <th><label for="inquiry_type">お問い合わせ種別<span>必須</span></label></th>
+                                    <td>
+                                      <select id="inquiry_type" name="inquiry_type" class="form-control" aria-required="true"<?php echo $contact_invalid('inquiry_type'); ?>><option value="">選択してください</option><?php foreach ($inquiry_types as $option): ?><option value="<?php echo h($option); ?>"<?php echo isset($contact_data['inquiry_type']) && $contact_data['inquiry_type'] === $option ? ' selected="selected"' : ''; ?>><?php echo h($option); ?></option><?php endforeach; ?></select>
+                                      <?php if ($contact_error('inquiry_type') !== ''): ?><p id="inquiry_type-error" class="contact-form__error" role="alert"><?php echo $contact_error('inquiry_type'); ?></p><?php endif; ?>
+                                    </td>
                                   </tr>
                                   <tr>
-                                    <th>お名前<span>必須</span></th>
-                                    <td><input name="word2" type="text" class="form-control" placeholder="入力　例：山田　太郎"></td>
+                                    <th><label for="company">貴社名・団体名</label></th>
+                                    <td><input id="company" name="company" type="text" class="form-control" autocomplete="organization" value="<?php echo $contact_value('company'); ?>"<?php echo $contact_invalid('company'); ?>><?php if ($contact_error('company') !== ''): ?><p id="company-error" class="contact-form__error" role="alert"><?php echo $contact_error('company'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>フリガナ</th>
-                                    <td><input name="word3" type="text" class="form-control" placeholder="入力　例：ヤマダ　タロウ"></td>
+                                    <th><label for="name">お名前<span>必須</span></label></th>
+                                    <td><input id="name" name="name" type="text" class="form-control" autocomplete="name" aria-required="true" value="<?php echo $contact_value('name'); ?>"<?php echo $contact_invalid('name'); ?>><?php if ($contact_error('name') !== ''): ?><p id="name-error" class="contact-form__error" role="alert"><?php echo $contact_error('name'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>郵便番号</th>
-                                    <td><input name="word4" type="text" class="form-control w300" onKeyUp="AjaxZip3.zip2addr(this,'','word5','word6','','',false);" placeholder="半角入力　例：102-0084"></td>
+                                    <th><label for="furigana">フリガナ</label></th>
+                                    <td><input id="furigana" name="furigana" type="text" class="form-control" value="<?php echo $contact_value('furigana'); ?>"<?php echo $contact_invalid('furigana'); ?>><?php if ($contact_error('furigana') !== ''): ?><p id="furigana-error" class="contact-form__error" role="alert"><?php echo $contact_error('furigana'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                        <th>都道府県</th>
-                                        <td><select name="word5">
-                                          <option value="" selected="selected">都道府県</option>
-                                          <option value="北海道">北海道</option>
-                                          <option value="青森県">青森県</option>
-                                          <option value="秋田県">秋田県</option>
-                                          <option value="岩手県">岩手県</option>
-                                          <option value="宮城県">宮城県</option>
-                                          <option value="山形県">山形県</option>
-                                          <option value="福島県">福島県</option>
-                                          <option value="新潟県">新潟県</option>
-                                          <option value="愛知県">愛知県</option>
-                                          <option value="山梨県">山梨県</option>
-                                          <option value="富山県">富山県</option>
-                                          <option value="静岡県">静岡県</option>
-                                          <option value="長野県">長野県</option>
-                                          <option value="石川県">石川県</option>
-                                          <option value="岐阜県">岐阜県</option>
-                                          <option value="福井県">福井県</option>
-                                          <option value="茨城県">茨城県</option>
-                                          <option value="栃木県">栃木県</option>
-                                          <option value="群馬県">群馬県</option>
-                                          <option value="千葉県">千葉県</option>
-                                          <option value="埼玉県">埼玉県</option>
-                                          <option value="東京都">東京都</option>
-                                          <option value="神奈川県">神奈川県</option>
-                                          <option value="大阪府">大阪府</option>
-                                          <option value="京都府">京都府</option>
-                                          <option value="和歌山県">和歌山県</option>
-                                          <option value="奈良県">奈良県</option>
-                                          <option value="三重県">三重県</option>
-                                          <option value="滋賀県">滋賀県</option>
-                                          <option value="兵庫県">兵庫県</option>
-                                          <option value="岡山県">岡山県</option>
-                                          <option value="広島県">広島県</option>
-                                          <option value="島根県">島根県</option>
-                                          <option value="山口県">山口県</option>
-                                          <option value="鳥取県">鳥取県</option>
-                                          <option value="香川県">香川県</option>
-                                          <option value="愛媛県">愛媛県</option>
-                                          <option value="徳島県">徳島県</option>
-                                          <option value="高知県">高知県</option>
-                                          <option value="福岡県">福岡県</option>
-                                          <option value="佐賀県">佐賀県</option>
-                                          <option value="長崎県">長崎県</option>
-                                          <option value="大分県">大分県</option>
-                                          <option value="熊本県">熊本県</option>
-                                          <option value="宮崎県">宮崎県</option>
-                                          <option value="鹿児島県">鹿児島県</option>
-                                          <option value="沖縄県">沖縄県</option>
-                                        </select></td>
-                                      </tr>
-                                  <tr>
-                                    <th>市区町村</th>
-                                    <td><input name="word6" type="text" class="form-control" placeholder="入力　例：千代田区二番町"></td>
+                                    <th><label for="email">メールアドレス<span>必須</span></label></th>
+                                    <td><input id="email" name="email" type="email" class="form-control" autocomplete="email" inputmode="email" aria-required="true" value="<?php echo $contact_value('email'); ?>"<?php echo $contact_invalid('email'); ?>><?php if ($contact_error('email') !== ''): ?><p id="email-error" class="contact-form__error" role="alert"><?php echo $contact_error('email'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>番地</th>
-                                    <td><input name="word7" type="text" class="form-control" placeholder="入力　例：9-3"></td>
+                                    <th><label for="tel">電話番号</label></th>
+                                    <td><input id="tel" name="tel" type="tel" class="form-control" autocomplete="tel" inputmode="tel" value="<?php echo $contact_value('tel'); ?>"<?php echo $contact_invalid('tel'); ?>><small class="contact-form__help">お急ぎの場合はご記入ください</small><?php if ($contact_error('tel') !== ''): ?><p id="tel-error" class="contact-form__error" role="alert"><?php echo $contact_error('tel'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>ビル・マンション名</th>
-                                    <td><input name="word8" type="text" class="form-control" placeholder="入力　例：：〇〇ビル"></td>
+                                    <th><label for="event_date">開催予定日</label></th>
+                                    <td><input id="event_date" name="event_date" type="date" class="form-control" min="<?php echo date('Y-m-d'); ?>" value="<?php echo $contact_value('event_date'); ?>"<?php echo !empty($contact_data['event_date_tbd']) ? ' disabled="disabled"' : ''; ?><?php echo $contact_invalid('event_date'); ?>><p class="contact-form__check"><input id="event_date_tbd" name="event_date_tbd" type="checkbox" value="1"<?php echo !empty($contact_data['event_date_tbd']) ? ' checked="checked"' : ''; ?>><label for="event_date_tbd">日程は未定・調整中</label></p><?php if ($contact_error('event_date') !== ''): ?><p id="event_date-error" class="contact-form__error" role="alert"><?php echo $contact_error('event_date'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>電話番号<span>必須</span></th>
-                                    <td><input name="word9"  type="text" class="form-control" placeholder="半角入力　例：03-6261-4348　携帯可"></td>
+                                    <th><label for="event_pref">開催エリア</label></th>
+                                    <td><select id="event_pref" name="event_pref" class="form-control"<?php echo $contact_invalid('event_pref'); ?>><option value="">選択してください</option><?php foreach ($event_prefs as $option): ?><option value="<?php echo h($option); ?>"<?php echo isset($contact_data['event_pref']) && $contact_data['event_pref'] === $option ? ' selected="selected"' : ''; ?>><?php echo h($option); ?></option><?php endforeach; ?></select><?php if ($contact_error('event_pref') !== ''): ?><p id="event_pref-error" class="contact-form__error" role="alert"><?php echo $contact_error('event_pref'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>メールアドレス<span>必須</span></th>
-                                    <td><input name="word10"  type="email" class="form-control" placeholder="半角入力　例：email@example.com"></td>
+                                    <th><label for="venue">会場名・会場の種類</label></th>
+                                    <td><input id="venue" name="venue" type="text" class="form-control" placeholder="例：○○ホテル 宴会場、本社ロビー、屋外ステージ" value="<?php echo $contact_value('venue'); ?>"<?php echo $contact_invalid('venue'); ?>><?php if ($contact_error('venue') !== ''): ?><p id="venue-error" class="contact-form__error" role="alert"><?php echo $contact_error('venue'); ?></p><?php endif; ?></td>
                                   </tr>
                                   <tr>
-                                    <th>お問い合わせ内容<span>必須</span></th>
-                                    <td><textarea name="word11" rows="5" class="form-control" placeholder="お問い合わせ内容をご入力ください。"></textarea></td>
+                                    <th><label for="budget">ご予算の目安</label></th>
+                                    <td><select id="budget" name="budget" class="form-control"<?php echo $contact_invalid('budget'); ?>><option value="">選択してください</option><?php foreach ($budgets as $option): ?><option value="<?php echo h($option); ?>"<?php echo isset($contact_data['budget']) && $contact_data['budget'] === $option ? ' selected="selected"' : ''; ?>><?php echo h($option); ?></option><?php endforeach; ?></select><?php if ($contact_error('budget') !== ''): ?><p id="budget-error" class="contact-form__error" role="alert"><?php echo $contact_error('budget'); ?></p><?php endif; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th><label for="genre">ご希望のジャンル・編成</label></th>
+                                    <td><input id="genre" name="genre" type="text" class="form-control" placeholder="例：弦楽四重奏、ジャズバンド、和楽器、オーケストラ" value="<?php echo $contact_value('genre'); ?>"<?php echo $contact_invalid('genre'); ?>><?php if ($contact_error('genre') !== ''): ?><p id="genre-error" class="contact-form__error" role="alert"><?php echo $contact_error('genre'); ?></p><?php endif; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th><label for="message">お問い合わせ内容<span>必須</span></label></th>
+                                    <td><textarea id="message" name="message" rows="6" class="form-control" aria-required="true" placeholder="イベントの目的やご検討中の内容を、分かる範囲でお聞かせください"<?php echo $contact_invalid('message'); ?>><?php echo $contact_value('message'); ?></textarea><?php if ($contact_error('message') !== ''): ?><p id="message-error" class="contact-form__error" role="alert"><?php echo $contact_error('message'); ?></p><?php endif; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th>個人情報保護方針<span>必須</span></th>
+                                    <td><p class="contact-form__check"><input id="agree" name="agree" type="checkbox" value="1" aria-required="true"<?php echo !empty($contact_data['agree']) ? ' checked="checked"' : ''; ?><?php echo $contact_invalid('agree'); ?>><label for="agree"><a href="privacy.html" target="_blank" rel="noopener">個人情報保護方針</a>に同意する</label></p><?php if ($contact_error('agree') !== ''): ?><p id="agree-error" class="contact-form__error" role="alert"><?php echo $contact_error('agree'); ?></p><?php endif; ?></td>
                                   </tr>
                                 </table>
 
-
-
-                                <h2 class="midashi4 mb30 en">PRIVACY POLICY</h2>
-                                <div class="privacy_waku mb30_md50">
-                                    <div class="privacy_scroll">
-                                        <p class="mb30">当社は、個人情報保護の重要性を認識し、個人情報保護の方針を定めるとともに、個人情報の適切な保護に努めます。<br>
-個人情報の収集、利用に関する基本原則、管理方法ならびに実効性を持たせる手段として教育・訓練、監査等について以下のとおり規定し、実行して参ります。</p>
-
-                                        <h3 class="midashi5 mb10">個人情報の収集、利用、提供等に関する基本原則</h3>
-                                          <ul class="list_ul mb30">
-                                            <li>個人情報を直接収集する際は、適法かつ公正な手段により、本人の同意を得た上で行います。</li>
-                                            <li>収集にあたっては、利用目的を明確にし、その目的のために必要な範囲内にとどめます。</li>
-                                            <li>個人の利益を侵害する可能性が高い機微な情報は、本人の明確な同意がある場合または法令等の裏付けがある場合以外には収集しません。</li>
-                                            <li>当社が個人情報の処理を伴う業務を外部から受託する場合や外部へ委託する場合は、個人情報に関する秘密の保持、再委託に関する事項、事故時の責任分担、契約終了時の個人情報の返却および消去等について定め、それに従います。</li>
-                                            <li>個人情報は、本人の同意を得た範囲内で利用、提供します。</li>
-                                        </ul>
-
-                                        <h3 class="midashi5 mb10">個人情報の管理について</h3>
-                                          <ol class="list_ol mb30">
-                                            <li>当社が直接収集または外部から業務を受託する際に入手した個人情報は、正確な状態に保ち、不正アクセス、紛失・破壊・改ざんおよび漏洩等を防止するための措置を講じます。</li>
-                                            <li>個人情報の処理を伴う業務を外部から受託する場合は、委託者が個人情報を入手した際、本人の同意を得た上で、適法かつ公正な手段によって収集したものであることを確認します。</li>
-                                        </ol>
-
-                                        <h3 class="midashi5 mb10">法令及びその他の規範について</h3>
-                                        <p class="mb30">当社は、個人情報の保護に関係する日本の法令及びその他の規範を遵守し、本方針の継続的改善に努めます。</p>
-
-                                        <h3 class="midashi5 mb10">本人からのお問い合わせ</h3>
-                                        <p>本人からの個人情報の取扱いに関するお問い合わせには、妥当な範囲において、すみやかな対応に努めます。<br>
-このページの内容に関するご質問及びお客様がご自身の個人情報についてご確認されたい場合には、【<span data-action="call" class="text_link_sp">TEL：03-6261-4348</span>】までお問い合わせください。</p>
-                                    </div><!--privacy_scroll-->
-                                </div><!--privacy_waku-->
-
-
-                                <p class="tac mb10">
-                               <input name="word12" type="hidden" />
-                               <input name="word12" type="checkbox" value="個人情報保護方針に同意の上、送信" id="nini" />
-                               <label for="nini">個人情報保護方針に同意の上、送信<span class="hidden-xs">します</span></label></p>
-
+                                <div class="contact-form__honeypot" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" value="<?php echo $contact_value('website'); ?>"></div>
 
                                 <div class="row mb05">
                                     <div class="offset-sm-2 col-sm-8 offset-lg-3 col-lg-6 tac contact_btn"><button type="submit" class="btn btn-primary btn-block btn-lg">入力内容を確認する</button></div>
                                 </div>
-                    </form>
+                            </form>
 
 				</div>
 			</div>
@@ -443,9 +382,87 @@ $(function(){
 <script src="js/main.js"></script>
 <script src="js/title.js?v=20260804b"></script>
 
-<!--お問い合わせページ用-->
-<script src="https://ajaxzip3.github.io/ajaxzip3.js"></script>
-<script src="js/not_enter.js"></script>
+<script>
+$(function() {
+    var $form = $('#contact-form');
+    if (!$form.length) {
+        return;
+    }
+    var $date = $('#event_date');
+    var $dateTbd = $('#event_date_tbd');
+
+    function syncEventDate() {
+        if ($dateTbd.prop('checked')) {
+            $date.val('').prop('disabled', true);
+        } else {
+            $date.prop('disabled', false);
+        }
+    }
+
+    function clearClientErrors() {
+        $form.find('.contact-form__error[data-client-error="true"]').remove();
+        $form.find('[data-client-invalid="true"]').removeAttr('aria-invalid aria-describedby').removeAttr('data-client-invalid');
+    }
+
+    function showError($field, message) {
+        var id = $field.attr('id') + '-client-error';
+        $field.attr('aria-invalid', 'true').attr('aria-describedby', id).attr('data-client-invalid', 'true');
+        $('<p>', {
+            id: id,
+            'class': 'contact-form__error',
+            role: 'alert',
+            'data-client-error': 'true',
+            text: message
+        }).insertAfter($field.closest('.contact-form__check').length ? $field.closest('.contact-form__check') : $field);
+    }
+
+    $dateTbd.on('change', syncEventDate);
+    syncEventDate();
+
+    $form.on('submit', function(event) {
+        clearClientErrors();
+        var errors = [];
+        var inquiryType = $('#inquiry_type');
+        var name = $('#name');
+        var email = $('#email');
+        var tel = $('#tel');
+        var message = $('#message');
+        var agree = $('#agree');
+
+        if ($.trim(inquiryType.val()) === '') {
+            errors.push([inquiryType, 'お問い合わせ種別を選択してください。']);
+        }
+        if ($.trim(name.val()) === '') {
+            errors.push([name, 'お名前を入力してください。']);
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($.trim(email.val()))) {
+            errors.push([email, 'メールアドレスを正しく入力してください。']);
+        }
+        if ($.trim(tel.val()) !== '' && !/^[0-9+\-]+$/.test($.trim(tel.val()))) {
+            errors.push([tel, '電話番号は半角数字・ハイフン・+のみで入力してください。']);
+        }
+        if ($.trim(message.val()).length < 10) {
+            errors.push([message, 'お問い合わせ内容は10文字以上で入力してください。']);
+        }
+        if (!agree.prop('checked')) {
+            errors.push([agree, '個人情報保護方針への同意を確認してください。']);
+        }
+
+        if (errors.length) {
+            event.preventDefault();
+            $.each(errors, function(_, error) {
+                showError(error[0], error[1]);
+            });
+            errors[0][0].focus();
+        }
+    });
+
+    var $serverError = $form.find('[aria-invalid="true"]').first();
+    if ($serverError.length) {
+        $serverError.focus();
+    }
+});
+</script>
 
 
 </body>
