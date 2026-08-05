@@ -42,8 +42,8 @@
     },
     {
       "path": "app/View/catalog/cl01_2/default/index.html",
-      "bytes": 55746,
-      "sha256": "4a4d5f67c3223688ac21964ebda1b662737637a2bfe782d170271267c735c661"
+      "bytes": 55734,
+      "sha256": "80225ba8128bbda27c96c5aad7f09a50bf8a72b1e4506b6fda2fc27f00d21d5e"
     },
     {
       "path": "app/View/catalog/cl01_3/default/index.html",

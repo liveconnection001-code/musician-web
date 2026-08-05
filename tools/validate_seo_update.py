@@ -367,6 +367,10 @@ def validate_works_categories() -> None:
     gallery_branch = "<?php if ($worksCategoryKey === 'gallery'): ?>"
     check(page_band in works and gallery_branch in works and works.index(page_band) < works.index(gallery_branch), "works: page band must render before category branches")
     check('class="cb-header"' not in works, "works: legacy cb-header must not be rendered by category state")
+    check('<header class="works-category-section__header">' not in works, "works: category section header must not inherit the global fixed-header rule")
+    check('<header class="works-cms-entry__header">' not in works, "works: case entry header must not inherit the global fixed-header rule")
+    check('<div class="works-category-section__header">' in works, "works: category section wrapper is missing")
+    check('<div class="works-cms-entry__header">' in works, "works: case entry wrapper is missing")
     check("history.scrollRestoration = 'manual';" in works and "window.scrollTo(0, 0);" in works, "works: non-anchor category loads must reset the initial scroll position")
 
 
