@@ -418,6 +418,13 @@ def verify() -> bool:
     check("ページが見つかりません" in missing, "unknown .html: friendly 404 body")
     check('name="robots" content="noindex, follow"' in missing, "unknown .html: noindex")
 
+    status_target, _headers, payload_target = fetch("/release-cache-refresh.php")
+    status_control, _headers, payload_control = fetch("/nonexistent-codex-cache-probe.php")
+    check(
+        (status_target, len(payload_target)) == (status_control, len(payload_control)),
+        "release-cache-refresh.php: response differs from a nonexistent .php (one-time helper may still be deployed)",
+    )
+
     for sample_path in (
         "/.git/config",
         "/.env",

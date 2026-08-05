@@ -25,6 +25,18 @@ def text(relative_path: str) -> str:
     return (DEPLOYMENT / relative_path).read_text(encoding="utf-8")
 
 
+def validate_retired_ga4_absence() -> None:
+    retired_id = RETIRED_GA4_MEASUREMENT_ID.encode("ascii")
+    matches = []
+    for path in DEPLOYMENT.rglob("*"):
+        if path.is_file() and retired_id in path.read_bytes():
+            matches.append(path.relative_to(DEPLOYMENT).as_posix())
+    check(
+        not matches,
+        "retired GA4 ID remains in deployment package: " + ", ".join(matches),
+    )
+
+
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
@@ -365,6 +377,14 @@ def validate_templates() -> None:
         page = text(relative_path)
         check('name="robots" content="noindex, nofollow"' in page, f"{relative_path}: noindex missing")
 
+    thanks = text("app/View/Contact/thanks.html")
+    # This exact title is the GA4 generate_lead key. Any title change must be
+    # released together with the corresponding GA4 key-event configuration.
+    check(
+        "<title>お問い合わせ送信完了｜MUSICIAN</title>" in thanks,
+        "completion page title is the GA4 generate_lead key; changing it silently stops lead measurement",
+    )
+
 
 def validate_javascript() -> None:
     bootstrap = text("app/webroot/js/bootstrap.js")
@@ -498,6 +518,7 @@ def validate_preview() -> None:
 
 
 def main() -> None:
+    validate_retired_ga4_absence()
     validate_manifest()
     validate_contact_form()
     validate_templates()
