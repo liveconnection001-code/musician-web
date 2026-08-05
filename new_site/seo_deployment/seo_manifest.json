@@ -22,8 +22,8 @@
     },
     {
       "path": "app/Controller/AppController.php",
-      "bytes": 37919,
-      "sha256": "d0aaccaba08338be35155c447d3ea087a4cfab0176d80c93b6eca354fee99c05"
+      "bytes": 38104,
+      "sha256": "5c869739e93b7513cad9a0cc60c3639aa311f11b4d62578b207ce1f53ad56b06"
     },
     {
       "path": "app/Controller/ContactController.php",
@@ -193,7 +193,7 @@
     {
       "path": "app/webroot/release-cache-refresh.php",
       "bytes": 967,
-      "sha256": "1cb10483ed3a9d7ab9554c52968bd7ebbd2b37ee96ceae0a1dd505d7972b3f2a"
+      "sha256": "16d6455aad394dbd395f386e6295c4c0f3852070e6208d84c6239444bcd6fdb3"
     },
     {
       "path": "app/webroot/sitemap.xml",

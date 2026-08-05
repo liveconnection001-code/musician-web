@@ -168,7 +168,9 @@ class AppController extends Controller {
         $code = $embed_code['EmbedCode']['code'];
 
         // GAコードが出現した場合、最初の1個のみ有効にする
-        if (is_ga_code($code)) {
+        // The legacy helper only recognizes UA-* IDs, so detect GA4 snippets too.
+        $is_ga4_code = strpos($code, 'googletagmanager.com/gtag/js?id=G-') !== false;
+        if (is_ga_code($code) || $is_ga4_code) {
           if ($ga_exists) {
             continue;
           }

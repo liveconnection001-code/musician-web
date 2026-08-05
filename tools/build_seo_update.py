@@ -90,6 +90,13 @@ def build_ga4_runtime() -> None:
         . '</script>';
       $ga_exists   = false;"""
     controller = replace_once(controller, marker, replacement, "AppController GA4 source")
+    detector = """        // GAコードが出現した場合、最初の1個のみ有効にする
+        if (is_ga_code($code)) {"""
+    detector_replacement = """        // GAコードが出現した場合、最初の1個のみ有効にする
+        // The legacy helper only recognizes UA-* IDs, so detect GA4 snippets too.
+        $is_ga4_code = strpos($code, 'googletagmanager.com/gtag/js?id=G-') !== false;
+        if (is_ga_code($code) || $is_ga4_code) {"""
+    controller = replace_once(controller, detector, detector_replacement, "AppController GA4 detection")
     branch = """          if ($this->request['controller'] === 'catalog_preview' || $this->request['controller'] === 'CatalogPreview') {
             continue;
           }

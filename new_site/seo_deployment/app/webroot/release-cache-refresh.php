@@ -1,6 +1,6 @@
 <?php
 $controller = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Controller' . DIRECTORY_SEPARATOR . 'AppController.php';
-$expected_hash = 'd0aaccaba08338be35155c447d3ea087a4cfab0176d80c93b6eca354fee99c05';
+$expected_hash = '5c869739e93b7513cad9a0cc60c3639aa311f11b4d62578b207ce1f53ad56b06';
 $provided_hash = isset($_SERVER['HTTP_X_MUSICIAN_RELEASE']) ? strtolower(trim($_SERVER['HTTP_X_MUSICIAN_RELEASE'])) : '';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST'

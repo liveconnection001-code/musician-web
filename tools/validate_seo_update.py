@@ -58,6 +58,8 @@ def validate_manifest() -> None:
     app_controller = text("app/Controller/AppController.php")
     check(app_controller.count(GA4_MEASUREMENT_ID) == 2, "GA4 runtime must contain the company-owned ID twice")
     check(RETIRED_GA4_MEASUREMENT_ID not in app_controller, "GA4 runtime still contains the retired ID")
+    check("googletagmanager.com/gtag/js?id=G-" in app_controller, "GA4 runtime must detect modern GA4 CMS snippets")
+    check("is_ga_code($code) || $is_ga4_code" in app_controller, "GA4 runtime must accept legacy and GA4 embed formats")
     check("$code = $ga4_code;" in app_controller, "GA4 runtime must replace the legacy CMS payload")
     cache_refresh = text("app/webroot/release-cache-refresh.php")
     controller_digest = hashlib.sha256(app_controller.encode("utf-8")).hexdigest()
