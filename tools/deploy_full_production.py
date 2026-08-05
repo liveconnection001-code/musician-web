@@ -229,8 +229,8 @@ def remove_tree(ftp: ftplib.FTP, remote: PurePosixPath) -> int:
 
 def read_local_targets() -> tuple[dict[str, bytes], dict]:
     manifest = json.loads(SEO_MANIFEST.read_text(encoding="utf-8"))
-    if manifest.get("file_count") != 39:
-        warn(f"SEO manifest file_count is {manifest.get('file_count')}, expected 39.")
+    if manifest.get("file_count") != 40:
+        warn(f"SEO manifest file_count is {manifest.get('file_count')}, expected 40.")
     manifest_files = {entry["path"]: entry for entry in manifest["files"]}
     manifest_mismatches: list[str] = []
 

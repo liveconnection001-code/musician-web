@@ -3,7 +3,7 @@
   "source_backup": "A:\\AI\\Web\\MUSICIAN\\backup_2026-07-25\\site_files",
   "company_template_source": "A:\\AI\\Web\\MUSICIAN\\new_site\\deployment\\app\\View\\catalog\\cl01_3\\default\\index.html",
   "production_uploaded": false,
-  "file_count": 39,
+  "file_count": 40,
   "files": [
     {
       "path": ".htaccess",
@@ -189,6 +189,11 @@
       "path": "app/webroot/privacy.html",
       "bytes": 10852,
       "sha256": "56b959375a84c69677dcbb3b8938bb4a1c1ffe9318939c30411fcfa7ab7766d3"
+    },
+    {
+      "path": "app/webroot/release-cache-refresh.php",
+      "bytes": 967,
+      "sha256": "1cb10483ed3a9d7ab9554c52968bd7ebbd2b37ee96ceae0a1dd505d7972b3f2a"
     },
     {
       "path": "app/webroot/sitemap.xml",

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -27,10 +28,11 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 39, "deployment must contain 39 staged files")
+    check(manifest.get("file_count") == 40, "deployment must contain 40 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
     check("app/Controller/AppController.php" in expected, "GA4 runtime controller missing from manifest")
+    check("app/webroot/release-cache-refresh.php" in expected, "one-time PHP cache refresh helper missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
     check("app/webroot/js/bootstrap.js" in expected, "guarded Bootstrap script missing from manifest")
     check("app/webroot/js/title.js" in expected, "guarded title animation script missing from manifest")
@@ -57,6 +59,11 @@ def validate_manifest() -> None:
     check(app_controller.count(GA4_MEASUREMENT_ID) == 2, "GA4 runtime must contain the company-owned ID twice")
     check(RETIRED_GA4_MEASUREMENT_ID not in app_controller, "GA4 runtime still contains the retired ID")
     check("$code = $ga4_code;" in app_controller, "GA4 runtime must replace the legacy CMS payload")
+    cache_refresh = text("app/webroot/release-cache-refresh.php")
+    controller_digest = hashlib.sha256(app_controller.encode("utf-8")).hexdigest()
+    check(controller_digest in cache_refresh, "PHP cache refresh helper must pin the deployed AppController hash")
+    check("opcache_invalidate($controller, true)" in cache_refresh, "PHP cache refresh helper must invalidate AppController")
+    check("@unlink(__FILE__)" in cache_refresh, "PHP cache refresh helper must remove itself")
 
 
 def validate_contact_form() -> None:
@@ -503,7 +510,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 39 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 40 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

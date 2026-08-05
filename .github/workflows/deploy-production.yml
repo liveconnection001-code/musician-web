@@ -65,6 +65,7 @@ jobs:
               raise SystemExit(f"Manifest mismatch: {summary['manifest_mismatches']}")
           required = {
               "app/Controller/AppController.php",
+              "app/webroot/release-cache-refresh.php",
               "app/View/catalog/cl01_2/default/index.html",
               "app/View/catalog/cl01_3/default/index.html",
               "app/View/catalog/cl02_4/default/index.html",
@@ -97,6 +98,32 @@ jobs:
           result = json.loads(Path("deploy-result.json").read_text(encoding="utf-8").splitlines()[-1])
           print(f"backup_dir={result['backup_dir']}")
           PY
+
+      - name: Refresh deployed PHP runtime cache
+        run: |
+          expected_hash="$(python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("new_site/seo_deployment/seo_manifest.json").read_text(encoding="utf-8"))
+          entry = next(item for item in manifest["files"] if item["path"] == "app/Controller/AppController.php")
+          print(entry["sha256"])
+          PY
+          )"
+          set +e
+          http_code="$(curl --silent --show-error --output php-cache-refresh-result.json --write-out '%{http_code}' \
+            --connect-timeout 3 --max-time 10 --request POST \
+            --header "X-MUSICIAN-RELEASE: ${expected_hash}" \
+            https://www.musician.co.jp/release-cache-refresh.php)"
+          curl_exit=$?
+          set -e
+          echo "PHP_CACHE_REFRESH http_status=${http_code:-0} curl_exit=${curl_exit}"
+          if [ -s php-cache-refresh-result.json ]; then
+            cat php-cache-refresh-result.json
+          fi
+          # The production verifier remains authoritative. If this transient
+          # refresh fails, its GA4 content checks trigger the normal rollback.
+          exit 0
 
       - name: Verify deployed production
         id: verify
