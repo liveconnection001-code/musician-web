@@ -16,6 +16,8 @@ from pathlib import Path
 
 
 BASE = "https://www.musician.co.jp"
+GA4_MEASUREMENT_ID = "G-74ETNWY2T9"
+RETIRED_GA4_MEASUREMENT_ID = "G-N0RQ" + "FSVHCM"
 ERRORS: list[str] = []
 CHECKS: list[str] = []
 FETCH_TIMEOUT_SECONDS = int(os.environ.get("MUSICIAN_VERIFY_FETCH_TIMEOUT_SECONDS", "20"))
@@ -209,6 +211,14 @@ def verify_html(path: str, canonical: str) -> str:
     check(f'href="{BASE}{canonical}"' in html, f"{path}: canonical URL mismatch")
     check('property="og:title"' in html, f"{path}: OGP missing")
     check('name="twitter:card"' in html, f"{path}: Twitter card missing")
+    check(
+        html.count(GA4_MEASUREMENT_ID) == 2,
+        f"{path}: expected company-owned GA4 ID twice",
+    )
+    check(
+        RETIRED_GA4_MEASUREMENT_ID not in html,
+        f"{path}: retired GA4 ID remains",
+    )
     match = re.search(
         r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
     )

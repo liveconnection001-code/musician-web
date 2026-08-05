@@ -9,6 +9,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEPLOYMENT = ROOT / "new_site" / "seo_deployment"
+GA4_MEASUREMENT_ID = "G-74ETNWY2T9"
+RETIRED_GA4_MEASUREMENT_ID = "G-N0RQ" + "FSVHCM"
 PREVIEW = ROOT / "temporary_preview_site"
 ERRORS: list[str] = []
 
@@ -25,9 +27,10 @@ def text(relative_path: str) -> str:
 def validate_manifest() -> None:
     manifest = json.loads(text("seo_manifest.json"))
     check(manifest.get("production_uploaded") is False, "manifest must say production_uploaded=false")
-    check(manifest.get("file_count") == 38, "deployment must contain 38 staged files")
+    check(manifest.get("file_count") == 39, "deployment must contain 39 staged files")
     expected = {entry["path"] for entry in manifest.get("files", [])}
     check("app/View/Elements/seo_meta.html" in expected, "SEO metadata element missing from manifest")
+    check("app/Controller/AppController.php" in expected, "GA4 runtime controller missing from manifest")
     check("app/webroot/sitemap.xml" in expected, "sitemap missing from manifest")
     check("app/webroot/js/bootstrap.js" in expected, "guarded Bootstrap script missing from manifest")
     check("app/webroot/js/title.js" in expected, "guarded title animation script missing from manifest")
@@ -49,6 +52,11 @@ def validate_manifest() -> None:
     admin_htaccess = text("admin/.htaccess")
     check("Require all denied" in admin_htaccess, "admin HTTP access block lacks Apache 2.4 denial")
     check("Deny from all" in admin_htaccess, "admin HTTP access block lacks Apache 2.2 denial")
+
+    app_controller = text("app/Controller/AppController.php")
+    check(app_controller.count(GA4_MEASUREMENT_ID) == 2, "GA4 runtime must contain the company-owned ID twice")
+    check(RETIRED_GA4_MEASUREMENT_ID not in app_controller, "GA4 runtime still contains the retired ID")
+    check("$code = $ga4_code;" in app_controller, "GA4 runtime must replace the legacy CMS payload")
 
 
 def validate_contact_form() -> None:
@@ -456,6 +464,10 @@ def validate_service_wording() -> None:
 
 
 def validate_preview() -> None:
+    preview_source = (ROOT / "new_site" / "preview" / "company.html").read_text(encoding="utf-8")
+    check(preview_source.count(GA4_MEASUREMENT_ID) == 2, "company preview source must use the company-owned GA4 ID")
+    check(RETIRED_GA4_MEASUREMENT_ID not in preview_source, "company preview source still contains the retired GA4 ID")
+    check('name="robots" content="noindex, nofollow"' in preview_source, "company preview source must remain noindex")
     # The browser preview is intentionally local-only and excluded from Git.
     # CI validates the deployable package; local runs additionally validate the
     # private noindex preview when it is present.
@@ -491,7 +503,7 @@ def main() -> None:
         for error in ERRORS:
             print(f"- {error}")
         sys.exit(1)
-    print("SEO validation passed: 38 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
+    print("SEO validation passed: 39 files, 39 canonical URLs, 85 recent achievements and 2672 historical occurrences")
 
 
 if __name__ == "__main__":

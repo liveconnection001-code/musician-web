@@ -21,6 +21,7 @@ CURRENT_COMPANY = (
     / "index.html"
 )
 OUTPUT = ROOT / "new_site" / "seo_deployment"
+GA4_MEASUREMENT_ID = "G-74ETNWY2T9"
 
 
 def read(path: Path) -> str:
@@ -63,6 +64,46 @@ def require_contact_form_overrides() -> None:
             "Contact-form overrides are missing or incomplete; refusing to "
             f"regenerate a package that would discard them: {joined}"
         )
+
+
+def build_ga4_runtime() -> None:
+    """Pin rendered GA4 output to the company-owned measurement property.
+
+    EZManager stores the historical analytics snippet in the database and
+    AppController injects it after rendering.  Keep the CMS row only as the
+    insertion-position selector, and replace its payload before it reaches a
+    public response so a full regeneration cannot restore the retired tag.
+    """
+    controller = read(BACKUP / "app" / "Controller" / "AppController.php")
+    marker = """      // 埋め込みコード
+      $ga_exists   = false;"""
+    replacement = f"""      // 埋め込みコード
+      // GA4 is owned by MUSICIAN. The legacy CMS record only selects the
+      // insertion position; its stored tracking code is never rendered.
+      $ga4_code = '<!-- Google tag (gtag.js) -->' . "\\n"
+        . '<script async src="https://www.googletagmanager.com/gtag/js?id={GA4_MEASUREMENT_ID}"></script>' . "\\n"
+        . '<script>' . "\\n"
+        . '  window.dataLayer = window.dataLayer || [];' . "\\n"
+        . '  function gtag(){{dataLayer.push(arguments);}}' . "\\n"
+        . "  gtag('js', new Date());" . "\\n\\n"
+        . "  gtag('config', '{GA4_MEASUREMENT_ID}');" . "\\n"
+        . '</script>';
+      $ga_exists   = false;"""
+    controller = replace_once(controller, marker, replacement, "AppController GA4 source")
+    branch = """          if ($this->request['controller'] === 'catalog_preview' || $this->request['controller'] === 'CatalogPreview') {
+            continue;
+          }
+        }
+        if (empty($embed_code['EmbedCode']['position'])) {"""
+    branch_replacement = """          if ($this->request['controller'] === 'catalog_preview' || $this->request['controller'] === 'CatalogPreview') {
+            continue;
+          }
+          $code = $ga4_code;
+        }
+        if (empty($embed_code['EmbedCode']['position'])) {"""
+    controller = replace_once(controller, branch, branch_replacement, "AppController GA4 output")
+    controller = "\n".join(line.rstrip() for line in controller.splitlines()) + "\n"
+    write("app/Controller/AppController.php", controller)
 
 
 def replace_once(text: str, old: str, new: str, label: str) -> str:
@@ -1208,6 +1249,7 @@ def write_manifest() -> None:
 
 def main() -> None:
     require_contact_form_overrides()
+    build_ga4_runtime()
     write("app/View/Elements/seo_meta.html", SEO_ELEMENT)
     build_home()
     build_static_pages()

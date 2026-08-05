@@ -64,6 +64,7 @@ jobs:
           if summary["manifest_mismatches"]:
               raise SystemExit(f"Manifest mismatch: {summary['manifest_mismatches']}")
           required = {
+              "app/Controller/AppController.php",
               "app/View/catalog/cl01_2/default/index.html",
               "app/View/catalog/cl01_3/default/index.html",
               "app/View/catalog/cl02_4/default/index.html",
